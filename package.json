@@ -1,0 +1,25 @@
+{
+  "name": "pokeblox2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pokeblox.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack --mode=development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lk340/pokeblox2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lk340/pokeblox2/issues"
+  },
+  "homepage": "https://github.com/lk340/pokeblox2#readme",
+  "dependencies": {
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3"
+  }
+}

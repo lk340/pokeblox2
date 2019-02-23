@@ -8,11 +8,11 @@ export default class Piece {
     this.tetrominoes = tetrominoes;
 
     this.currPiece = randomPiece(this.tetrominoes);
+    this.nextPiece = randomPiece(this.tetrominoes);
+
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
     this.currentPiece = this.shapes[this.currentPieceIndex];
-
-    this.nextPiece = randomPiece(this.tetrominoes);
     this.savedPiece = null;
 
     this.color = this.currPiece.color;
@@ -166,17 +166,36 @@ export default class Piece {
     }
   }
 
+  resetForSavePiece() {
+      this.shapes = this.currPiece.shapes;
+      this.currentPieceIndex = 0;
+      this.currentPiece = this.shapes[this.currentPieceIndex];
+      this.color = this.currPiece.color;
+      this.type = this.currPiece.type;
+      this.x_offset = 3;
+      this.y_offset = -1;
+      this.verticalCollision = false;
+      this.horizontalLeftCollision = false;
+      this.horizontalRightCollision = false;
+  }
+
   savePiece() {
     if (this.savedPiece === null) {
-      this.savedPiece = this.currentPiece;
-      this.currentPiece = this.nextPiece;
-      this.nextPiece = randomPiece(this.tetrominoes).shapes;
+      this.deletePiece();
+      this.savedPiece = this.currPiece;
+      this.currPiece = this.nextPiece;
+      this.nextPiece = randomPiece(this.tetrominoes);
+      this.resetForSavePiece();
+      this.drawPiece();
     }
 
     else {
+      this.deletePiece();
       const temp = this.savedPiece;
-      this.savedPiece = this.currentPiece;
-      this.currentPiece = temp;
+      this.savedPiece = this.currPiece;
+      this.currPiece = temp;
+      this.resetForSavePiece();
+      this.drawPiece();
     }
   }
 

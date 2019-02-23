@@ -25,18 +25,19 @@ export default class PlayGame {
     return function setAnimationForTetrisPiece() {
       if (currentPiece.verticalCollision === false) {
         currentPiece.moveDown();
-        board.updateBoard(currentPiece);
 
-        console.log(board.board);
+        // console.log(board.board);
       }
-
-      // else {
-      //   currentPiece.resetPiece();
-      // }
+      else {
+        board.updateBoard(currentPiece);
+        currentPiece.deletePiece();
+        currentPiece.resetPiece();
+        currentPiece.drawPiece();
+      }
 
       setTimeout(() => {
         requestAnimationFrame(setAnimationForTetrisPiece);
-      }, 500);
+      }, 1200);
     };
     
     // const test = setInterval(() => {

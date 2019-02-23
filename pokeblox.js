@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // DRAW PIECE START
   const tetrominoes = [I, O, T, S, Z, J, L];
-  const currentPiece = new Piece(context, tetrominoes);
-  const shadow = new Piece(context, tetrominoes);
+  const currentPiece = new Piece(context, gameBoard, tetrominoes);
+  const shadow = new Piece(context, gameBoard, tetrominoes);
   currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================

@@ -97,8 +97,6 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Board; });
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
-/* harmony import */ var _modules_arrayLastElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/arrayLastElement */ "./javascripts/modules/arrayLastElement.js");
-
 
 
 class Board {
@@ -129,6 +127,14 @@ class Board {
     }
   }
 
+  deleteBoard() {
+    for ( let y = 0; y < this.board.length; y++ ) {
+      for ( let x = 0; x < this.board[y].length; x++ ) {
+        this.createGrid(x, y, _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], this.context);
+      }
+    }
+  }
+
   drawBoard() {
     for ( let y = 0; y < this.board.length; y++ ) {
       for ( let x = 0; x < this.board[y].length; x++ ) {
@@ -149,14 +155,17 @@ class Board {
     let x_offset = piece.x_offset;
     let y_offset = piece.y_offset;
 
-    this.board = [];
-    this.createEmptyBoard();
-    for (let y = Object(_modules_arrayLastElement__WEBPACK_IMPORTED_MODULE_1__["arrayLastElement"])(currentPiece); y >= 0; y--) {
-      for (let x = 0; x < currentPiece[y].length; x++) {
-        if (currentPiece[y][x] === 1) {
-          this.board[y_offset + y][x_offset + x] = pieceColor;
+    // this.board = [];
+    // this.createEmptyBoard();
+    if (piece.verticalCollision === true) {
+      for (let y = currentPiece.length - 1; y >= 0; y--) {
+        for (let x = 0; x < currentPiece[y].length; x++) {
+          if (currentPiece[y][x] === 1) {
+            this.board[y_offset + y][x_offset + x] = pieceColor;
+          }
         }
       }
+      this.drawBoard();
     }
   }
 
@@ -180,7 +189,7 @@ class Board {
 
   deleteRow() {
     // will check the board from bottom-up and delete rows as it goes along
-    let lastRowIndex = Object(_modules_arrayLastElement__WEBPACK_IMPORTED_MODULE_1__["arrayLastElement"])(this.board);
+    let lastRowIndex = this.board.length - 1;
     const row = this.board[lastRowIndex];
 
     while (checkIfRowIsEmpty(row) === false) {
@@ -309,35 +318,24 @@ const playPause = () => {
 
 /***/ }),
 
-/***/ "./javascripts/modules/arrayLastElement.js":
-/*!*************************************************!*\
-  !*** ./javascripts/modules/arrayLastElement.js ***!
-  \*************************************************/
-/*! exports provided: arrayLastElement */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrayLastElement", function() { return arrayLastElement; });
-const arrayLastElement = array => {
-  return array[array.length - 1];
-};
-
-/***/ }),
-
-/***/ "./javascripts/modules/randomPiece.js":
-/*!********************************************!*\
-  !*** ./javascripts/modules/randomPiece.js ***!
-  \********************************************/
-/*! exports provided: randomPiece */
+/***/ "./javascripts/modules/modules.js":
+/*!****************************************!*\
+  !*** ./javascripts/modules/modules.js ***!
+  \****************************************/
+/*! exports provided: randomPiece, arrayLastElement */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "randomPiece", function() { return randomPiece; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrayLastElement", function() { return arrayLastElement; });
 const randomPiece = array => {
   // Returns random element in a given array.
   return array[Math.floor(Math.random()*array.length)];
+};
+
+const arrayLastElement = array => {
+  return array[array.length - 1];
 };
 
 /***/ }),
@@ -353,24 +351,30 @@ const randomPiece = array => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Piece; });
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
-/* harmony import */ var _modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/randomPiece */ "./javascripts/modules/randomPiece.js");
+/* harmony import */ var _modules_modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modules */ "./javascripts/modules/modules.js");
 
 
 
 class Piece {
-  constructor(context, tetrominoes) {
+  constructor(context, board, tetrominoes) {
     this.context = context;
+    this.board = board;
     this.tetrominoes = tetrominoes;
-    this.currPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
+
+    this.currPiece = Object(_modules_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
     this.currentPiece = this.shapes[this.currentPieceIndex];
-    this.nextPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
+
+    this.nextPiece = Object(_modules_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
     this.savedPiece = null;
+
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
+
     this.x_offset = 3;
-    this.y_offset = -1; // Note: was originally 0 but changed to -1 because of rAF going a frame fasterf
+    this.y_offset = -1; // Note: was originally 0 but changed to -1 because of rAF going a frame faster
+
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
@@ -409,14 +413,21 @@ class Piece {
 
   checkVerticalCollision() {
     const y = this.currentPiece.length - 1;
+    // If there is AT LEAST one grid block that detects a grid below it, then there must be a piece.
+      // Therefore, if verticalCheck is AT LEAST 1, then we must have hit something.
+    let verticalCheck = 0;
+
     for (let x = 0; x < this.currentPiece[y].length; x++) {
       if (this.currentPiece[y][x] === 1) {
-        if (this.y_offset + y === 19) this.verticalCollision = true;
-        else this.verticalCollision = false;
+        let gridBelow;
+        if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
+        if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) verticalCheck += 1;
       }
     }
 
-    console.log(this.verticalCollision);
+    if (this.y_offset + y === 19) this.verticalCollision = true;
+    else if (verticalCheck > 0) this.verticalCollision = true;
+    else this.verticalCollision = false;
   }
 
   checkHorizontalLeftCollision() {
@@ -426,8 +437,6 @@ class Piece {
         else this.horizontalLeftCollision = false;
       }
     }
-
-    console.log(this.horizontalLeftCollision);
   }
 
   checkHorizontalRightCollision() {
@@ -439,8 +448,6 @@ class Piece {
         else this.horizontalRightCollision = false;
       }
     }
-
-    console.log(this.horizontalRightCollision);
   }
 
   moveLeft() {
@@ -459,7 +466,9 @@ class Piece {
   }
   
   moveDown() {
+    console.log(`Vertical Collision 1: ${this.verticalCollision}`);
     this.checkVerticalCollision();
+    console.log(`Vertical Collision 2: ${this.verticalCollision}`);
     this.deletePiece();
     if (this.verticalCollision === false) this.y_offset += 1;
     this.drawPiece();
@@ -508,7 +517,7 @@ class Piece {
     if (this.savedPiece === null) {
       this.savedPiece = this.currentPiece;
       this.currentPiece = this.nextPiece;
-      this.nextPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
+      this.nextPiece = Object(_modules_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
     }
 
     else {
@@ -524,7 +533,7 @@ class Piece {
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
     this.currentPiece = this.shapes[this.currentPieceIndex];
-    this.nextPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
+    this.nextPiece = Object(_modules_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
     this.x_offset = 3;
@@ -596,18 +605,19 @@ class PlayGame {
     return function setAnimationForTetrisPiece() {
       if (currentPiece.verticalCollision === false) {
         currentPiece.moveDown();
-        board.updateBoard(currentPiece);
 
-        console.log(board.board);
+        // console.log(board.board);
       }
-
-      // else {
-      //   currentPiece.resetPiece();
-      // }
+      else {
+        board.updateBoard(currentPiece);
+        currentPiece.deletePiece();
+        currentPiece.resetPiece();
+        currentPiece.drawPiece();
+      }
 
       setTimeout(() => {
         requestAnimationFrame(setAnimationForTetrisPiece);
-      }, 500);
+      }, 1200);
     };
     
     // const test = setInterval(() => {
@@ -837,8 +847,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // DRAW PIECE START
   const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["L"]];
-  const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, tetrominoes);
-  const shadow = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, tetrominoes);
+  const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
+  const shadow = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================

@@ -162,12 +162,40 @@ export default class Piece {
     }
   }
 
-  frameRate() {
+  resetPiece() {
+    // helper method for frameRate()
+    this.currPiece = this.nextPiece;
+    this.shapes = this.currPiece.shapes;
+    this.currentPieceIndex = 0;
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    this.nextPiece = randomPiece(this.tetrominoes).shapes;
+    this.color = this.currPiece.color;
+    this.type = this.currPiece.type;
+    this.x_offset = 3;
+    this.y_offset = 0;
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
+  }
+  
+  frameRate(board) {
     // use requestAnimationFrame
       // do NOT use setTimeout, as it will lag a frame behind
     // utilize this.verticalCollision's value to reset the frame and reset the piece's position
       // remember to first delete the piece, reset its value, and then draw the piece again
     // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
       // clearing logic this way
+
+    const test = setInterval(() => {
+      if (this.verticalCollision === false) {
+        this.moveDown();
+        board.updateBoard(this);
+        console.log(board.board);
+      }
+  
+      else {
+        clearInterval(test);
+      }
+    }, 500);
   }
 }

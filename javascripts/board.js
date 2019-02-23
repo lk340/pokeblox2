@@ -5,6 +5,7 @@ export default class Board {
     this.board = [];
     this.context = context;
     this.colorCount = 0;
+    this.gameOver = false;
   }
 
   createEmptyBoard() {
@@ -88,7 +89,7 @@ export default class Board {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal]);  
       }
-      
+
       else {
         if (lastRowIndex > 0) {            
           if (lastRowIndex - 1 === 0) break;
@@ -100,7 +101,8 @@ export default class Board {
   }
 
   checkIfLose() {
-    // checks the top-most row, and if it isn't all charcoal, then the player loses
+    // checks the top-most row, and if it isn't all charcoal, then the player loses (this.gameOver = true)
       // Optimization: if it hits a color that isn't charcoal, player loses
+        // rather than iterating through entire row, just stop short as soon as you hit a color that isn't charcoal
   }
 }

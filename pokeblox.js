@@ -1,5 +1,6 @@
 import Board from './javascripts/board';
 import Piece from './javascripts/piece';
+import PlayGame from './javascripts/play_game';
 
 import { I, O, T, S, Z, J, L } from './javascripts/tetrominoes';
 import { movePiece } from './javascripts/dom_manipulation/piece_controls';
@@ -19,24 +20,36 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // DRAW PIECE START
   const tetrominoes = [I, O, T, S, Z, J, L];
-  const piece = new Piece(context, tetrominoes);
+  const currentPiece = new Piece(context, tetrominoes);
   const shadow = new Piece(context, tetrominoes);
-  piece.drawPiece();
+  currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
   // PIECE DOM MANIPULATION START
-  movePiece(piece);
+  movePiece(currentPiece);
   playPause();
   // PIECE DOM MANIPULATION END
 
-  window.piece = piece;
-  window.updateBoard = gameBoard.updateBoard;
-  window.updateBoard2 = gameBoard.updateBoard(piece);
-  window.thisboard = gameBoard.board;
+  // [] ======================= TESTING BELOW ======================= ]
+
+  const game = new PlayGame(currentPiece, gameBoard);
+  game.frameRate();
+  
+  // const test = setInterval(() => {
+  //   if (currentPiece.verticalCollision === false) {
+  //     currentPiece.moveDown();
+  //     gameBoard.updateBoard(currentPiece);
+  //     console.log(gameBoard.board);
+  //   }
+
+  //   else {
+  //     clearInterval(test);
+  //   }
+  // }, 500);
 
   console.log(gameBoard.board);
-  console.log(piece.currentPiece);
-  console.log(piece.shapes);
-  console.log(piece.nextPiece);
-  console.log(piece.currPiece);
+  console.log(currentPiece.currentPiece);
+  console.log(currentPiece.shapes);
+  console.log(currentPiece.nextPiece);
+  console.log(currentPiece.currPiece);
 });

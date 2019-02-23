@@ -104,6 +104,7 @@ class Board {
     this.board = [];
     this.context = context;
     this.colorCount = 0;
+    this.gameOver = false;
   }
 
   createEmptyBoard() {
@@ -187,7 +188,7 @@ class Board {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);  
       }
-      
+
       else {
         if (lastRowIndex > 0) {            
           if (lastRowIndex - 1 === 0) break;
@@ -199,8 +200,9 @@ class Board {
   }
 
   checkIfLose() {
-    // checks the top-most row, and if it isn't all charcoal, then the player loses
+    // checks the top-most row, and if it isn't all charcoal, then the player loses (this.gameOver = true)
       // Optimization: if it hits a color that isn't charcoal, player loses
+        // rather than iterating through entire row, just stop short as soon as you hit a color that isn't charcoal
   }
 }
 
@@ -498,6 +500,62 @@ class Piece {
     }
   }
 
+  resetPiece() {
+    // helper method for frameRate()
+    this.currPiece = this.nextPiece;
+    this.shapes = this.currPiece.shapes;
+    this.currentPieceIndex = 0;
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    this.nextPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
+    this.color = this.currPiece.color;
+    this.type = this.currPiece.type;
+    this.x_offset = 3;
+    this.y_offset = 0;
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
+  }
+  
+  frameRate(board) {
+    // use requestAnimationFrame
+      // do NOT use setTimeout, as it will lag a frame behind
+    // utilize this.verticalCollision's value to reset the frame and reset the piece's position
+      // remember to first delete the piece, reset its value, and then draw the piece again
+    // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
+      // clearing logic this way
+
+    const test = setInterval(() => {
+      if (this.verticalCollision === false) {
+        this.moveDown();
+        board.updateBoard(this);
+        console.log(board.board);
+      }
+  
+      else {
+        clearInterval(test);
+      }
+    }, 500);
+  }
+}
+
+/***/ }),
+
+/***/ "./javascripts/play_game.js":
+/*!**********************************!*\
+  !*** ./javascripts/play_game.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayGame; });
+class PlayGame {
+  constructor(currentPiece, board) {
+    this.currentPiece = currentPiece;
+    this.board = board;
+  }
+
   frameRate() {
     // use requestAnimationFrame
       // do NOT use setTimeout, as it will lag a frame behind
@@ -505,6 +563,18 @@ class Piece {
       // remember to first delete the piece, reset its value, and then draw the piece again
     // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
       // clearing logic this way
+
+    const test = setInterval(() => {
+      if (this.currentPiece.verticalCollision === false) {
+        this.currentPiece.moveDown();
+        this.board.updateBoard(this.currentPiece);
+        console.log(this.board.board);
+      }
+
+      else {
+        clearInterval(test);
+      }
+    }, 500);
   }
 }
 
@@ -691,9 +761,11 @@ const L = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_board__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./javascripts/board */ "./javascripts/board.js");
 /* harmony import */ var _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./javascripts/piece */ "./javascripts/piece.js");
-/* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
-/* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
-/* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
+/* harmony import */ var _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/play_game */ "./javascripts/play_game.js");
+/* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
+/* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
+/* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
+
 
 
 
@@ -714,27 +786,39 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["L"]];
-  const piece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, tetrominoes);
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["L"]];
+  const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, tetrominoes);
   const shadow = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, tetrominoes);
-  piece.drawPiece();
+  currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
   // PIECE DOM MANIPULATION START
-  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_3__["movePiece"])(piece);
-  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_4__["playPause"])();
+  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
+  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])();
   // PIECE DOM MANIPULATION END
 
-  window.piece = piece;
-  window.updateBoard = gameBoard.updateBoard;
-  window.updateBoard2 = gameBoard.updateBoard(piece);
-  window.thisboard = gameBoard.board;
+  // [] ======================= TESTING BELOW ======================= ]
+
+  const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
+  game.frameRate();
+  
+  // const test = setInterval(() => {
+  //   if (currentPiece.verticalCollision === false) {
+  //     currentPiece.moveDown();
+  //     gameBoard.updateBoard(currentPiece);
+  //     console.log(gameBoard.board);
+  //   }
+
+  //   else {
+  //     clearInterval(test);
+  //   }
+  // }, 500);
 
   console.log(gameBoard.board);
-  console.log(piece.currentPiece);
-  console.log(piece.shapes);
-  console.log(piece.nextPiece);
-  console.log(piece.currPiece);
+  console.log(currentPiece.currentPiece);
+  console.log(currentPiece.shapes);
+  console.log(currentPiece.nextPiece);
+  console.log(currentPiece.currPiece);
 });
 
 

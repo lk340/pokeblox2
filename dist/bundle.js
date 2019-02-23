@@ -181,10 +181,20 @@ class Board {
     const row = this.board[lastRowIndex];
 
     while (checkIfRowIsEmpty(row) === false) {
+
       if (!row.includes(_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"])) {
-        this.board.splice(this.board[y]);
+        // must be a row full of piece colors
+        this.board.splice(lastRowIndex, 1);
         this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);  
       }
+      
+      else {
+        if (lastRowIndex > 0) {            
+          if (lastRowIndex - 1 === 0) break;
+          else lastRowIndex -= 1;
+        }
+      }
+
     }
   }
 

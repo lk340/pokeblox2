@@ -65,7 +65,7 @@ export default class Board {
   checkIfRowIsEmpty(row) {
     // Helper method for deleteRow();
     for (let i = 0; i < row.length; i++) {
-      const rowGrid = row[i]; // just an array element
+      const rowGrid = row[i];
       if (rowGrid === charcoal) this.colorCount++;
     }
 
@@ -75,9 +75,11 @@ export default class Board {
       return true;
     }
 
-    // Otherwise, the row isn't empty.
-    this.colorCount = 0; // reset colorCount for new row check
-    return false;
+    else {
+      // Otherwise, the row isn't empty.
+      this.colorCount = 0; // reset colorCount for new row check
+      return false;
+    }
   }
 
   deleteRow() {
@@ -87,13 +89,11 @@ export default class Board {
     let rowCheck = this.checkIfRowIsEmpty(row);
 
     while (rowCheck === false) {
-      rowCheck = this.checkIfRowIsEmpty(row);
-      
+      // debugger;
       if (!row.includes(charcoal)) {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal]);
-        console.log(board);
-        // this.drawBoard(); 
+        this.drawBoard(); 
       }
 
       else {
@@ -106,6 +106,9 @@ export default class Board {
         }
       }
 
+      row = this.board[lastRowIndex];
+      rowCheck = this.checkIfRowIsEmpty(row);
+      // debugger;
     }
   }
 

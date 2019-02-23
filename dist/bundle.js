@@ -164,7 +164,7 @@ class Board {
   checkIfRowIsEmpty(row) {
     // Helper method for deleteRow();
     for (let i = 0; i < row.length; i++) {
-      const rowGrid = row[i]; // just an array element
+      const rowGrid = row[i];
       if (rowGrid === _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.colorCount++;
     }
 
@@ -174,9 +174,11 @@ class Board {
       return true;
     }
 
-    // Otherwise, the row isn't empty.
-    this.colorCount = 0; // reset colorCount for new row check
-    return false;
+    else {
+      // Otherwise, the row isn't empty.
+      this.colorCount = 0; // reset colorCount for new row check
+      return false;
+    }
   }
 
   deleteRow() {
@@ -186,13 +188,11 @@ class Board {
     let rowCheck = this.checkIfRowIsEmpty(row);
 
     while (rowCheck === false) {
-      rowCheck = this.checkIfRowIsEmpty(row);
-      
+      // debugger;
       if (!row.includes(_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"])) {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);
-        console.log(board);
-        // this.drawBoard(); 
+        this.drawBoard(); 
       }
 
       else {
@@ -205,6 +205,9 @@ class Board {
         }
       }
 
+      row = this.board[lastRowIndex];
+      rowCheck = this.checkIfRowIsEmpty(row);
+      // debugger;
     }
   }
 

@@ -572,11 +572,14 @@ class PlayGame {
       }
 
       else {
-        clearInterval(test);
+        // setTimeout(() => {
+          clearInterval(test);
+        // }, 500);
       }
     }, 500);
   }
 }
+
 
 /***/ }),
 
@@ -796,11 +799,13 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])();
   // PIECE DOM MANIPULATION END
-
-  // [] ======================= TESTING BELOW ======================= ]
-
+  // =============================================================
+  // GAME-PLAY LOGIC START
   const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
   game.frameRate();
+  // GAME-PLAY LOGIC END
+
+  // [] ======================= TESTING BELOW ======================= ]
   
   // const test = setInterval(() => {
   //   if (currentPiece.verticalCollision === false) {

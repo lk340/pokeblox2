@@ -20,7 +20,9 @@ export default class PlayGame {
       }
 
       else {
-        clearInterval(test);
+        // setTimeout(() => {
+          clearInterval(test);
+        // }, 500);
       }
     }, 500);
   }

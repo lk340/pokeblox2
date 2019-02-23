@@ -29,11 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
   movePiece(currentPiece);
   playPause();
   // PIECE DOM MANIPULATION END
-
-  // [] ======================= TESTING BELOW ======================= ]
-
+  // =============================================================
+  // GAME-PLAY LOGIC START
   const game = new PlayGame(currentPiece, gameBoard);
   game.frameRate();
+  // GAME-PLAY LOGIC END
+
+  // [] ======================= TESTING BELOW ======================= ]
   
   // const test = setInterval(() => {
   //   if (currentPiece.verticalCollision === false) {

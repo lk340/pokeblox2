@@ -132,6 +132,20 @@ class Board {
       }
     }
   }
+
+  updateBoard() {
+    // will change board array to include colors
+    // calls this.drawBoard() to re-draw the new board
+  }
+
+  deleteRow() {
+    // will check the board from bottom-up and delete rows as it goes along
+  }
+
+  checkIfLose() {
+    // checks the top-most row, and if it isn't all charcoal, then the player loses
+      // Optimization: if it hits a color that isn't charcoal, player loses
+  }
 }
 
 /***/ }),
@@ -140,7 +154,7 @@ class Board {
 /*!*******************************!*\
   !*** ./javascripts/colors.js ***!
   \*******************************/
-/*! exports provided: charcoal, shadow, ash, iColor, oColor, tColor, sColor, zColor, jColor, lColor */
+/*! exports provided: charcoal, shadow, ash */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -148,23 +162,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "charcoal", function() { return charcoal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shadow", function() { return shadow; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ash", function() { return ash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "iColor", function() { return iColor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "oColor", function() { return oColor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tColor", function() { return tColor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sColor", function() { return sColor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "zColor", function() { return zColor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "jColor", function() { return jColor; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lColor", function() { return lColor; });
 const charcoal = "rgb(54, 54, 54)";
 const shadow = "rgb(41, 41, 41)";
-const ash = "rgb(92, 92, 92)"; 
-const iColor = "rgb(145, 145, 245)";
-const oColor = "rgb(255, 255, 149)";
-const tColor = "rgb(204, 129, 204)";
-const sColor = "rgb(179, 221, 179)";
-const zColor = "rgb(211, 123, 123)";
-const jColor = "rgb(73, 73, 172)";
-const lColor = "rgb(255, 205, 113)";
+const ash = "rgb(92, 92, 92)";
 
 /***/ }),
 
@@ -172,30 +172,248 @@ const lColor = "rgb(255, 205, 113)";
 /*!********************************!*\
   !*** ./javascripts/modules.js ***!
   \********************************/
-/*! exports provided: generateGridBlock, drawBoard */
+/*! exports provided: randomPiece */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateGridBlock", function() { return generateGridBlock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drawBoard", function() { return drawBoard; });
-const generateGridBlock = (x, y, blockColor, context) => {
-  if (x < 10 && y < 20) {
-    const x_pos = x * 30;
-    const y_pos = y * 30;
-    context.fillStyle = blockColor;
-    context.fillRect(x_pos, y_pos, 30, 30);
-    context.strokeStyle = ash;
-    context.strokeRect(x_pos, y_pos, 30, 30);
-  }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "randomPiece", function() { return randomPiece; });
+const randomPiece = array => {
+  return array[Math.floor(Math.random()*array.length)];
 };
 
-const drawBoard = (board) => {
-  for ( let y = 0; y < board.length; y++ ) {
-    for ( let x = 0; x < board[y].length; x++ ) {
-      generateGridBlock(x, y, board[y][x]);
+/***/ }),
+
+/***/ "./javascripts/piece.js":
+/*!******************************!*\
+  !*** ./javascripts/piece.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Piece; });
+class Piece {
+  constructor(currentPiece, nextPiece, context) {
+    this.context = context;
+    this.currentPieceIndex = 0;
+    this.currentPiece = currentPiece[this.currentPieceIndex];
+    this.nextPiece = nextPiece;
+    this.x_offset = 3;
+    this.y_offset = 3;
+  }
+
+  createGrid(x, y, blockColor, context) {
+    if (x < 10 && y < 20) {
+      const x_pos = x * 30;
+      const y_pos = y * 30;
+      context.fillStyle = blockColor;
+      context.fillRect(x_pos, y_pos, 30, 30);
+      context.strokeStyle = ash;
+      context.strokeRect(x_pos, y_pos, 30, 30);
     }
   }
+
+  drawPiece() {
+    for (let y = 0; y < this.currentPiece.length; y++) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        if (this.currentPiece[y][x] === 1) {
+          this.createGrid(x, y, )
+        }
+      }
+    }
+  }
+
+  moveLeft() {
+
+  }
+
+  moveRight() {
+
+  }
+  
+  moveDown() {
+
+  }
+
+  rotate() {
+    if (this.currentPieceIndex === this.currentPiece.length - 2) {
+      this.currentPieceIndex = 0;
+    }
+
+    this.currentPieceIndex += 1;
+  }
+}
+
+/***/ }),
+
+/***/ "./javascripts/tetrominoes.js":
+/*!************************************!*\
+  !*** ./javascripts/tetrominoes.js ***!
+  \************************************/
+/*! exports provided: I, O, T, S, Z, J, L */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return I; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return O; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "T", function() { return T; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "S", function() { return S; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Z", function() { return Z; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return J; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return L; });
+const I = {
+  shapes: [
+    [ 
+      [1, 1, 1, 1],
+    ], 
+    [
+      [1], 
+      [1], 
+      [1], 
+      [1],
+    ]
+  ],
+  color: "rgb(145, 145, 245)",
+  type: "I",
+};
+
+const O = {
+  shapes: [
+    [ 
+      [1, 1], 
+      [1, 1],
+    ]
+  ],
+  color: "rgb(255, 255, 149)",
+  type: "O",
+};
+
+const T = {
+  shapes: [
+    [
+      [0, 1, 0],
+      [1, 1, 1],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [1, 0],
+    ],
+    [
+      [1, 1, 1],
+      [0, 1, 0],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [0, 1],
+    ]
+  ],
+  color: "rgb(204, 129, 204)",
+  type: "T"
+};
+
+const S = {
+  shapes: [
+    [
+      [0, 1, 1],
+      [1, 1, 0],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [0, 1],
+    ],
+    [
+      [0, 1, 1],
+      [1, 1, 0],
+    ],
+    [
+      [1, 0],
+      [1, 1],
+      [0, 1],
+    ]
+  ],
+  color: "rgb(179, 221, 179)",
+  type: "S",
+};
+
+const Z = {
+  shapes: [
+    [
+      [1, 1, 0],
+      [0, 1, 1],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [1, 0],
+    ],
+    [
+      [1, 1, 0],
+      [0, 1, 1],
+    ],
+    [
+      [0, 1],
+      [1, 1],
+      [1, 0],
+    ]
+  ],
+  color: "rgb(211, 123, 123)",
+  type: "Z",
+};
+
+const J = {
+  shapes: [
+    [
+      [1, 0, 0],
+      [1, 1, 1],
+    ],
+    [
+      [1, 1],
+      [1, 0],
+      [1, 0],
+    ],
+    [
+      [1, 1, 1],
+      [0, 0, 1],
+    ],
+    [
+      [0, 1],
+      [0, 1],
+      [1, 1],
+    ]
+  ],
+  color: "rgb(73, 73, 172)",
+  type: "J",
+};
+
+const L = {
+  shapes: [
+    [
+      [0, 0, 1],
+      [1, 1, 1],
+    ],
+    [
+      [1, 0],
+      [1, 0],
+      [1, 1],
+    ],
+    [
+      [1, 1, 1],
+      [1, 0, 0],
+    ],
+    [
+      [1, 1],
+      [0, 1],
+      [0, 1],
+    ]
+  ],
+  color: "rgb(255, 205, 113)",
+  type: "L",
 };
 
 /***/ }),
@@ -210,8 +428,11 @@ const drawBoard = (board) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_board__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./javascripts/board */ "./javascripts/board.js");
-/* harmony import */ var _javascripts_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./javascripts/colors */ "./javascripts/colors.js");
-/* harmony import */ var _javascripts_modules__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/modules */ "./javascripts/modules.js");
+/* harmony import */ var _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./javascripts/piece */ "./javascripts/piece.js");
+/* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
+/* harmony import */ var _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/modules */ "./javascripts/modules.js");
+
+
 
 
 
@@ -228,9 +449,19 @@ document.addEventListener("DOMContentLoaded", () => {
   gameBoard.drawBoard();
   // DRAW BOARD END
 
+  // DRAW PIECE START
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["L"]];
+  const currentPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
+  const nextPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
+  const piece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](currentPiece, nextPiece, context);
+  // DRAW PIECE END
+
   console.log(gameBoard.board);
+  console.log(piece.currentPiece);
+  console.log(piece.nextPiece);
 
 });
+
 
 /***/ }),
 

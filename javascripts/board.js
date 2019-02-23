@@ -33,4 +33,18 @@ export default class Board {
       }
     }
   }
+
+  updateBoard() {
+    // will change board array to include colors
+    // calls this.drawBoard() to re-draw the new board
+  }
+
+  deleteRow() {
+    // will check the board from bottom-up and delete rows as it goes along
+  }
+
+  checkIfLose() {
+    // checks the top-most row, and if it isn't all charcoal, then the player loses
+      // Optimization: if it hits a color that isn't charcoal, player loses
+  }
 }

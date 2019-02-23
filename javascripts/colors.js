@@ -1,10 +1,3 @@
 export const charcoal = "rgb(54, 54, 54)";
 export const shadow = "rgb(41, 41, 41)";
-export const ash = "rgb(92, 92, 92)"; 
-export const iColor = "rgb(145, 145, 245)";
-export const oColor = "rgb(255, 255, 149)";
-export const tColor = "rgb(204, 129, 204)";
-export const sColor = "rgb(179, 221, 179)";
-export const zColor = "rgb(211, 123, 123)";
-export const jColor = "rgb(73, 73, 172)";
-export const lColor = "rgb(255, 205, 113)";
+export const ash = "rgb(92, 92, 92)";

@@ -378,7 +378,7 @@ class Piece {
     this.type = this.currPiece.type;
 
     this.x_offset = 3;
-    this.y_offset = -1; // Note: was originally 0 but changed to -1 because of rAF going a frame faster
+    this.y_offset = -1; // Note to self: was originally 0 but changed to -1 because of rAF rendering a frame faster
 
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
@@ -526,16 +526,16 @@ class Piece {
   }
 
   resetForSavePiece() {
-      this.shapes = this.currPiece.shapes;
-      this.currentPieceIndex = 0;
-      this.currentPiece = this.shapes[this.currentPieceIndex];
-      this.color = this.currPiece.color;
-      this.type = this.currPiece.type;
-      this.x_offset = 3;
-      this.y_offset = 0;
-      this.verticalCollision = false;
-      this.horizontalLeftCollision = false;
-      this.horizontalRightCollision = false;
+    this.shapes = this.currPiece.shapes;
+    this.currentPieceIndex = 0;
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    this.color = this.currPiece.color;
+    this.type = this.currPiece.type;
+    this.x_offset = 3;
+    this.y_offset = 0;
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
   }
 
   savePiece() {

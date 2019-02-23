@@ -1,5 +1,5 @@
 import { charcoal, ash } from './colors';
-import { randomPiece, arrayLastElement } from './modules/modules';
+import { randomPiece } from './modules/modules';
 
 export default class Piece {
   constructor(context, board, tetrominoes) {
@@ -19,7 +19,7 @@ export default class Piece {
     this.type = this.currPiece.type;
 
     this.x_offset = 3;
-    this.y_offset = -1; // Note: was originally 0 but changed to -1 because of rAF going a frame faster
+    this.y_offset = -1; // Note to self: was originally 0 but changed to -1 because of rAF rendering a frame faster
 
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
@@ -167,16 +167,16 @@ export default class Piece {
   }
 
   resetForSavePiece() {
-      this.shapes = this.currPiece.shapes;
-      this.currentPieceIndex = 0;
-      this.currentPiece = this.shapes[this.currentPieceIndex];
-      this.color = this.currPiece.color;
-      this.type = this.currPiece.type;
-      this.x_offset = 3;
-      this.y_offset = 0;
-      this.verticalCollision = false;
-      this.horizontalLeftCollision = false;
-      this.horizontalRightCollision = false;
+    this.shapes = this.currPiece.shapes;
+    this.currentPieceIndex = 0;
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    this.color = this.currPiece.color;
+    this.type = this.currPiece.type;
+    this.x_offset = 3;
+    this.y_offset = 0;
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
   }
 
   savePiece() {

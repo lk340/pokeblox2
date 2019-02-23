@@ -394,14 +394,10 @@ class Piece {
     else this.currentPieceIndex += 1;
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
-    
-    this.checkHorizontalLeftCollision();
-    this.checkHorizontalRightCollision();
-
-    // Fixes piece falling off the board when rotating at the bottom
     const y = this.currentPiece.length - 1;
     const x = this.currentPiece[y].length - 1;
-    
+
+    // Fixes piece falling off the board when rotating at the bottom
     if (this.y_offset + y > 19) {
       while (this.y_offset + y > 19) {
         this.y_offset -= 1;

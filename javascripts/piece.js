@@ -1,5 +1,5 @@
 import { charcoal, ash } from './colors';
-import { randomPiece } from './modules';
+import { randomPiece } from './modules/randomPiece';
 
 export default class Piece {
   constructor(context, tetrominoes) {

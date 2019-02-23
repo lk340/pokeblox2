@@ -218,10 +218,41 @@ const movePiece = (currentPiece) => {
 
 /***/ }),
 
-/***/ "./javascripts/modules.js":
-/*!********************************!*\
-  !*** ./javascripts/modules.js ***!
-  \********************************/
+/***/ "./javascripts/dom_manipulation/play_pause_controls.js":
+/*!*************************************************************!*\
+  !*** ./javascripts/dom_manipulation/play_pause_controls.js ***!
+  \*************************************************************/
+/*! exports provided: playPause */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playPause", function() { return playPause; });
+const playPause = () => {
+  document.addEventListener("keydown", event => {
+    switch(event.which) {
+      case 81: // q
+        console.log("q");
+        break;
+      case 80: // p
+        console.log("p");
+        break;
+      case 69: // e
+        console.log("e");
+        break;
+      case 82: // r
+        console.log("r");
+        break;
+    }
+  });
+};
+
+/***/ }),
+
+/***/ "./javascripts/modules/randomPiece.js":
+/*!********************************************!*\
+  !*** ./javascripts/modules/randomPiece.js ***!
+  \********************************************/
 /*! exports provided: randomPiece */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -246,7 +277,7 @@ const randomPiece = array => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Piece; });
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
-/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules */ "./javascripts/modules.js");
+/* harmony import */ var _modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/randomPiece */ "./javascripts/modules/randomPiece.js");
 
 
 
@@ -254,11 +285,11 @@ class Piece {
   constructor(context, tetrominoes) {
     this.context = context;
     this.tetrominoes = tetrominoes;
-    this.currPiece = Object(_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
+    this.currPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
     this.currentPiece = this.shapes[this.currentPieceIndex];
-    this.nextPiece = Object(_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
+    this.nextPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
     this.savedPiece = null;
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
@@ -398,7 +429,7 @@ class Piece {
     if (this.savedPiece === null) {
       this.savedPiece = this.currentPiece;
       this.currentPiece = nextPiece;
-      this.nextPiece = Object(_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
+      this.nextPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
     }
 
     else {
@@ -601,6 +632,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./javascripts/piece */ "./javascripts/piece.js");
 /* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
 /* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
+/* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
+
 
 
 
@@ -628,6 +661,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // PIECE DOM MANIPULATION START
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_3__["movePiece"])(piece);
+  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_4__["playPause"])();
   // PIECE DOM MANIPULATION END
 
   console.log(gameBoard.board);

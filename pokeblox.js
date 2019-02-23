@@ -3,6 +3,7 @@ import Piece from './javascripts/piece';
 
 import { I, O, T, S, Z, J, L } from './javascripts/tetrominoes';
 import { movePiece } from './javascripts/dom_manipulation/piece_controls';
+import { playPause } from './javascripts/dom_manipulation/play_pause_controls';
 
 document.addEventListener("DOMContentLoaded", () => {
   // CANVAS START
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // PIECE DOM MANIPULATION START
   movePiece(piece);
+  playPause();
   // PIECE DOM MANIPULATION END
 
   console.log(gameBoard.board);

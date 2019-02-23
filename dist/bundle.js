@@ -564,22 +564,43 @@ class PlayGame {
     // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
       // clearing logic this way
 
-    const test = setInterval(() => {
-      if (this.currentPiece.verticalCollision === false) {
-        this.currentPiece.moveDown();
-        this.board.updateBoard(this.currentPiece);
-        console.log(this.board.board);
+    // ALLOWS REQUEST_ANIMATION_FRAME TO BE MORE ACCESSIBLE TO DIFFERENT / OLDER BROWSERS
+    const requestAnimationFrame = window.requestAnimationFrame ||
+                                  window.mozRequestAnimationFrame ||
+                                  window.webkitRequestAnimationFrame ||
+                                  window.msRequestAnimationFrame;
+    // ALLOWS REQUEST_ANIMATION_FRAME TO BE MORE ACCESSIBLE TO DIFFERENT / OLDER BROWSERS
+    const currentPiece = this.currentPiece;
+    const board = this.board;
+
+    return function setAnimationForTetrisPiece() {
+      if (currentPiece.verticalCollision === false) {
+        currentPiece.moveDown();
+        board.updateBoard(currentPiece);
+
+        console.log(board.board);
       }
 
-      else {
-        // setTimeout(() => {
-          clearInterval(test);
-        // }, 500);
-      }
-    }, 500);
+      requestAnimationFrame(setAnimationForTetrisPiece);
+    };
+    
+    // const test = setInterval(() => {
+      // if (this.currentPiece.verticalCollision === false) {
+      //   this.currentPiece.moveDown();
+      //   this.board.updateBoard(this.currentPiece);
+
+      //   console.log(this.board.board);
+      // }
+
+    //   else {
+    //     // setTimeout(() => {
+    //       clearInterval(test);
+    //     // }, 500);
+    //   }
+    // }, 500);
   }
 }
-P
+
 
 /***/ }),
 
@@ -802,7 +823,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // GAME-PLAY LOGIC START
   const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
-  game.frameRate();
+  game.frameRate()(); // Shorthand for activating curried function
   // GAME-PLAY LOGIC END
 
   // [] ======================= TESTING BELOW ======================= ]

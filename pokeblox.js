@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // GAME-PLAY LOGIC START
   const game = new PlayGame(currentPiece, gameBoard);
-  game.frameRate();
+  game.frameRate()(); // Shorthand for activating curried function
   // GAME-PLAY LOGIC END
 
   // [] ======================= TESTING BELOW ======================= ]

@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentPiece = randomPiece(tetrominoes);
   const nextPiece = randomPiece(tetrominoes);
   const piece = new Piece(context, currentPiece, nextPiece);
+  const shadow = new Piece(context, currentPiece, nextPiece);
   piece.drawPiece();
   // DRAW PIECE END
   // =============================================================

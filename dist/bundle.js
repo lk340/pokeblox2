@@ -97,14 +97,12 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Board; });
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
-/* harmony import */ var _modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules */ "./javascripts/modules.js");
-
 
 
 class Board {
-  constructor() {
+  constructor(context) {
     this.board = [];
-    this.drawBoard = _modules__WEBPACK_IMPORTED_MODULE_1__["generateGridBlock"];
+    this.context = context;
   }
 
   createEmptyBoard() {
@@ -116,10 +114,21 @@ class Board {
     }
   }
 
+  createGrid(x, y, blockColor, context) {
+    if (x < 10 && y < 20) {
+      const x_pos = x * 30;
+      const y_pos = y * 30;
+      context.fillStyle = blockColor;
+      context.fillRect(x_pos, y_pos, 30, 30);
+      context.strokeStyle = _colors__WEBPACK_IMPORTED_MODULE_0__["ash"];
+      context.strokeRect(x_pos, y_pos, 30, 30);
+    }
+  }
+
   drawBoard() {
     for ( let y = 0; y < this.board.length; y++ ) {
       for ( let x = 0; x < this.board[y].length; x++ ) {
-        Object(_modules__WEBPACK_IMPORTED_MODULE_1__["generateGridBlock"])(x, y, this.board[y][x]);
+        this.createGrid(x, y, this.board[y][x], this.context);
       }
     }
   }
@@ -163,13 +172,14 @@ const lColor = "rgb(255, 205, 113)";
 /*!********************************!*\
   !*** ./javascripts/modules.js ***!
   \********************************/
-/*! exports provided: generateGridBlock */
+/*! exports provided: generateGridBlock, drawBoard */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateGridBlock", function() { return generateGridBlock; });
-const generateGridBlock = (x, y, blockColor) => {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drawBoard", function() { return drawBoard; });
+const generateGridBlock = (x, y, blockColor, context) => {
   if (x < 10 && y < 20) {
     const x_pos = x * 30;
     const y_pos = y * 30;
@@ -180,6 +190,13 @@ const generateGridBlock = (x, y, blockColor) => {
   }
 };
 
+const drawBoard = (board) => {
+  for ( let y = 0; y < board.length; y++ ) {
+    for ( let x = 0; x < board[y].length; x++ ) {
+      generateGridBlock(x, y, board[y][x]);
+    }
+  }
+};
 
 /***/ }),
 
@@ -194,21 +211,24 @@ const generateGridBlock = (x, y, blockColor) => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_board__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./javascripts/board */ "./javascripts/board.js");
 /* harmony import */ var _javascripts_colors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./javascripts/colors */ "./javascripts/colors.js");
+/* harmony import */ var _javascripts_modules__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/modules */ "./javascripts/modules.js");
+
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
   // CANVAS START
-const canvasBoard = document.getElementById("board");
-const context = canvasBoard.getContext("2d");
-// CANVAS END
+  const canvasBoard = document.getElementById("board");
+  const context = canvasBoard.getContext("2d");
+  // CANVAS END
 
-const gameBoard = new _javascripts_board__WEBPACK_IMPORTED_MODULE_0__["default"];
-gameBoard.createEmptyBoard();
-gameBoard.drawBoard();
+  // DRAW BOARD START
+  const gameBoard = new _javascripts_board__WEBPACK_IMPORTED_MODULE_0__["default"](context);
+  gameBoard.createEmptyBoard();
+  gameBoard.drawBoard();
+  // DRAW BOARD END
 
-console.log(gameBoard.board);
-console.log(gameBoard.drawBoard());
+  console.log(gameBoard.board);
 
 });
 

@@ -59,31 +59,39 @@ export default class Piece {
         else this.verticalCollision = false;
       }
     }
+
+    console.log(this.verticalCollision);
   }
 
   checkHorizontalLeftCollision() {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       if (this.currentPiece[y][0] === 1) {
-        if (this.x_offset < 0) this.horizontalLeftCollision = true;
+        if (this.x_offset === 0) this.horizontalLeftCollision = true;
         else this.horizontalLeftCollision = false;
       }
     }
+
+    console.log(this.horizontalLeftCollision);
   }
 
   checkHorizontalRightCollision() {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
-        const farRightPosition = this.x_offset + this.currentPiece[y].length;
-        if (farRightPosition > 9) this.horizontalRightCollision = true;
+        const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
+        if (farRightGridOnPiece > 9) this.horizontalRightCollision = true;
         else this.horizontalRightCollision = false;
       }
     }
+
+    console.log(this.horizontalRightCollision);
   }
 
   moveLeft() {
     this.deletePiece();
-    if (this.x_offset > 0) this.x_offset -= 1;
+    this.checkHorizontalLeftCollision();
+    // if (this.x_offset > 0) this.x_offset -= 1;
+    if (this.horizontalLeftCollision === false) this.x_offset -= 1;
     this.drawPiece();
   }
 
@@ -92,7 +100,6 @@ export default class Piece {
     this.deletePiece();
     if (this.horizontalRightCollision === false) this.x_offset += 1;
     this.drawPiece();
-    console.log(this.x_offset);
   }
   
   moveDown() {
@@ -107,30 +114,30 @@ export default class Piece {
     else this.currentPieceIndex += 1;
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
-    this.checkVerticalCollision();
+    
     this.checkHorizontalLeftCollision();
     this.checkHorizontalRightCollision();
 
-    if (this.verticalCollision === true) {
-      while (this.verticalCollision === true) {
-        this.checkVerticalCollision();
-        this.deletePiece();
+    // Fixes piece falling off the board when rotating at the bottom
+    const y = this.currentPiece.length - 1;
+    const x = this.currentPiece[y].length - 1;
+    
+    if (this.y_offset + y > 19) {
+      while (this.y_offset + y > 19) {
         this.y_offset -= 1;
-        console.log(this.y_offset);
-        this.drawPiece();
       }
     }
 
-    if (this.horizontalLeftCollision === true) {
-      while (this.horizontalLeftCollision === true) {
-        this.checkHorizontalLeftCollision();
+    // Fixes piece falling off the board when rotating at the left
+    if (this.x_offset < 0) {
+      while (this.x_offset < 0) {
         this.x_offset += 1;
       }
     }
 
-    else if (this.horizontalRightCollision === true) {
-      while (this.horizontalRightCollision === true) {
-        this.checkHorizontalRightCollision();
+    // Fixes piece falling off the board when rotating at the right
+    if (this.x_offset + x > 9) {
+      while (this.x_offset + x > 9) {
         this.x_offset -= 1;
       }
     }
@@ -150,19 +157,29 @@ export default class Piece {
       this.savedPiece = this.currentPiece;
       this.currentPiece = nextPiece;
       this.nextPiece = randomPiece(this.tetrominoes).shapes;
+
+      console.log(this.currentPiece);
+      console.log(this.savedPiece);
+      console.log(this.nextPiece);
     }
 
     else {
       const temp = this.savedPiece;
       this.savedPiece = this.currentPiece;
       this.currentPiece = temp;
+
+      console.log(this.currentPiece);
+      console.log(this.savedPiece);
+      console.log(this.nextPiece);
     }
   }
 
   frameRate() {
     // use requestAnimationFrame
-    // do NOT use setTimeout, as it will lag a frame behind
+      // do NOT use setTimeout, as it will lag a frame behind
     // utilize this.verticalCollision's value to reset the frame and reset the piece's position
       // remember to first delete the piece, reset its value, and then draw the piece again
+    // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
+      // clearing logic this way
   }
 }

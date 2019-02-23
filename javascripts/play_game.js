@@ -1,3 +1,5 @@
+import Piece from "./piece";
+
 export default class PlayGame {
   constructor(currentPiece, board) {
     this.currentPiece = currentPiece;
@@ -11,13 +13,12 @@ export default class PlayGame {
       // remember to first delete the piece, reset its value, and then draw the piece again
     // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
       // clearing logic this way
+    const requestAnimationFrame = 
+      window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.msRequestAnimationFrame;
 
-    // ALLOWS REQUEST_ANIMATION_FRAME TO BE MORE ACCESSIBLE TO DIFFERENT / OLDER BROWSERS
-    const requestAnimationFrame = window.requestAnimationFrame ||
-                                  window.mozRequestAnimationFrame ||
-                                  window.webkitRequestAnimationFrame ||
-                                  window.msRequestAnimationFrame;
-    // ALLOWS REQUEST_ANIMATION_FRAME TO BE MORE ACCESSIBLE TO DIFFERENT / OLDER BROWSERS
     const currentPiece = this.currentPiece;
     const board = this.board;
 
@@ -28,8 +29,13 @@ export default class PlayGame {
 
         console.log(board.board);
       }
+      // else {
+      //   currentPiece.resetPiece();
+      // }
 
-      requestAnimationFrame(setAnimationForTetrisPiece);
+      setTimeout(() => {
+        requestAnimationFrame(setAnimationForTetrisPiece);
+      }, 500);
     };
     
     // const test = setInterval(() => {

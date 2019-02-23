@@ -352,7 +352,7 @@ class Piece {
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
     this.x_offset = 3;
-    this.y_offset = 0;
+    this.y_offset = -1; // Note: was originally 0 but changed to -1 because of rAF going a frame faster
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
@@ -550,6 +550,9 @@ class Piece {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayGame; });
+/* harmony import */ var _piece__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./piece */ "./javascripts/piece.js");
+
+
 class PlayGame {
   constructor(currentPiece, board) {
     this.currentPiece = currentPiece;
@@ -563,13 +566,12 @@ class PlayGame {
       // remember to first delete the piece, reset its value, and then draw the piece again
     // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
       // clearing logic this way
+    const requestAnimationFrame = 
+      window.requestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.msRequestAnimationFrame;
 
-    // ALLOWS REQUEST_ANIMATION_FRAME TO BE MORE ACCESSIBLE TO DIFFERENT / OLDER BROWSERS
-    const requestAnimationFrame = window.requestAnimationFrame ||
-                                  window.mozRequestAnimationFrame ||
-                                  window.webkitRequestAnimationFrame ||
-                                  window.msRequestAnimationFrame;
-    // ALLOWS REQUEST_ANIMATION_FRAME TO BE MORE ACCESSIBLE TO DIFFERENT / OLDER BROWSERS
     const currentPiece = this.currentPiece;
     const board = this.board;
 
@@ -580,8 +582,13 @@ class PlayGame {
 
         console.log(board.board);
       }
+      // else {
+      //   currentPiece.resetPiece();
+      // }
 
-      requestAnimationFrame(setAnimationForTetrisPiece);
+      setTimeout(() => {
+        requestAnimationFrame(setAnimationForTetrisPiece);
+      }, 500);
     };
     
     // const test = setInterval(() => {

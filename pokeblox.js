@@ -29,7 +29,13 @@ document.addEventListener("DOMContentLoaded", () => {
   playPause();
   // PIECE DOM MANIPULATION END
 
+  window.piece = piece;
+  window.updateBoard = gameBoard.updateBoard;
+  window.updateBoard2 = gameBoard.updateBoard(piece);
+  window.thisboard = gameBoard.board;
+
   console.log(gameBoard.board);
+  console.log(piece.currentPiece);
   console.log(piece.shapes);
   console.log(piece.nextPiece);
   console.log(piece.currPiece);

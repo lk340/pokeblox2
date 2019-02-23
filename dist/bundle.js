@@ -103,6 +103,7 @@ class Board {
   constructor(context) {
     this.board = [];
     this.context = context;
+    this.colorCount = 0;
   }
 
   createEmptyBoard() {
@@ -133,13 +134,58 @@ class Board {
     }
   }
 
-  updateBoard() {
+  updateBoard(piece) {
     // will change board array to include colors
     // calls this.drawBoard() to re-draw the new board
+    // looks through the array of the currentPiece (currentPiece.currentPiece)
+      // updates board by for-looping through the currentPiece.currentPiece array
+      // and adding currentPiece.color to board[currentPiece.y_offset + y][currentPiece.x_offset + x]
+    // this needs to be called for every frame
+    let currentPiece = piece.currentPiece;
+    let pieceColor = piece.color;
+    let x_offset = piece.x_offset;
+    let y_offset = piece.y_offset;
+
+    this.board = [];
+    this.createEmptyBoard();
+    for (let y = currentPiece.length - 1; y >= 0; y--) {
+      for (let x = 0; x < currentPiece[y].length; x++) {
+        if (currentPiece[y][x] === 1) {
+          this.board[y_offset + y][x_offset + x] = pieceColor;
+        }
+      }
+    }
+  }
+
+  checkIfRowIsEmpty(row) {
+    // Helper method for deleteRow();
+    for (let i = 0; i < row.length; i++) {
+      const rowGrid = row[i]; // just an array element
+      if (rowGrid === _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.colorCount++;
+    }
+
+    if (this.colorCount === row.length) {
+      // If all the colors of the row are charcoal, then it must be an empty row.
+      this.colorCount = 0; // reset colorCount for new row check
+      return true;
+    }
+
+    // Otherwise, the row isn't empty.
+    this.colorCount = 0; // reset colorCount for new row check
+    return false;
   }
 
   deleteRow() {
     // will check the board from bottom-up and delete rows as it goes along
+    let lastRowIndex = this.board.length - 1;
+    const row = this.board[lastRowIndex];
+
+    while (checkIfRowIsEmpty(row) === false) {
+      if (!row.includes(_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"])) {
+        this.board.splice(this.board[y]);
+        this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);  
+      }
+    }
   }
 
   checkIfLose() {
@@ -669,7 +715,13 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_4__["playPause"])();
   // PIECE DOM MANIPULATION END
 
+  window.piece = piece;
+  window.updateBoard = gameBoard.updateBoard;
+  window.updateBoard2 = gameBoard.updateBoard(piece);
+  window.thisboard = gameBoard.board;
+
   console.log(gameBoard.board);
+  console.log(piece.currentPiece);
   console.log(piece.shapes);
   console.log(piece.nextPiece);
   console.log(piece.currPiece);

@@ -640,13 +640,13 @@ document.addEventListener("DOMContentLoaded", () => {
 /***/ }),
 
 /***/ 0:
-/*!************************!*\
-  !*** multi ./pokeblox ***!
-  \************************/
+/*!***************************!*\
+  !*** multi ./pokeblox.js ***!
+  \***************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./pokeblox */"./pokeblox.js");
+module.exports = __webpack_require__(/*! ./pokeblox.js */"./pokeblox.js");
 
 
 /***/ })

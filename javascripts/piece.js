@@ -38,6 +38,8 @@ export default class Piece {
     if (this.x > 0) {
       this.x -= 1;
     }
+
+    this.drawPiece();
   }
 
   moveRight() {
@@ -54,6 +56,14 @@ export default class Piece {
     }
 
     this.currentPieceIndex += 1;
+  }
+
+  instantFall() {
+
+  }
+
+  savePiece() {
+    
   }
 
   frameRate() {

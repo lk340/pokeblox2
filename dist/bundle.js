@@ -168,6 +168,56 @@ const ash = "rgb(92, 92, 92)";
 
 /***/ }),
 
+/***/ "./javascripts/dom_manipulation/piece_controls.js":
+/*!********************************************************!*\
+  !*** ./javascripts/dom_manipulation/piece_controls.js ***!
+  \********************************************************/
+/*! exports provided: movePiece */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "movePiece", function() { return movePiece; });
+const movePiece = (currentPiece) => {
+  document.addEventListener("keydown", event => {
+    switch(event.which) {
+      case 87: // w
+        console.log("w");
+        return currentPiece.rotate();
+      case 65: // a
+        console.log("a");
+        return currentPiece.moveLeft();
+      case 83: // s
+        console.log("s");
+        return currentPiece.moveDown();
+      case 68: // d
+        console.log("d");
+        return currentPiece.moveRight();
+      case 38: // up
+        console.log("up");
+        return currentPiece.rotate();
+      case 37: // left
+        console.log("left");
+        return currentPiece.moveLeft();
+      case 40: // down
+        console.log("down");
+        return currentPiece.moveDown();
+      case 39: // right
+        console.log("right");
+        return currentPiece.moveRight();
+      case 32: // space-bar
+        console.log("space-bar");
+        return currentPiece.instantFall();
+      case 16: // shift
+        console.log("shift");
+        return currentPiece.savePiece();
+    }
+  });
+};
+
+
+/***/ }),
+
 /***/ "./javascripts/modules.js":
 /*!********************************!*\
   !*** ./javascripts/modules.js ***!
@@ -235,6 +285,8 @@ class Piece {
     if (this.x > 0) {
       this.x -= 1;
     }
+
+    this.drawPiece();
   }
 
   moveRight() {
@@ -251,6 +303,14 @@ class Piece {
     }
 
     this.currentPieceIndex += 1;
+  }
+
+  instantFall() {
+
+  }
+
+  savePiece() {
+    
   }
 
   frameRate() {
@@ -444,6 +504,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./javascripts/piece */ "./javascripts/piece.js");
 /* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
 /* harmony import */ var _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/modules */ "./javascripts/modules.js");
+/* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
+
 
 
 
@@ -464,11 +526,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // DRAW PIECE START
   const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["L"]];
-  const currentPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
-  const nextPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
+  const currentPiece = Object(_javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"])(tetrominoes);
+  const nextPiece = Object(_javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"])(tetrominoes);
   const piece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, currentPiece, nextPiece);
   piece.drawPiece();
   // DRAW PIECE END
+  
+  // PIECE DOM MANIPULATION START
+  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(piece);
+  // PIECE DOM MANIPULATION END
 
   console.log(gameBoard.board);
   console.log(piece.color);

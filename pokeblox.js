@@ -2,7 +2,8 @@ import Board from './javascripts/board';
 import Piece from './javascripts/piece';
 
 import { I, O, T, S, Z, J, L } from './javascripts/tetrominoes';
-import * as Modules from './javascripts/modules';
+import { randomPiece } from './javascripts/modules';
+import { movePiece } from './javascripts/dom_manipulation/piece_controls';
 
 document.addEventListener("DOMContentLoaded", () => {
   // CANVAS START
@@ -18,11 +19,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // DRAW PIECE START
   const tetrominoes = [I, O, T, S, Z, J, L];
-  const currentPiece = Modules.randomPiece(tetrominoes);
-  const nextPiece = Modules.randomPiece(tetrominoes);
+  const currentPiece = randomPiece(tetrominoes);
+  const nextPiece = randomPiece(tetrominoes);
   const piece = new Piece(context, currentPiece, nextPiece);
   piece.drawPiece();
   // DRAW PIECE END
+  
+  // PIECE DOM MANIPULATION START
+  movePiece(piece);
+  // PIECE DOM MANIPULATION END
 
   console.log(gameBoard.board);
   console.log(piece.color);

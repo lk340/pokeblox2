@@ -198,10 +198,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Piece {
-  constructor(currentPiece, nextPiece, context) {
+  constructor(context, currentPiece, nextPiece) {
     this.context = context;
     this.currentPieceIndex = 0;
     this.currentPiece = currentPiece.shapes[this.currentPieceIndex];
+    this.shapes = currentPiece.shapes;
     this.nextPiece = nextPiece;
     this.color = currentPiece.color;
     this.type = currentPiece.type;
@@ -231,7 +232,9 @@ class Piece {
   }
 
   moveLeft() {
-
+    if (this.x > 0) {
+      this.x -= 1;
+    }
   }
 
   moveRight() {
@@ -243,11 +246,16 @@ class Piece {
   }
 
   rotate() {
-    if (this.currentPieceIndex === this.currentPiece.length - 1) {
+    if (this.currentPieceIndex === this.shapes.length - 1) {
       this.currentPieceIndex = 0;
     }
 
     this.currentPieceIndex += 1;
+  }
+
+  frameRate() {
+    // use requestAnimationFrame
+    // do NOT use setTimeout, as it will lag a frame behind
   }
 }
 
@@ -458,7 +466,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["L"]];
   const currentPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
   const nextPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
-  const piece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](currentPiece, nextPiece, context);
+  const piece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, currentPiece, nextPiece);
   piece.drawPiece();
   // DRAW PIECE END
 

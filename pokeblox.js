@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tetrominoes = [I, O, T, S, Z, J, L];
   const currentPiece = Modules.randomPiece(tetrominoes);
   const nextPiece = Modules.randomPiece(tetrominoes);
-  const piece = new Piece(currentPiece, nextPiece, context);
+  const piece = new Piece(context, currentPiece, nextPiece);
   piece.drawPiece();
   // DRAW PIECE END
 

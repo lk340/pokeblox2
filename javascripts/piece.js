@@ -1,10 +1,11 @@
 import { ash } from './colors';
 
 export default class Piece {
-  constructor(currentPiece, nextPiece, context) {
+  constructor(context, currentPiece, nextPiece) {
     this.context = context;
     this.currentPieceIndex = 0;
     this.currentPiece = currentPiece.shapes[this.currentPieceIndex];
+    this.shapes = currentPiece.shapes;
     this.nextPiece = nextPiece;
     this.color = currentPiece.color;
     this.type = currentPiece.type;
@@ -34,7 +35,9 @@ export default class Piece {
   }
 
   moveLeft() {
-
+    if (this.x > 0) {
+      this.x -= 1;
+    }
   }
 
   moveRight() {
@@ -46,10 +49,15 @@ export default class Piece {
   }
 
   rotate() {
-    if (this.currentPieceIndex === this.currentPiece.length - 1) {
+    if (this.currentPieceIndex === this.shapes.length - 1) {
       this.currentPieceIndex = 0;
     }
 
     this.currentPieceIndex += 1;
+  }
+
+  frameRate() {
+    // use requestAnimationFrame
+    // do NOT use setTimeout, as it will lag a frame behind
   }
 }

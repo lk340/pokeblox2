@@ -4,12 +4,12 @@ export default class Piece {
   constructor(currentPiece, nextPiece, context) {
     this.context = context;
     this.currentPieceIndex = 0;
+    this.currentPiece = currentPiece.shapes[this.currentPieceIndex];
     this.nextPiece = nextPiece;
-    this.shapes = currentPiece.shapes[this.currentPieceIndex];
     this.color = currentPiece.color;
     this.type = currentPiece.type;
     this.x_offset = 3;
-    this.y_offset = 3;
+    this.y_offset = 0;
   }
 
   createGrid(x, y, blockColor, context) {
@@ -24,9 +24,9 @@ export default class Piece {
   }
 
   drawPiece() {
-    for (let y = 0; y < this.shapes.length; y++) {
-      for (let x = 0; x < this.shapes[y].length; x++) {
-        if (this.shapes[y][x] === 1) {
+    for (let y = 0; y < this.currentPiece.length; y++) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        if (this.currentPiece[y][x] === 1) {
           this.createGrid(this.x_offset + x, this.y_offset + y, this.color, this.context);
         }
       }
@@ -46,7 +46,7 @@ export default class Piece {
   }
 
   rotate() {
-    if (this.currentPieceIndex === this.shapes.length - 1) {
+    if (this.currentPieceIndex === this.currentPiece.length - 1) {
       this.currentPieceIndex = 0;
     }
 

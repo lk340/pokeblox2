@@ -14,7 +14,7 @@ export default class Piece {
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
     this.x_offset = 3;
-    this.y_offset = -1; // Note: was originally 0 but changed to -1 because of rAF going a frame faster
+    this.y_offset = -1; // Note: was originally 0 but changed to -1 because of rAF going a frame fasterf
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;

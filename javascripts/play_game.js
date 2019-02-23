@@ -29,9 +29,10 @@ export default class PlayGame {
 
         console.log(board.board);
       }
-      // else {
-      //   currentPiece.resetPiece();
-      // }
+      
+      else {
+        currentPiece.resetPiece();
+      }
 
       setTimeout(() => {
         requestAnimationFrame(setAnimationForTetrisPiece);

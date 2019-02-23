@@ -173,7 +173,7 @@ export default class Piece {
       this.color = this.currPiece.color;
       this.type = this.currPiece.type;
       this.x_offset = 3;
-      this.y_offset = -1;
+      this.y_offset = 0;
       this.verticalCollision = false;
       this.horizontalLeftCollision = false;
       this.horizontalRightCollision = false;

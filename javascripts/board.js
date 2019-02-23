@@ -83,20 +83,26 @@ export default class Board {
   deleteRow() {
     // will check the board from bottom-up and delete rows as it goes along
     let lastRowIndex = this.board.length - 1;
-    const row = this.board[lastRowIndex];
+    let row = this.board[lastRowIndex];
+    let rowCheck = this.checkIfRowIsEmpty(row);
 
-    while (checkIfRowIsEmpty(row) === false) {
-
+    while (rowCheck === false) {
+      rowCheck = this.checkIfRowIsEmpty(row);
+      
       if (!row.includes(charcoal)) {
-        // must be a row full of piece colors
         this.board.splice(lastRowIndex, 1);
-        this.board.unshift([charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal]);  
+        this.board.unshift([charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal]);
+        console.log(board);
+        // this.drawBoard(); 
       }
 
       else {
         if (lastRowIndex > 0) {            
           if (lastRowIndex - 1 === 0) break;
-          else lastRowIndex -= 1;
+          else {
+            lastRowIndex -= 1;
+            // row = this.board[lastRowIndex];
+          }
         }
       }
 

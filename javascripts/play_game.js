@@ -29,6 +29,7 @@ export default class PlayGame {
 
     else {
       this.board.updateBoard(this.currentPiece);
+      this.board.deleteRow();
       this.currentPiece.resetPiece();
     }
 

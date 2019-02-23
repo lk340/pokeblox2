@@ -182,20 +182,26 @@ class Board {
   deleteRow() {
     // will check the board from bottom-up and delete rows as it goes along
     let lastRowIndex = this.board.length - 1;
-    const row = this.board[lastRowIndex];
+    let row = this.board[lastRowIndex];
+    let rowCheck = this.checkIfRowIsEmpty(row);
 
-    while (checkIfRowIsEmpty(row) === false) {
-
+    while (rowCheck === false) {
+      rowCheck = this.checkIfRowIsEmpty(row);
+      
       if (!row.includes(_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"])) {
-        // must be a row full of piece colors
         this.board.splice(lastRowIndex, 1);
-        this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);  
+        this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);
+        console.log(board);
+        // this.drawBoard(); 
       }
 
       else {
         if (lastRowIndex > 0) {            
           if (lastRowIndex - 1 === 0) break;
-          else lastRowIndex -= 1;
+          else {
+            lastRowIndex -= 1;
+            // row = this.board[lastRowIndex];
+          }
         }
       }
 
@@ -523,7 +529,7 @@ class Piece {
       this.color = this.currPiece.color;
       this.type = this.currPiece.type;
       this.x_offset = 3;
-      this.y_offset = -1;
+      this.y_offset = 0;
       this.verticalCollision = false;
       this.horizontalLeftCollision = false;
       this.horizontalRightCollision = false;
@@ -630,6 +636,7 @@ class PlayGame {
 
     else {
       this.board.updateBoard(this.currentPiece);
+      this.board.deleteRow();
       this.currentPiece.resetPiece();
     }
 

@@ -90,7 +90,10 @@ export default class Piece {
   }
 
   instantFall() {
-
+    while (this.verticalCollision === false) {
+      this.checkVerticalCollision();
+      this.moveDown();
+    }
   }
 
   savePiece() {

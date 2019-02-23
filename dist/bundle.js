@@ -250,9 +250,9 @@ __webpack_require__.r(__webpack_exports__);
 class Piece {
   constructor(context, currentPiece, nextPiece) {
     this.context = context;
-    this.currentPieceIndex = 0;
-    this.currentPiece = currentPiece.shapes[this.currentPieceIndex];
     this.shapes = currentPiece.shapes;
+    this.currentPieceIndex = 0;
+    this.currentPiece = this.shapes[this.currentPieceIndex];
     this.nextPiece = nextPiece;
     this.color = currentPiece.color;
     this.type = currentPiece.type;
@@ -271,6 +271,16 @@ class Piece {
     }
   }
 
+  deletePiece() {
+    for (let y = 0; y < this.currentPiece.length; y++) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        if (this.currentPiece[y][x] === 1) {
+          this.createGrid(this.x_offset + x, this.y_offset + y, _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], this.context);
+        }
+      }
+    }
+  }
+
   drawPiece() {
     for (let y = 0; y < this.currentPiece.length; y++) {
       for (let x = 0; x < this.currentPiece[y].length; x++) {
@@ -282,27 +292,46 @@ class Piece {
   }
 
   moveLeft() {
-    if (this.x > 0) {
-      this.x -= 1;
+    this.deletePiece();
+
+    if (this.x_offset > 0) {
+      this.x_offset -= 1;
     }
 
     this.drawPiece();
   }
 
   moveRight() {
+    this.deletePiece();
 
+    if (this.x_offset + this.currentPiece.length - 1 < 10) {
+      this.x_offset += 1;
+    }
+    
+    this.drawPiece();
   }
   
   moveDown() {
+    this.deletePiece();
 
+    if (this.y_offset < 19) {
+      this.y_offset += 1;
+    }
+    
+    this.drawPiece();
   }
 
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) {
       this.currentPieceIndex = 0;
     }
+    else {
+      this.currentPieceIndex += 1;
+    }
 
-    this.currentPieceIndex += 1;
+    this.deletePiece();
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    this.drawPiece();
   }
 
   instantFall() {
@@ -310,7 +339,7 @@ class Piece {
   }
 
   savePiece() {
-    
+
   }
 
   frameRate() {
@@ -517,13 +546,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvasBoard = document.getElementById("board");
   const context = canvasBoard.getContext("2d");
   // CANVAS END
-
+  // =============================================================
   // DRAW BOARD START
   const gameBoard = new _javascripts_board__WEBPACK_IMPORTED_MODULE_0__["default"](context);
   gameBoard.createEmptyBoard();
   gameBoard.drawBoard();
   // DRAW BOARD END
-
+  // =============================================================
   // DRAW PIECE START
   const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_2__["L"]];
   const currentPiece = Object(_javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"])(tetrominoes);
@@ -531,15 +560,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const piece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, currentPiece, nextPiece);
   piece.drawPiece();
   // DRAW PIECE END
-  
+  // =============================================================
   // PIECE DOM MANIPULATION START
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(piece);
   // PIECE DOM MANIPULATION END
 
   console.log(gameBoard.board);
-  console.log(piece.color);
+  console.log(piece.shapes);
   console.log(piece.nextPiece);
-
 });
 
 

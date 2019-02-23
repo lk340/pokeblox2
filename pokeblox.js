@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const canvasBoard = document.getElementById("board");
   const context = canvasBoard.getContext("2d");
   // CANVAS END
-
+  // =============================================================
   // DRAW BOARD START
   const gameBoard = new Board(context);
   gameBoard.createEmptyBoard();
   gameBoard.drawBoard();
   // DRAW BOARD END
-
+  // =============================================================
   // DRAW PIECE START
   const tetrominoes = [I, O, T, S, Z, J, L];
   const currentPiece = randomPiece(tetrominoes);
@@ -24,13 +24,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const piece = new Piece(context, currentPiece, nextPiece);
   piece.drawPiece();
   // DRAW PIECE END
-  
+  // =============================================================
   // PIECE DOM MANIPULATION START
   movePiece(piece);
   // PIECE DOM MANIPULATION END
 
   console.log(gameBoard.board);
-  console.log(piece.color);
+  console.log(piece.shapes);
   console.log(piece.nextPiece);
-
 });

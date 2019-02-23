@@ -431,22 +431,14 @@ class Piece {
   savePiece() {
     if (this.savedPiece === null) {
       this.savedPiece = this.currentPiece;
-      this.currentPiece = nextPiece;
+      this.currentPiece = this.nextPiece;
       this.nextPiece = Object(_modules_randomPiece__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes).shapes;
-
-      console.log(this.currentPiece);
-      console.log(this.savedPiece);
-      console.log(this.nextPiece);
     }
 
     else {
       const temp = this.savedPiece;
       this.savedPiece = this.currentPiece;
       this.currentPiece = temp;
-
-      console.log(this.currentPiece);
-      console.log(this.savedPiece);
-      console.log(this.nextPiece);
     }
   }
 

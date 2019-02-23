@@ -1,0 +1,12 @@
+#board-container {
+  display: flex;
+  justify-content: center;
+  border: red solid 1px;
+}
+
+.board {
+  width: 300px;
+  height: 600px;
+  
+  border: blue solid 1px;
+}

@@ -127,14 +127,6 @@ class Board {
     }
   }
 
-  deleteBoard() {
-    for ( let y = 0; y < this.board.length; y++ ) {
-      for ( let x = 0; x < this.board[y].length; x++ ) {
-        this.createGrid(x, y, _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], this.context);
-      }
-    }
-  }
-
   drawBoard() {
     for ( let y = 0; y < this.board.length; y++ ) {
       for ( let x = 0; x < this.board[y].length; x++ ) {
@@ -214,6 +206,10 @@ class Board {
     // checks the top-most row, and if it isn't all charcoal, then the player loses (this.gameOver = true)
       // Optimization: if it hits a color that isn't charcoal, player loses
         // rather than iterating through entire row, just stop short as soon as you hit a color that isn't charcoal
+    const firstRow = this.board[0];
+    for (let x = 0; x < firstRow.length; x++) {
+      if (firstRow[x] !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.gameOver = true;
+    }
   }
 }
 
@@ -412,22 +408,31 @@ class Piece {
   }
 
   checkVerticalCollision() {
-    const y = this.currentPiece.length - 1;
+    // const y = this.currentPiece.length - 1;
+
     // If there is AT LEAST one grid block that detects a grid below it, then there must be a piece.
       // Therefore, if verticalCheck is AT LEAST 1, then we must have hit something.
     let verticalCheck = 0;
 
-    for (let x = 0; x < this.currentPiece[y].length; x++) {
-      if (this.currentPiece[y][x] === 1) {
-        let gridBelow;
-        if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
-        if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) verticalCheck += 1;
+    if (this.y_offset >= 0) {
+      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+        for (let x = 0; x < this.currentPiece[y].length; x++) {
+          if (this.currentPiece[y][x] === 1) {
+            let gridBelow;
+            if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
+  
+            // if (gridBelow !== charcoal) verticalCheck += 1;
+            if (this.y_offset + y === 19) this.verticalCollision = true;
+            else if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.verticalCollision = true;
+            // else verticalCollision = false;
+          }
+        }
       }
     }
 
-    if (this.y_offset + y === 19) this.verticalCollision = true;
-    else if (verticalCheck > 0) this.verticalCollision = true;
-    else this.verticalCollision = false;
+    // if (this.y_offset + y === 19) this.verticalCollision = true;
+    // else if (verticalCheck > 0) this.verticalCollision = true;
+    // else this.verticalCollision = false;
   }
 
   checkHorizontalLeftCollision() {
@@ -466,9 +471,7 @@ class Piece {
   }
   
   moveDown() {
-    console.log(`Vertical Collision 1: ${this.verticalCollision}`);
     this.checkVerticalCollision();
-    console.log(`Vertical Collision 2: ${this.verticalCollision}`);
     this.deletePiece();
     if (this.verticalCollision === false) this.y_offset += 1;
     this.drawPiece();
@@ -537,7 +540,7 @@ class Piece {
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
     this.x_offset = 3;
-    this.y_offset = 0;
+    this.y_offset = -1;
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
@@ -577,63 +580,43 @@ class Piece {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayGame; });
-/* harmony import */ var _piece__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./piece */ "./javascripts/piece.js");
-
-
 class PlayGame {
   constructor(currentPiece, board) {
     this.currentPiece = currentPiece;
     this.board = board;
+    this.animation = null;
+    this.frameRate = this.frameRate.bind(this);
   }
 
   frameRate() {
-    // use requestAnimationFrame
-      // do NOT use setTimeout, as it will lag a frame behind
-    // utilize this.verticalCollision's value to reset the frame and reset the piece's position
-      // remember to first delete the piece, reset its value, and then draw the piece again
-    // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
-      // clearing logic this way
     const requestAnimationFrame = 
-      window.requestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.webkitRequestAnimationFrame ||
+      window.requestAnimationFrame || 
+      window.mozRequestAnimationFrame || 
+      window.webkitRequestAnimationFrame || 
       window.msRequestAnimationFrame;
-
-    const currentPiece = this.currentPiece;
-    const board = this.board;
-
-    return function setAnimationForTetrisPiece() {
-      if (currentPiece.verticalCollision === false) {
-        currentPiece.moveDown();
-
-        // console.log(board.board);
-      }
-      else {
-        board.updateBoard(currentPiece);
-        currentPiece.deletePiece();
-        currentPiece.resetPiece();
-        currentPiece.drawPiece();
-      }
-
-      setTimeout(() => {
-        requestAnimationFrame(setAnimationForTetrisPiece);
-      }, 1200);
-    };
     
-    // const test = setInterval(() => {
-      // if (this.currentPiece.verticalCollision === false) {
-      //   this.currentPiece.moveDown();
-      //   this.board.updateBoard(this.currentPiece);
+    const cancelAnimationFrame = 
+      window.cancelAnimationFrame || 
+      window.mozCancelAnimationFrame;
 
-      //   console.log(this.board.board);
-      // }
+    if (this.currentPiece.verticalCollision === false) {
+      this.board.checkIfLose();
+      if (this.board.gameOver === true) {
+        cancelAnimationFrame(this.animation);
+        return;
+      }
+      this.currentPiece.moveDown();
+      console.log(this.board.board);
+    }
 
-    //   else {
-    //     // setTimeout(() => {
-    //       clearInterval(test);
-    //     // }, 500);
-    //   }
-    // }, 500);
+    else {
+      this.board.updateBoard(this.currentPiece);
+      this.currentPiece.resetPiece();
+    }
+
+    setTimeout(() => {
+      this.animation = requestAnimationFrame(this.frameRate);
+    }, 700);
   }
 }
 
@@ -859,22 +842,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // GAME-PLAY LOGIC START
   const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
-  game.frameRate()(); // Shorthand for activating curried function
+  game.frameRate();
   // GAME-PLAY LOGIC END
-
-  // [] ======================= TESTING BELOW ======================= ]
-  
-  // const test = setInterval(() => {
-  //   if (currentPiece.verticalCollision === false) {
-  //     currentPiece.moveDown();
-  //     gameBoard.updateBoard(currentPiece);
-  //     console.log(gameBoard.board);
-  //   }
-
-  //   else {
-  //     clearInterval(test);
-  //   }
-  // }, 500);
 
   console.log(gameBoard.board);
   console.log(currentPiece.currentPiece);

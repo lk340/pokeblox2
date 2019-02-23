@@ -28,14 +28,6 @@ export default class Board {
     }
   }
 
-  deleteBoard() {
-    for ( let y = 0; y < this.board.length; y++ ) {
-      for ( let x = 0; x < this.board[y].length; x++ ) {
-        this.createGrid(x, y, charcoal, this.context);
-      }
-    }
-  }
-
   drawBoard() {
     for ( let y = 0; y < this.board.length; y++ ) {
       for ( let x = 0; x < this.board[y].length; x++ ) {
@@ -115,5 +107,9 @@ export default class Board {
     // checks the top-most row, and if it isn't all charcoal, then the player loses (this.gameOver = true)
       // Optimization: if it hits a color that isn't charcoal, player loses
         // rather than iterating through entire row, just stop short as soon as you hit a color that isn't charcoal
+    const firstRow = this.board[0];
+    for (let x = 0; x < firstRow.length; x++) {
+      if (firstRow[x] !== charcoal) this.gameOver = true;
+    }
   }
 }

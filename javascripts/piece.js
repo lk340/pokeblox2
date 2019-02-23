@@ -58,22 +58,31 @@ export default class Piece {
   }
 
   checkVerticalCollision() {
-    const y = this.currentPiece.length - 1;
+    // const y = this.currentPiece.length - 1;
+
     // If there is AT LEAST one grid block that detects a grid below it, then there must be a piece.
       // Therefore, if verticalCheck is AT LEAST 1, then we must have hit something.
     let verticalCheck = 0;
 
-    for (let x = 0; x < this.currentPiece[y].length; x++) {
-      if (this.currentPiece[y][x] === 1) {
-        let gridBelow;
-        if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
-        if (gridBelow !== charcoal) verticalCheck += 1;
+    if (this.y_offset >= 0) {
+      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+        for (let x = 0; x < this.currentPiece[y].length; x++) {
+          if (this.currentPiece[y][x] === 1) {
+            let gridBelow;
+            if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
+  
+            // if (gridBelow !== charcoal) verticalCheck += 1;
+            if (this.y_offset + y === 19) this.verticalCollision = true;
+            else if (gridBelow !== charcoal) this.verticalCollision = true;
+            // else verticalCollision = false;
+          }
+        }
       }
     }
 
-    if (this.y_offset + y === 19) this.verticalCollision = true;
-    else if (verticalCheck > 0) this.verticalCollision = true;
-    else this.verticalCollision = false;
+    // if (this.y_offset + y === 19) this.verticalCollision = true;
+    // else if (verticalCheck > 0) this.verticalCollision = true;
+    // else this.verticalCollision = false;
   }
 
   checkHorizontalLeftCollision() {
@@ -112,9 +121,7 @@ export default class Piece {
   }
   
   moveDown() {
-    console.log(`Vertical Collision 1: ${this.verticalCollision}`);
     this.checkVerticalCollision();
-    console.log(`Vertical Collision 2: ${this.verticalCollision}`);
     this.deletePiece();
     if (this.verticalCollision === false) this.y_offset += 1;
     this.drawPiece();
@@ -183,7 +190,7 @@ export default class Piece {
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
     this.x_offset = 3;
-    this.y_offset = 0;
+    this.y_offset = -1;
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;

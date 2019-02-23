@@ -32,22 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // GAME-PLAY LOGIC START
   const game = new PlayGame(currentPiece, gameBoard);
-  game.frameRate()(); // Shorthand for activating curried function
+  game.frameRate();
   // GAME-PLAY LOGIC END
-
-  // [] ======================= TESTING BELOW ======================= ]
-  
-  // const test = setInterval(() => {
-  //   if (currentPiece.verticalCollision === false) {
-  //     currentPiece.moveDown();
-  //     gameBoard.updateBoard(currentPiece);
-  //     console.log(gameBoard.board);
-  //   }
-
-  //   else {
-  //     clearInterval(test);
-  //   }
-  // }, 500);
 
   console.log(gameBoard.board);
   console.log(currentPiece.currentPiece);

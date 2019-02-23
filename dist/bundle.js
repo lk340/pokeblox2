@@ -97,6 +97,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Board; });
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
+/* harmony import */ var _modules_arrayLastElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/arrayLastElement */ "./javascripts/modules/arrayLastElement.js");
+
 
 
 class Board {
@@ -149,7 +151,7 @@ class Board {
 
     this.board = [];
     this.createEmptyBoard();
-    for (let y = currentPiece.length - 1; y >= 0; y--) {
+    for (let y = Object(_modules_arrayLastElement__WEBPACK_IMPORTED_MODULE_1__["arrayLastElement"])(currentPiece); y >= 0; y--) {
       for (let x = 0; x < currentPiece[y].length; x++) {
         if (currentPiece[y][x] === 1) {
           this.board[y_offset + y][x_offset + x] = pieceColor;
@@ -178,7 +180,7 @@ class Board {
 
   deleteRow() {
     // will check the board from bottom-up and delete rows as it goes along
-    let lastRowIndex = this.board.length - 1;
+    let lastRowIndex = Object(_modules_arrayLastElement__WEBPACK_IMPORTED_MODULE_1__["arrayLastElement"])(this.board);
     const row = this.board[lastRowIndex];
 
     while (checkIfRowIsEmpty(row) === false) {
@@ -303,6 +305,22 @@ const playPause = () => {
         break;
     }
   });
+};
+
+/***/ }),
+
+/***/ "./javascripts/modules/arrayLastElement.js":
+/*!*************************************************!*\
+  !*** ./javascripts/modules/arrayLastElement.js ***!
+  \*************************************************/
+/*! exports provided: arrayLastElement */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrayLastElement", function() { return arrayLastElement; });
+const arrayLastElement = array => {
+  return array[array.length - 1];
 };
 
 /***/ }),
@@ -582,10 +600,10 @@ class PlayGame {
 
         console.log(board.board);
       }
-      
-      else {
-        currentPiece.resetPiece();
-      }
+
+      // else {
+      //   currentPiece.resetPiece();
+      // }
 
       setTimeout(() => {
         requestAnimationFrame(setAnimationForTetrisPiece);

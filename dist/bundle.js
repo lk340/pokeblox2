@@ -194,12 +194,17 @@ const randomPiece = array => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Piece; });
+/* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
+
+
 class Piece {
   constructor(currentPiece, nextPiece, context) {
     this.context = context;
     this.currentPieceIndex = 0;
-    this.currentPiece = currentPiece[this.currentPieceIndex];
     this.nextPiece = nextPiece;
+    this.shapes = currentPiece.shapes[this.currentPieceIndex];
+    this.color = currentPiece.color;
+    this.type = currentPiece.type;
     this.x_offset = 3;
     this.y_offset = 3;
   }
@@ -210,16 +215,16 @@ class Piece {
       const y_pos = y * 30;
       context.fillStyle = blockColor;
       context.fillRect(x_pos, y_pos, 30, 30);
-      context.strokeStyle = ash;
+      context.strokeStyle = _colors__WEBPACK_IMPORTED_MODULE_0__["ash"];
       context.strokeRect(x_pos, y_pos, 30, 30);
     }
   }
 
   drawPiece() {
-    for (let y = 0; y < this.currentPiece.length; y++) {
-      for (let x = 0; x < this.currentPiece[y].length; x++) {
-        if (this.currentPiece[y][x] === 1) {
-          this.createGrid(x, y, )
+    for (let y = 0; y < this.shapes.length; y++) {
+      for (let x = 0; x < this.shapes[y].length; x++) {
+        if (this.shapes[y][x] === 1) {
+          this.createGrid(this.x_offset + x, this.y_offset + y, this.color, this.context);
         }
       }
     }
@@ -238,7 +243,7 @@ class Piece {
   }
 
   rotate() {
-    if (this.currentPieceIndex === this.currentPiece.length - 2) {
+    if (this.currentPieceIndex === this.shapes.length - 1) {
       this.currentPieceIndex = 0;
     }
 
@@ -454,10 +459,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
   const nextPiece = _javascripts_modules__WEBPACK_IMPORTED_MODULE_3__["randomPiece"](tetrominoes);
   const piece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](currentPiece, nextPiece, context);
+  piece.drawPiece();
   // DRAW PIECE END
 
   console.log(gameBoard.board);
-  console.log(piece.currentPiece);
+  console.log(piece.color);
   console.log(piece.nextPiece);
 
 });

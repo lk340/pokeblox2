@@ -21,10 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const currentPiece = Modules.randomPiece(tetrominoes);
   const nextPiece = Modules.randomPiece(tetrominoes);
   const piece = new Piece(currentPiece, nextPiece, context);
+  piece.drawPiece();
   // DRAW PIECE END
 
   console.log(gameBoard.board);
-  console.log(piece.currentPiece);
+  console.log(piece.color);
   console.log(piece.nextPiece);
 
 });

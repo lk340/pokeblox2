@@ -1,0 +1,9 @@
+#board-container {
+  display: flex;
+  justify-content: center;
+  border: red solid 1px;
+}
+
+.board {
+  border: green solid 3px;
+}

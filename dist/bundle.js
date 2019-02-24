@@ -316,7 +316,7 @@ const movePiece = (currentPiece) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playPause", function() { return playPause; });
-const playPause = () => {
+const playPause = (playGame) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
@@ -327,6 +327,7 @@ const playPause = () => {
         break;
       case 69: // e
         console.log("e");
+        playGame.pauseGame();
         break;
       case 82: // r
         console.log("r");
@@ -569,22 +570,24 @@ class Piece {
   }
 
   savePiece() {
-    if (this.savedPiece === null) {
-      this.deletePiece();
-      this.savedPiece = this.currPiece;
-      this.currPiece = this.nextPiece;
-      this.nextPiece = Object(_modules_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
-      this.resetForSavePiece();
-      this.drawPiece();
-    }
-
-    else {
-      this.deletePiece();
-      const temp = this.savedPiece;
-      this.savedPiece = this.currPiece;
-      this.currPiece = temp;
-      this.resetForSavePiece();
-      this.drawPiece();
+    if (this.verticalCollision === false) {
+      if (this.savedPiece === null) {
+        this.deletePiece();
+        this.savedPiece = this.currPiece;
+        this.currPiece = this.nextPiece;
+        this.nextPiece = Object(_modules_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
+        this.resetForSavePiece();
+        this.drawPiece();
+      }
+  
+      else {
+        this.deletePiece();
+        const temp = this.savedPiece;
+        this.savedPiece = this.currPiece;
+        this.currPiece = temp;
+        this.resetForSavePiece();
+        this.drawPiece();
+      }
     }
   }
 
@@ -642,6 +645,7 @@ class PlayGame {
   constructor(currentPiece, board) {
     this.currentPiece = currentPiece;
     this.board = board;
+    this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
   }
@@ -658,16 +662,17 @@ class PlayGame {
       window.mozCancelAnimationFrame;
 
     if (this.currentPiece.verticalCollision === false) {
-      this.board.checkIfLose(); // sets this.board.gameOver = true or false
+      this.board.checkIfLose();
       if (this.board.gameOver === true) {
-        setTimeout(() => {
+        // setTimeout(() => {
           cancelAnimationFrame(this.animation);
-        });
+        // }, 400);
         document.getElementById("game-over").play();
         return;
       }
       this.currentPiece.moveDown();
-      console.log(this.board.board);
+
+      // console.log(this.board.board);
     }
 
     else {
@@ -677,8 +682,19 @@ class PlayGame {
     }
 
     setTimeout(() => {
-      this.animation = requestAnimationFrame(this.frameRate);
+      if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
     }, 400);
+  }
+
+  pauseGame() {
+    if (this.toggleAnimation === true) this.toggleAnimation = false;
+    else {
+      this.toggleAnimation = true;
+      this.frameRate();
+    }
+    console.log(this.toggleAnimation);
+    // cancelAnimationFrame(this.animation);
+    // return;
   }
 }
 
@@ -898,15 +914,15 @@ document.addEventListener("DOMContentLoaded", () => {
   currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
-  // PIECE DOM MANIPULATION START
-  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
-  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])();
-  // PIECE DOM MANIPULATION END
-  // =============================================================
   // GAME-PLAY LOGIC START
   const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
   game.frameRate();
   // GAME-PLAY LOGIC END
+  // =============================================================
+  // PIECE DOM MANIPULATION START
+  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
+  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(game);
+  // PIECE DOM MANIPULATION END
 });
 
 

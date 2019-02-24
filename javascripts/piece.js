@@ -196,22 +196,24 @@ export default class Piece {
   }
 
   savePiece() {
-    if (this.savedPiece === null) {
-      this.deletePiece();
-      this.savedPiece = this.currPiece;
-      this.currPiece = this.nextPiece;
-      this.nextPiece = randomPiece(this.tetrominoes);
-      this.resetForSavePiece();
-      this.drawPiece();
-    }
-
-    else {
-      this.deletePiece();
-      const temp = this.savedPiece;
-      this.savedPiece = this.currPiece;
-      this.currPiece = temp;
-      this.resetForSavePiece();
-      this.drawPiece();
+    if (this.verticalCollision === false) {
+      if (this.savedPiece === null) {
+        this.deletePiece();
+        this.savedPiece = this.currPiece;
+        this.currPiece = this.nextPiece;
+        this.nextPiece = randomPiece(this.tetrominoes);
+        this.resetForSavePiece();
+        this.drawPiece();
+      }
+  
+      else {
+        this.deletePiece();
+        const temp = this.savedPiece;
+        this.savedPiece = this.currPiece;
+        this.currPiece = temp;
+        this.resetForSavePiece();
+        this.drawPiece();
+      }
     }
   }
 

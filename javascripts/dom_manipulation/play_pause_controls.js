@@ -1,4 +1,4 @@
-export const playPause = () => {
+export const playPause = (playGame) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
@@ -9,6 +9,7 @@ export const playPause = () => {
         break;
       case 69: // e
         console.log("e");
+        playGame.pauseGame();
         break;
       case 82: // r
         console.log("r");

@@ -25,13 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
   currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
-  // PIECE DOM MANIPULATION START
-  movePiece(currentPiece);
-  playPause();
-  // PIECE DOM MANIPULATION END
-  // =============================================================
   // GAME-PLAY LOGIC START
   const game = new PlayGame(currentPiece, gameBoard);
   game.frameRate();
   // GAME-PLAY LOGIC END
+  // =============================================================
+  // PIECE DOM MANIPULATION START
+  movePiece(currentPiece);
+  playPause(game);
+  // PIECE DOM MANIPULATION END
 });

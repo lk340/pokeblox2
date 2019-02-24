@@ -2,6 +2,7 @@ export default class PlayGame {
   constructor(currentPiece, board) {
     this.currentPiece = currentPiece;
     this.board = board;
+    this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
   }
@@ -18,16 +19,17 @@ export default class PlayGame {
       window.mozCancelAnimationFrame;
 
     if (this.currentPiece.verticalCollision === false) {
-      this.board.checkIfLose(); // sets this.board.gameOver = true or false
+      this.board.checkIfLose();
       if (this.board.gameOver === true) {
-        setTimeout(() => {
+        // setTimeout(() => {
           cancelAnimationFrame(this.animation);
-        });
+        // }, 400);
         document.getElementById("game-over").play();
         return;
       }
       this.currentPiece.moveDown();
-      console.log(this.board.board);
+
+      // console.log(this.board.board);
     }
 
     else {
@@ -37,7 +39,18 @@ export default class PlayGame {
     }
 
     setTimeout(() => {
-      this.animation = requestAnimationFrame(this.frameRate);
+      if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
     }, 400);
+  }
+
+  pauseGame() {
+    if (this.toggleAnimation === true) this.toggleAnimation = false;
+    else {
+      this.toggleAnimation = true;
+      this.frameRate();
+    }
+    console.log(this.toggleAnimation);
+    // cancelAnimationFrame(this.animation);
+    // return;
   }
 }

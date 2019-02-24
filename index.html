@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" type="text/css" media="screen" href="./css/global.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/header.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/board.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/sidebars.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/logo.css">
@@ -17,12 +18,17 @@
   <script src="./dist/bundle.js"></script>
 </head>
 <body>
-  <img id="logo" src="./images/logo/pokeblox_logo.png" alt="logo">
+  <header>
+    <div id="guide">Guide</div>
+    <img id="logo" src="./images/logo/pokeblox_logo.png" alt="logo">
+    <div id="about">About</div>
+  </header>
   
   <div id="master-container">
     <div id="left-sidebar">
       <div id="high-score">
-
+        <h3>High Scores</h3>
+        <div id="high-score-scores"></div>
       </div>
 
       <div id="playlist">
@@ -63,7 +69,24 @@
     </div>
 
     <div id="right-sidebar">
+      <div>
+        <div id="next-piece-title">Next Piece</div>
+        <div id="next-piece">
+          
+        </div>
+      </div>
 
+      <div>
+        <div id="saved-piece-title">Saved Piece</div>
+        <div id="saved-piece">
+  
+        </div>
+      </div>
+
+      <div>
+        <div id="points-title">Points</div>
+        <div id="points">500</div>
+      </div>
     </div>
   </div>
 

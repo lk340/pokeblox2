@@ -664,9 +664,9 @@ class PlayGame {
     if (this.currentPiece.verticalCollision === false) {
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
-        // setTimeout(() => {
+        setTimeout(() => {
           cancelAnimationFrame(this.animation);
-        // }, 400);
+        }, 400);
         document.getElementById("game-over").play();
         return;
       }

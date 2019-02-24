@@ -1,0 +1,22 @@
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#guide, #about {
+  color: white;
+  font-size: 2rem;
+  padding: 6px 10px;
+  border: white solid 1px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+#guide:hover {
+  background-color: var(--fireRed);
+}
+
+#about:hover {
+  background-color: var(--waterBlue);
+}

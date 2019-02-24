@@ -471,18 +471,18 @@ class Piece {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
         const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
-        if (farRightGridOnPiece > 9) this.horizontalRightCollision = true;
+        if (farRightGridOnPiece > 9 || this.board.board[this.y_offset + y][farRightGridOnPiece] !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalRightCollision = true;
         else this.horizontalRightCollision = false;
       }
     }
 
-    const board = this.board.board;
-    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
-      for (let x = this.currentPiece[y].length - 1; x >= 0; x--) {
-        const rightGrid = board[this.y_offset + y][this.x_offset + x + 1];
-        if (rightGrid !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
-      }
-    }
+    // const board = this.board.board;
+    // for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+    //   for (let x = this.currentPiece[y].length - 1; x >= 0; x--) {
+    //     const rightGrid = board[this.y_offset + y][this.x_offset + x + 1];
+    //     if (rightGrid !== charcoal) this.horizontalLeftCollision = true;
+    //   }
+    // }
   }
 
   moveLeft() {

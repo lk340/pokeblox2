@@ -18,7 +18,7 @@ export default class PlayGame {
       window.mozCancelAnimationFrame;
 
     if (this.currentPiece.verticalCollision === false) {
-      this.board.checkIfLose();
+      this.board.checkIfLose(); // sets this.board.gameOver = true or false
       if (this.board.gameOver === true) {
         cancelAnimationFrame(this.animation);
         return;

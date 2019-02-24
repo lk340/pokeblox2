@@ -92,6 +92,14 @@ export default class Piece {
         else this.horizontalLeftCollision = false;
       }
     }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        const leftGrid = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftGrid !== charcoal) this.horizontalLeftCollision = true;
+      }
+    }
   }
 
   checkHorizontalRightCollision() {
@@ -101,6 +109,14 @@ export default class Piece {
         const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
         if (farRightGridOnPiece > 9) this.horizontalRightCollision = true;
         else this.horizontalRightCollision = false;
+      }
+    }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      for (let x = this.currentPiece[y].length - 1; x >= 0; x--) {
+        const rightGrid = board[this.y_offset + y][this.x_offset + x + 1];
+        if (rightGrid !== charcoal) this.horizontalLeftCollision = true;
       }
     }
   }

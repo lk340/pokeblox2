@@ -6,6 +6,8 @@ export default class Board {
     this.context = context;
     this.colorCount = 0;
     this.gameOver = false;
+    this.pointCounter = 0;
+    this.points = 0;
   }
 
   createEmptyBoard() {
@@ -37,19 +39,11 @@ export default class Board {
   }
 
   updateBoard(piece) {
-    // will change board array to include colors
-    // calls this.drawBoard() to re-draw the new board
-    // looks through the array of the currentPiece (currentPiece.currentPiece)
-      // updates board by for-looping through the currentPiece.currentPiece array
-      // and adding currentPiece.color to board[currentPiece.y_offset + y][currentPiece.x_offset + x]
-    // this needs to be called for every frame
     let currentPiece = piece.currentPiece;
     let pieceColor = piece.color;
     let x_offset = piece.x_offset;
     let y_offset = piece.y_offset;
 
-    // this.board = [];
-    // this.createEmptyBoard();
     if (piece.verticalCollision === true) {
       for (let y = currentPiece.length - 1; y >= 0; y--) {
         for (let x = 0; x < currentPiece[y].length; x++) {
@@ -89,7 +83,6 @@ export default class Board {
     let rowCheck = this.checkIfRowIsEmpty(row);
 
     while (rowCheck === false) {
-      // debugger;
       if (!row.includes(charcoal)) {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal]);
@@ -101,21 +94,33 @@ export default class Board {
           if (lastRowIndex - 1 === 0) break;
           else {
             lastRowIndex -= 1;
-            // row = this.board[lastRowIndex];
           }
         }
       }
 
       row = this.board[lastRowIndex];
       rowCheck = this.checkIfRowIsEmpty(row);
-      // debugger;
+    }
+  }
+
+  handlePoints() {
+    switch(this.pointCounter) {
+      case 1:
+        this.points += this.pointCounter * 10;
+        break;
+      case 2:
+        this.points += (this.pointCounter * 20) + 10;
+        break;
+      case 3:
+        this.points += (this.pointCounter * 30) + 20;
+        break;
+      case 4:
+        this.points += (this.pointCounter * 40) + 30;
+        break;
     }
   }
 
   checkIfLose() {
-    // checks the top-most row, and if it isn't all charcoal, then the player loses (this.gameOver = true)
-      // Optimization: if it hits a color that isn't charcoal, player loses
-        // rather than iterating through entire row, just stop short as soon as you hit a color that isn't charcoal
     const firstRow = this.board[0];
     for (let x = 0; x < firstRow.length; x++) {
       if (firstRow[x] !== charcoal) this.gameOver = true;

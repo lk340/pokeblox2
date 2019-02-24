@@ -105,6 +105,8 @@ class Board {
     this.context = context;
     this.colorCount = 0;
     this.gameOver = false;
+    this.pointCounter = 0;
+    this.points = 0;
   }
 
   createEmptyBoard() {
@@ -136,19 +138,11 @@ class Board {
   }
 
   updateBoard(piece) {
-    // will change board array to include colors
-    // calls this.drawBoard() to re-draw the new board
-    // looks through the array of the currentPiece (currentPiece.currentPiece)
-      // updates board by for-looping through the currentPiece.currentPiece array
-      // and adding currentPiece.color to board[currentPiece.y_offset + y][currentPiece.x_offset + x]
-    // this needs to be called for every frame
     let currentPiece = piece.currentPiece;
     let pieceColor = piece.color;
     let x_offset = piece.x_offset;
     let y_offset = piece.y_offset;
 
-    // this.board = [];
-    // this.createEmptyBoard();
     if (piece.verticalCollision === true) {
       for (let y = currentPiece.length - 1; y >= 0; y--) {
         for (let x = 0; x < currentPiece[y].length; x++) {
@@ -188,7 +182,6 @@ class Board {
     let rowCheck = this.checkIfRowIsEmpty(row);
 
     while (rowCheck === false) {
-      // debugger;
       if (!row.includes(_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"])) {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);
@@ -200,21 +193,33 @@ class Board {
           if (lastRowIndex - 1 === 0) break;
           else {
             lastRowIndex -= 1;
-            // row = this.board[lastRowIndex];
           }
         }
       }
 
       row = this.board[lastRowIndex];
       rowCheck = this.checkIfRowIsEmpty(row);
-      // debugger;
+    }
+  }
+
+  handlePoints() {
+    switch(this.pointCounter) {
+      case 1:
+        this.points += this.pointCounter * 10;
+        break;
+      case 2:
+        this.points += (this.pointCounter * 20) + 10;
+        break;
+      case 3:
+        this.points += (this.pointCounter * 30) + 20;
+        break;
+      case 4:
+        this.points += (this.pointCounter * 40) + 30;
+        break;
     }
   }
 
   checkIfLose() {
-    // checks the top-most row, and if it isn't all charcoal, then the player loses (this.gameOver = true)
-      // Optimization: if it hits a color that isn't charcoal, player loses
-        // rather than iterating through entire row, just stop short as soon as you hit a color that isn't charcoal
     const firstRow = this.board[0];
     for (let x = 0; x < firstRow.length; x++) {
       if (firstRow[x] !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.gameOver = true;
@@ -451,6 +456,14 @@ class Piece {
         else this.horizontalLeftCollision = false;
       }
     }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        const leftGrid = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftGrid !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
+      }
+    }
   }
 
   checkHorizontalRightCollision() {
@@ -460,6 +473,14 @@ class Piece {
         const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
         if (farRightGridOnPiece > 9) this.horizontalRightCollision = true;
         else this.horizontalRightCollision = false;
+      }
+    }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      for (let x = this.currentPiece[y].length - 1; x >= 0; x--) {
+        const rightGrid = board[this.y_offset + y][this.x_offset + x + 1];
+        if (rightGrid !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
       }
     }
   }
@@ -628,7 +649,7 @@ class PlayGame {
       window.mozCancelAnimationFrame;
 
     if (this.currentPiece.verticalCollision === false) {
-      this.board.checkIfLose();
+      this.board.checkIfLose(); // sets this.board.gameOver = true or false
       if (this.board.gameOver === true) {
         cancelAnimationFrame(this.animation);
         return;
@@ -873,12 +894,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
   game.frameRate();
   // GAME-PLAY LOGIC END
-
-  console.log(gameBoard.board);
-  console.log(currentPiece.currentPiece);
-  console.log(currentPiece.shapes);
-  console.log(currentPiece.nextPiece);
-  console.log(currentPiece.currPiece);
 });
 
 

@@ -34,10 +34,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const game = new PlayGame(currentPiece, gameBoard);
   game.frameRate();
   // GAME-PLAY LOGIC END
-
-  console.log(gameBoard.board);
-  console.log(currentPiece.currentPiece);
-  console.log(currentPiece.shapes);
-  console.log(currentPiece.nextPiece);
-  console.log(currentPiece.currPiece);
 });

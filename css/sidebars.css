@@ -11,6 +11,23 @@
   height: 290px;
   width: 300px;
   background-color: var(--charcoal);
+  position: relative;
+  overflow: hidden;
+}
+
+#playlist-enlarge {
+  position: absolute;
+  color: white;
+  transform: rotate(45deg);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 10px;
+  top: -10px;
+  transition-duration: 0.2s;
+}
+
+#playlist-enlarge:hover {
+  color: var(--ash);
 }
 
 #playlist-background {

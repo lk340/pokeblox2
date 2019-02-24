@@ -7,46 +7,25 @@
   border: red solid 1px;
 }
 
-#links {
-  border: red solid 1px;
+#master-container {
+  border-top: var(--charcoal) solid 4px;
+  border-bottom: var(--charcoal) solid 4px;
+  padding: 30px 0;
 
-  width: 200px;
-  height: 600px;
-}
-
-#links a {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-#links a span {
-  display: block;
-}
-
-#links a img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  background-image: url('../images/background/pancham.png');
+  background-repeat: none;
+  background-position: center;
+  background-position-y: -300px;
 }
 
 #board-container {
   display: flex;
   justify-content: center;
-
-  border: red solid 1px;
 }
 
 .board {
   height: 600px;
   width: 300px;
-  border: var(--charcoal) solid 14px;
+  border: var(--charcoal) solid 10px;
   border-radius: 7px;
-}
-
-#spacer {
-  border: red solid 1px;
-
-  width: 150px;
-  height: 600px;
 }

@@ -1,0 +1,15 @@
+#links {
+  border: red solid 1px;
+
+  width: 300px;
+  height: 600px;
+  margin-right: 40px;
+}
+
+#spacer {
+  border: red solid 1px;
+
+  width: 300px;
+  height: 600px;
+  margin-left: 40px;
+}

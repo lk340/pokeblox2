@@ -1,12 +1,54 @@
-#links {
-  border: red solid 1px;
-
+#left-sidebar {
   width: 300px;
   height: 600px;
   margin-right: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-#spacer {
+#high-score, #playlist {
+  height: 290px;
+  width: 300px;
+  background-color: var(--charcoal);
+}
+
+#playlist-background {
+  background-image: url(../images/playlist_images/team_rocket.jpg);
+  background-size: cover;
+  background-repeat: none;
+  height: 140px;
+}
+
+#playlist-songs {
+  height: 150px;
+  overflow: auto;
+}
+
+#playlist-songs span {
+  display: block;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgb(114, 114, 114);
+  cursor: pointer;
+  padding: 4px 0;
+  transition-duration: 0.3s;
+}
+
+#playlist-songs span:hover {
+  background-color: var(--charcoal);
+  color: white;
+  text-shadow: 0 0 3px white;
+}
+
+#playlist-spacer {
+  height: 1px;
+  width: 250px;
+  margin: auto;
+  background-color: var(--ash);
+}
+
+#right-sidebar {
   border: red solid 1px;
 
   width: 300px;

@@ -1,0 +1,89 @@
+.I {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+
+  display: none;
+}
+
+.I > div {
+  width: 30px;
+  height: 30px;
+  background-color: var(--lightBlue);
+  border: white solid 2px;
+}
+
+.O {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  position: absolute;
+
+  display: none;
+}
+
+.O > div {
+  width: 30px;
+  height: 30px;
+  background-color: var(--yellow);
+  border: white solid 2px;
+}
+
+.T, .S, .Z, .J, .L {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: absolute;
+
+  display: none;
+}
+
+.T > div:nth-child(2),
+.T > div:nth-child(4),
+.T > div:nth-child(5),
+.T > div:nth-child(6) {
+  width: 30px;
+  height: 30px;
+  background-color: var(--purple);
+  border: white solid 2px;
+}
+
+.S > div:nth-child(2),
+.S > div:nth-child(3),
+.S > div:nth-child(4),
+.S > div:nth-child(5) {
+  width: 30px;
+  height: 30px;
+  background-color: var(--green);
+  border: white solid 2px;
+}
+
+.Z > div:nth-child(1),
+.Z > div:nth-child(2),
+.Z > div:nth-child(5),
+.Z > div:nth-child(6) {
+  width: 30px;
+  height: 30px;
+  background-color: var(--red);
+  border: white solid 2px;
+}
+
+.J > div:nth-child(1),
+.J > div:nth-child(2),
+.J > div:nth-child(3),
+.J > div:nth-child(6) {
+  width: 30px;
+  height: 30px;
+  background-color: var(--blue);
+  border: white solid 2px;
+}
+
+.L > div:nth-child(3),
+.L > div:nth-child(4),
+.L > div:nth-child(5),
+.L > div:nth-child(6) {
+  width: 30px;
+  height: 30px;
+  background-color: var(--orange);
+  border: white solid 2px;
+}

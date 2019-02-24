@@ -1,0 +1,95 @@
+.bg-tearsOfLife {
+  background-image: url(../images/playlist_images/mewtwo.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-johtoOpening {
+  background-image: url(../images/playlist_images/johto_journeys.jpg);
+  background-size: cover;
+  background-position-y: -15px;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-viridianCity {
+  background-image: url(../images/playlist_images/viridian_city.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-viridianForest {
+  background-image: url(../images/playlist_images/viridian-forest.png);
+  background-size: cover;
+  background-position-y: -20px;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-battleTeamRocket {
+  background-image: url(../images/playlist_images/team_rocket.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-route47 {
+  background-image: url(../images/playlist_images/pikachu.png);
+  background-size: cover;
+  background-position-y: -45px;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-gscChampion {
+  background-image: url(../images/playlist_images/champion_lance.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-dppChampion {
+  background-image: url(../images/playlist_images/champion_cynthia.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-nTheme {
+  background-image: url(../images/playlist_images/n.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-snowbelleCity {
+  background-image: url(../images/playlist_images/snowbelle_city.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-usumTheme {
+  background-image: url(../images/playlist_images/alola.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-originalTetris {
+  background-image: url(../images/playlist_images/61Wvdn29vZL.png);
+  background-size: cover;
+  background-position-y: -25px;
+  background-repeat: no-repeat;
+  height: 140px;
+}
+
+.bg-tetris99 {
+  background-image: url(../images/playlist_images/tetris99.jpeg);
+  background-size: cover;
+  background-position-y: -7px;
+  background-repeat: no-repeat;
+  height: 140px;
+}

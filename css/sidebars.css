@@ -23,6 +23,7 @@
   text-shadow: 0 0 5px white;
   padding: 10px 0;
   background-color: rgba(32, 32, 32, 0.438);
+  cursor: default;
 }
 
 #high-score-scores {
@@ -92,10 +93,11 @@
 #next-piece-title, #saved-piece-title {
   text-align: center;
   font-size: 1.3rem;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   font-weight: bold;
   color: white;
   text-shadow: 0 0 5px white;
+  cursor: default;
 }
 
 #next-piece, #saved-piece {
@@ -112,6 +114,7 @@
   color: white;
   text-align: center;
   box-shadow: 0 0 10px 2px white;
+  cursor: default;
 }
 
 #points {
@@ -119,4 +122,5 @@
   color: white;
   margin-top: 15px;
   font-size: 1rem;
+  cursor: default;
 }

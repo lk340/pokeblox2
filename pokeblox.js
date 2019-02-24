@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // GAME-PLAY LOGIC END
   // =============================================================
   // PIECE DOM MANIPULATION START
-  movePiece(currentPiece);
+  movePiece(currentPiece, game);
   playPause(currentPiece, game);
   playlistHighscore();
   playlist();

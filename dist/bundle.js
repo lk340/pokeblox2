@@ -258,7 +258,7 @@ const ash = "rgb(92, 92, 92)";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "movePiece", function() { return movePiece; });
-const movePiece = (currentPiece) => {
+const movePiece = (currentPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 87: // w
@@ -279,23 +279,29 @@ const movePiece = (currentPiece) => {
         return currentPiece.moveRight();
       case 38: // up
         console.log("up");
+        event.preventDefault();
         document.getElementById("move-piece").play();
         return currentPiece.rotate();
       case 37: // left
         console.log("left");
+        event.preventDefault();
         document.getElementById("move-piece").play();
         return currentPiece.moveLeft();
       case 40: // down
         console.log("down");
+        event.preventDefault();
         document.getElementById("move-piece").play();
         return currentPiece.moveDown();
       case 39: // right
         console.log("right");
+        event.preventDefault();
         document.getElementById("move-piece").play();
         return currentPiece.moveRight();
       case 32: // space-bar
         console.log("space-bar");
-        return currentPiece.instantFall();
+        event.preventDefault();
+        if (game.start === true) currentPiece.instantFall();
+        break;
       case 16: // shift
         console.log("shift");
         return currentPiece.savePiece();
@@ -1093,7 +1099,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // GAME-PLAY LOGIC END
   // =============================================================
   // PIECE DOM MANIPULATION START
-  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
+  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
   Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])();

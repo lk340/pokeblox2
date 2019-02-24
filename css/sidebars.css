@@ -7,12 +7,30 @@
   justify-content: space-between;
 }
 
-#high-score, #playlist {
+.high-score, .playlist {
   height: 290px;
   width: 300px;
   background-color: var(--charcoal);
   position: relative;
   overflow: hidden;
+}
+
+.high-score-enlarged {
+  height: 600px;
+  width: 300px;
+  background-color: var(--charcoal);
+  position: relative;
+  overflow: hidden;
+}
+
+.playlist-enlarged {
+  min-height: 290px;
+  width: 300px;
+  background-color: var(--charcoal);
+  position: relative;
+  overflow: hidden;
+  left: 25px;
+  position: absolute;
 }
 
 #high-score h3 {
@@ -30,7 +48,7 @@
   overflow: auto;
 }
 
-#playlist-enlarge {
+.playlist-enlarge {
   position: absolute;
   color: white;
   transform: rotate(45deg);
@@ -41,7 +59,22 @@
   transition-duration: 0.2s;
 }
 
-#playlist-enlarge:hover {
+.playlist-enlarge:hover {
+  color: var(--ash);
+}
+
+.playlist-small {
+  position: absolute;
+  color: white;
+  transform: rotate(225deg);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 10px;
+  top: -10px;
+  transition-duration: 0.2s;
+}
+
+.playlist-small:hover {
   color: var(--ash);
 }
 
@@ -52,8 +85,13 @@
   height: 140px;
 }
 
-#playlist-songs {
+.playlist-songs {
   height: 150px;
+  overflow: auto;
+}
+
+.playlist-songs-enlarged {
+  height: 460px;
   overflow: auto;
 }
 

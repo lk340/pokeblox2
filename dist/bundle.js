@@ -338,6 +338,61 @@ const playPause = (playGame) => {
 
 /***/ }),
 
+/***/ "./javascripts/dom_manipulation/playlist_highscore.js":
+/*!************************************************************!*\
+  !*** ./javascripts/dom_manipulation/playlist_highscore.js ***!
+  \************************************************************/
+/*! exports provided: playlistHighscore */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playlistHighscore", function() { return playlistHighscore; });
+const playlistHighscore = () => {
+  document.getElementById("playlist-enlarge").addEventListener("click", () => {
+    const highScore = document.getElementById("high-score").classList;
+    const playlist = document.getElementById("playlist").classList;
+    const playlistSongs = document.getElementById("playlist-songs").classList;
+    const playlistArrow = document.getElementById("playlist-enlarge").classList;
+
+    const highScoreClass = highScore[0];
+    const playlistClass = playlist[0];
+    const playlistSongsClass = playlistSongs[0];
+    const playlistArrowClass = playlistArrow[0];
+
+    if (highScoreClass === "high-score" && playlistClass === "playlist" && playlistSongsClass === "playlist-songs" && playlistArrowClass === "playlist-enlarge") {
+      highScore.remove("high-score");
+      highScore.add("high-score-enlarged");
+  
+      playlist.remove("playlist");
+      playlist.add("playlist-enlarged");
+  
+      playlistSongs.remove("playlist-songs");
+      playlistSongs.add("playlist-songs-enlarged");
+  
+      playlistArrow.remove("playlist-enlarge");
+      playlistArrow.add("playlist-small");
+    }
+
+    else if (highScoreClass === "high-score-enlarged" && playlistClass === "playlist-enlarged" && playlistSongsClass === "playlist-songs-enlarged" && playlistArrowClass === "playlist-small") {
+      highScore.remove("high-score-enlarged");
+      highScore.add("high-score");
+  
+      playlist.remove("playlist-enlarged");
+      playlist.add("playlist");
+  
+      playlistSongs.remove("playlist-songs-enlarged");
+      playlistSongs.add("playlist-songs");
+  
+      playlistArrow.remove("playlist-small");
+      playlistArrow.add("playlist-enlarge");
+    }
+  });
+};
+
+
+/***/ }),
+
 /***/ "./javascripts/modules/modules.js":
 /*!****************************************!*\
   !*** ./javascripts/modules/modules.js ***!
@@ -884,6 +939,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
 /* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
 /* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
+/* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
+
 
 
 
@@ -919,6 +976,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // PIECE DOM MANIPULATION START
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(game);
+  Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
   // PIECE DOM MANIPULATION END
 });
 

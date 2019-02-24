@@ -675,7 +675,7 @@ class PlayGame {
       // console.log(this.board.board);
     }
 
-    else {
+    else { // this.currentPiece.verticalCollision === true
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
       this.currentPiece.resetPiece();
@@ -683,7 +683,7 @@ class PlayGame {
 
     setTimeout(() => {
       if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
-    }, 400);
+    }, 4000);
   }
 
   pauseGame() {
@@ -692,9 +692,6 @@ class PlayGame {
       this.toggleAnimation = true;
       this.frameRate();
     }
-    console.log(this.toggleAnimation);
-    // cancelAnimationFrame(this.animation);
-    // return;
   }
 }
 

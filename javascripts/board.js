@@ -87,6 +87,7 @@ export default class Board {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal, charcoal]);
         this.drawBoard(); 
+        document.getElementById("clear-row").play();
       }
 
       else {

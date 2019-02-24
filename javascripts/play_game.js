@@ -20,7 +20,10 @@ export default class PlayGame {
     if (this.currentPiece.verticalCollision === false) {
       this.board.checkIfLose(); // sets this.board.gameOver = true or false
       if (this.board.gameOver === true) {
-        cancelAnimationFrame(this.animation);
+        setTimeout(() => {
+          cancelAnimationFrame(this.animation);
+        });
+        document.getElementById("game-over").play();
         return;
       }
       this.currentPiece.moveDown();
@@ -35,6 +38,6 @@ export default class PlayGame {
 
     setTimeout(() => {
       this.animation = requestAnimationFrame(this.frameRate);
-    }, 700);
+    }, 400);
   }
 }

@@ -96,8 +96,8 @@ export default class Piece {
     const board = this.board.board;
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       for (let x = 0; x < this.currentPiece[y].length; x++) {
-        const leftGrid = board[this.y_offset + y][this.x_offset + x - 1];
-        if (leftGrid !== charcoal) this.horizontalLeftCollision = true;
+        const leftCollision = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftCollision !== charcoal) this.horizontalLeftCollision = true;
       }
     }
   }
@@ -107,39 +107,38 @@ export default class Piece {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
         const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
-        if (farRightGridOnPiece > 9 || this.board.board[this.y_offset + y][farRightGridOnPiece] !== charcoal) this.horizontalRightCollision = true;
+        const rightCollision = this.board.board[this.y_offset + y][farRightGridOnPiece];
+        if (farRightGridOnPiece > 9 || rightCollision !== charcoal) this.horizontalRightCollision = true;
         else this.horizontalRightCollision = false;
       }
     }
-
-    // const board = this.board.board;
-    // for (let y = this.currentPiece.length - 1; y >= 0; y--) {
-    //   for (let x = this.currentPiece[y].length - 1; x >= 0; x--) {
-    //     const rightGrid = board[this.y_offset + y][this.x_offset + x + 1];
-    //     if (rightGrid !== charcoal) this.horizontalLeftCollision = true;
-    //   }
-    // }
   }
 
   moveLeft() {
     this.deletePiece();
     this.checkHorizontalLeftCollision();
     // if (this.x_offset > 0) this.x_offset -= 1;
-    if (this.horizontalLeftCollision === false) this.x_offset -= 1;
+    if (this.horizontalLeftCollision === false) {
+      this.x_offset -= 1;
+    }
     this.drawPiece();
   }
 
   moveRight() {
     this.checkHorizontalRightCollision();
     this.deletePiece();
-    if (this.horizontalRightCollision === false) this.x_offset += 1;
+    if (this.horizontalRightCollision === false) {
+      this.x_offset += 1;
+    }
     this.drawPiece();
   }
   
   moveDown() {
     this.checkVerticalCollision();
     this.deletePiece();
-    if (this.verticalCollision === false) this.y_offset += 1;
+    if (this.verticalCollision === false) {
+      this.y_offset += 1;
+    }
     this.drawPiece();
   }
 
@@ -180,6 +179,7 @@ export default class Piece {
       this.checkVerticalCollision();
       this.moveDown();
     }
+    document.getElementById("fall-piece").play();
   }
 
   resetForSavePiece() {

@@ -186,6 +186,7 @@ class Board {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);
         this.drawBoard(); 
+        document.getElementById("clear-row").play();
       }
 
       else {
@@ -262,27 +263,35 @@ const movePiece = (currentPiece) => {
     switch(event.which) {
       case 87: // w
         console.log("w");
+        document.getElementById("move-piece").play();
         return currentPiece.rotate();
       case 65: // a
         console.log("a");
+        document.getElementById("move-piece").play();
         return currentPiece.moveLeft();
       case 83: // s
         console.log("s");
+        document.getElementById("move-piece").play();
         return currentPiece.moveDown();
       case 68: // d
         console.log("d");
+        document.getElementById("move-piece").play();
         return currentPiece.moveRight();
       case 38: // up
         console.log("up");
+        document.getElementById("move-piece").play();
         return currentPiece.rotate();
       case 37: // left
         console.log("left");
+        document.getElementById("move-piece").play();
         return currentPiece.moveLeft();
       case 40: // down
         console.log("down");
+        document.getElementById("move-piece").play();
         return currentPiece.moveDown();
       case 39: // right
         console.log("right");
+        document.getElementById("move-piece").play();
         return currentPiece.moveRight();
       case 32: // space-bar
         console.log("space-bar");
@@ -460,8 +469,8 @@ class Piece {
     const board = this.board.board;
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       for (let x = 0; x < this.currentPiece[y].length; x++) {
-        const leftGrid = board[this.y_offset + y][this.x_offset + x - 1];
-        if (leftGrid !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
+        const leftCollision = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
       }
     }
   }
@@ -471,39 +480,38 @@ class Piece {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
         const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
-        if (farRightGridOnPiece > 9 || this.board.board[this.y_offset + y][farRightGridOnPiece] !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalRightCollision = true;
+        const rightCollision = this.board.board[this.y_offset + y][farRightGridOnPiece];
+        if (farRightGridOnPiece > 9 || rightCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalRightCollision = true;
         else this.horizontalRightCollision = false;
       }
     }
-
-    // const board = this.board.board;
-    // for (let y = this.currentPiece.length - 1; y >= 0; y--) {
-    //   for (let x = this.currentPiece[y].length - 1; x >= 0; x--) {
-    //     const rightGrid = board[this.y_offset + y][this.x_offset + x + 1];
-    //     if (rightGrid !== charcoal) this.horizontalLeftCollision = true;
-    //   }
-    // }
   }
 
   moveLeft() {
     this.deletePiece();
     this.checkHorizontalLeftCollision();
     // if (this.x_offset > 0) this.x_offset -= 1;
-    if (this.horizontalLeftCollision === false) this.x_offset -= 1;
+    if (this.horizontalLeftCollision === false) {
+      this.x_offset -= 1;
+    }
     this.drawPiece();
   }
 
   moveRight() {
     this.checkHorizontalRightCollision();
     this.deletePiece();
-    if (this.horizontalRightCollision === false) this.x_offset += 1;
+    if (this.horizontalRightCollision === false) {
+      this.x_offset += 1;
+    }
     this.drawPiece();
   }
   
   moveDown() {
     this.checkVerticalCollision();
     this.deletePiece();
-    if (this.verticalCollision === false) this.y_offset += 1;
+    if (this.verticalCollision === false) {
+      this.y_offset += 1;
+    }
     this.drawPiece();
   }
 
@@ -544,6 +552,7 @@ class Piece {
       this.checkVerticalCollision();
       this.moveDown();
     }
+    document.getElementById("fall-piece").play();
   }
 
   resetForSavePiece() {
@@ -651,7 +660,10 @@ class PlayGame {
     if (this.currentPiece.verticalCollision === false) {
       this.board.checkIfLose(); // sets this.board.gameOver = true or false
       if (this.board.gameOver === true) {
-        cancelAnimationFrame(this.animation);
+        setTimeout(() => {
+          cancelAnimationFrame(this.animation);
+        });
+        document.getElementById("game-over").play();
         return;
       }
       this.currentPiece.moveDown();
@@ -666,7 +678,7 @@ class PlayGame {
 
     setTimeout(() => {
       this.animation = requestAnimationFrame(this.frameRate);
-    }, 700);
+    }, 400);
   }
 }
 
@@ -701,7 +713,7 @@ const I = {
       [1],
     ]
   ],
-  color: "rgb(145, 145, 245)",
+  color: "rgb(168, 121, 255)",
   type: "I",
 };
 
@@ -737,7 +749,7 @@ const T = {
       [0, 1],
     ]
   ],
-  color: "rgb(204, 129, 204)",
+  color: "rgb(255, 189, 252)",
   type: "T"
 };
 
@@ -762,7 +774,7 @@ const S = {
       [0, 1],
     ]
   ],
-  color: "rgb(179, 221, 179)",
+  color: "rgb(194, 255, 204)",
   type: "S",
 };
 
@@ -787,7 +799,7 @@ const Z = {
       [1, 0],
     ]
   ],
-  color: "rgb(211, 123, 123)",
+  color: "rgb(255, 137, 137)",
   type: "Z",
 };
 
@@ -812,7 +824,7 @@ const J = {
       [1, 1],
     ]
   ],
-  color: "rgb(73, 73, 172)",
+  color: "rgb(184, 255, 251)",
   type: "J",
 };
 
@@ -837,9 +849,10 @@ const L = {
       [0, 1],
     ]
   ],
-  color: "rgb(255, 205, 113)",
+  color: "rgb(255, 180, 137)",
   type: "L",
 };
+
 
 /***/ }),
 

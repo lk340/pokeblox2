@@ -1,10 +1,11 @@
-#left-sidebar {
+.left-sidebar {
   width: 300px;
   height: 600px;
   margin-right: 40px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition-duration: 0.3s;
 }
 
 .high-score, .playlist {
@@ -13,6 +14,7 @@
   background-color: var(--charcoal);
   position: relative;
   overflow: hidden;
+  transition-duration: 0.3s;
 }
 
 .high-score-enlarged {
@@ -21,6 +23,7 @@
   background-color: var(--charcoal);
   position: relative;
   overflow: hidden;
+  transition-duration: 0.3s;
 }
 
 .playlist-enlarged {
@@ -31,6 +34,7 @@
   overflow: hidden;
   left: 25px;
   position: absolute;
+  transition-duration: 0.3s;
 }
 
 #high-score h3 {
@@ -56,7 +60,7 @@
   cursor: pointer;
   padding: 10px;
   top: -10px;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
 }
 
 .playlist-enlarge:hover {
@@ -71,7 +75,7 @@
   cursor: pointer;
   padding: 10px;
   top: -10px;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
 }
 
 .playlist-small:hover {
@@ -88,11 +92,13 @@
 .playlist-songs {
   height: 150px;
   overflow: auto;
+  transition-duration: 0.3s;
 }
 
 .playlist-songs-enlarged {
   height: 460px;
   overflow: auto;
+  transition-duration: 0.3s;
 }
 
 #playlist-songs span {

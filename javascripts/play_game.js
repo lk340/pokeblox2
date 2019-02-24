@@ -5,6 +5,7 @@ export default class PlayGame {
     this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
+    this.start = false;
   }
 
   frameRate() {

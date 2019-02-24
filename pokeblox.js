@@ -24,17 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const tetrominoes = [I, O, T, S, Z, J, L];
   const currentPiece = new Piece(context, gameBoard, tetrominoes);
   const shadow = new Piece(context, gameBoard, tetrominoes);
-  currentPiece.drawPiece();
+  // currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
   // GAME-PLAY LOGIC START
   const game = new PlayGame(currentPiece, gameBoard);
-  game.frameRate();
+  // game.frameRate();
   // GAME-PLAY LOGIC END
   // =============================================================
   // PIECE DOM MANIPULATION START
   movePiece(currentPiece);
-  playPause(game);
+  playPause(currentPiece, game);
   playlistHighscore();
   playlist();
   // PIECE DOM MANIPULATION END

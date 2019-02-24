@@ -316,18 +316,24 @@ const movePiece = (currentPiece) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playPause", function() { return playPause; });
-const playPause = (playGame) => {
+const playPause = (currentPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
         console.log("q");
+        console.log(game.start);
+        if (game.start === false) {
+          game.start = true;
+          currentPiece.drawPiece();
+          game.frameRate();
+        }
         break;
       case 80: // p
         console.log("p");
         break;
       case 69: // e
         console.log("e");
-        playGame.pauseGame();
+        game.pauseGame();
         break;
       case 82: // r
         console.log("r");
@@ -813,6 +819,7 @@ class PlayGame {
     this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
+    this.start = false;
   }
 
   frameRate() {
@@ -1077,17 +1084,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["L"]];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   const shadow = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
-  currentPiece.drawPiece();
+  // currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
   // GAME-PLAY LOGIC START
   const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
-  game.frameRate();
+  // game.frameRate();
   // GAME-PLAY LOGIC END
   // =============================================================
   // PIECE DOM MANIPULATION START
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
-  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(game);
+  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
   Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])();
   // PIECE DOM MANIPULATION END

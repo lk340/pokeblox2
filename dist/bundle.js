@@ -338,6 +338,101 @@ const playPause = (playGame) => {
 
 /***/ }),
 
+/***/ "./javascripts/dom_manipulation/playlist.js":
+/*!**************************************************!*\
+  !*** ./javascripts/dom_manipulation/playlist.js ***!
+  \**************************************************/
+/*! exports provided: playlist */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playlist", function() { return playlist; });
+const playlist = () => {
+  let currentSong = document.getElementById("battle-team-rocket");
+  
+  document.getElementById("tearsOfLife").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("tears-of-life");
+    currentSong.play();
+  });
+
+  document.getElementById("johtoOpening").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("johto-opening");
+    currentSong.play();
+  });
+  
+  document.getElementById("viridianCity").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("viridian-city");
+    currentSong.play();
+  });
+  
+  document.getElementById("viridianForest").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("viridian-forest");
+    currentSong.play();
+  });
+  
+  document.getElementById("battleTeamRocket").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("battle-team-rocket");
+    currentSong.play();
+  });
+  
+  document.getElementById("route47").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("route-47");
+    currentSong.play();
+  });
+  
+  document.getElementById("gscChampion").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("gsc-champion");
+    currentSong.play();
+  });
+  
+  document.getElementById("dppChampion").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("dpp-champion");
+    currentSong.play();
+  });
+  
+  document.getElementById("nTheme").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("n-theme");
+    currentSong.play();
+  });
+  
+  document.getElementById("snowbelleCity").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("snowbelle-city");
+    currentSong.play();
+  });
+  
+  document.getElementById("usumTheme").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("usum-theme");
+    currentSong.play();
+  });
+  
+  document.getElementById("originalTetris").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("original-tetris");
+    currentSong.play();
+  });
+  
+  document.getElementById("tetris_99").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("tetris99");
+    currentSong.play();
+  });
+};
+
+
+/***/ }),
+
 /***/ "./javascripts/dom_manipulation/playlist_highscore.js":
 /*!************************************************************!*\
   !*** ./javascripts/dom_manipulation/playlist_highscore.js ***!
@@ -740,7 +835,7 @@ class PlayGame {
 
     setTimeout(() => {
       if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
-    }, 4000);
+    }, 400);
   }
 
   pauseGame() {
@@ -942,6 +1037,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
 /* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
 /* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
+/* harmony import */ var _javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist */ "./javascripts/dom_manipulation/playlist.js");
+
 
 
 
@@ -979,6 +1076,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece);
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
+  Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])();
   // PIECE DOM MANIPULATION END
 });
 

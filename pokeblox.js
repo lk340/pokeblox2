@@ -6,6 +6,7 @@ import { I, O, T, S, Z, J, L } from './javascripts/tetrominoes';
 import { movePiece } from './javascripts/dom_manipulation/piece_controls';
 import { playPause } from './javascripts/dom_manipulation/play_pause_controls';
 import { playlistHighscore } from './javascripts/dom_manipulation/playlist_highscore';
+import { playlist } from './javascripts/dom_manipulation/playlist';
 
 document.addEventListener("DOMContentLoaded", () => {
   // CANVAS START
@@ -35,5 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
   movePiece(currentPiece);
   playPause(game);
   playlistHighscore();
+  playlist();
   // PIECE DOM MANIPULATION END
 });

@@ -40,7 +40,7 @@ export default class PlayGame {
 
     setTimeout(() => {
       if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
-    }, 4000);
+    }, 400);
   }
 
   pauseGame() {

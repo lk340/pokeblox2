@@ -143,7 +143,7 @@ class Board {
     let x_offset = piece.x_offset;
     let y_offset = piece.y_offset;
 
-    if (piece.verticalCollision === true) {
+    // if (piece.verticalCollision === true) {
       for (let y = currentPiece.length - 1; y >= 0; y--) {
         for (let x = 0; x < currentPiece[y].length; x++) {
           if (currentPiece[y][x] === 1) {
@@ -152,7 +152,7 @@ class Board {
         }
       }
       this.drawBoard();
-    }
+    // }
   }
 
   checkIfRowIsEmpty(row) {
@@ -829,7 +829,7 @@ class Piece {
   
             // if (gridBelow !== charcoal) verticalCheck += 1;
             if (this.y_offset + y === 19) this.verticalCollision = true;
-            else if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.verticalCollision = true;
+            else if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"] && !this.currentPiece[y+1].includes(1)) this.verticalCollision = true;
             // else verticalCollision = false;
           }
         }
@@ -901,6 +901,7 @@ class Piece {
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
+    
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
     const y = this.currentPiece.length - 1;
@@ -1064,19 +1065,25 @@ class PlayGame {
       window.cancelAnimationFrame || 
       window.mozCancelAnimationFrame;
     // More accessible to different browsers and browser versions
+    
+    console.log(this.currentPiece.verticalCollision);
 
     if (this.currentPiece.verticalCollision === false) {
+      this.currentPiece.moveDown();
+      this.board.updateBoard(this.currentPiece);
+      this.shadowPiece.instantFall();
+
+      console.log(this.board.board);
+    }
+
+    else { // this.currentPiece.verticalCollision === true
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
         cancelAnimationFrame(this.animation);
         document.getElementById("game-over").play();
         return;
       }
-      this.currentPiece.moveDown();
-      this.shadowPiece.instantFall();
-    }
 
-    else { // this.currentPiece.verticalCollision === true
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
       

@@ -23,19 +23,25 @@ export default class PlayGame {
       window.cancelAnimationFrame || 
       window.mozCancelAnimationFrame;
     // More accessible to different browsers and browser versions
+    
+    console.log(this.currentPiece.verticalCollision);
 
     if (this.currentPiece.verticalCollision === false) {
+      this.currentPiece.moveDown();
+      this.board.updateBoard(this.currentPiece);
+      this.shadowPiece.instantFall();
+
+      console.log(this.board.board);
+    }
+
+    else { // this.currentPiece.verticalCollision === true
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
         cancelAnimationFrame(this.animation);
         document.getElementById("game-over").play();
         return;
       }
-      this.currentPiece.moveDown();
-      this.shadowPiece.instantFall();
-    }
 
-    else { // this.currentPiece.verticalCollision === true
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
       

@@ -44,7 +44,7 @@ export default class Board {
     let x_offset = piece.x_offset;
     let y_offset = piece.y_offset;
 
-    if (piece.verticalCollision === true) {
+    // if (piece.verticalCollision === true) {
       for (let y = currentPiece.length - 1; y >= 0; y--) {
         for (let x = 0; x < currentPiece[y].length; x++) {
           if (currentPiece[y][x] === 1) {
@@ -53,7 +53,7 @@ export default class Board {
         }
       }
       this.drawBoard();
-    }
+    // }
   }
 
   checkIfRowIsEmpty(row) {

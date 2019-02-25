@@ -73,7 +73,7 @@ export default class Piece {
   
             // if (gridBelow !== charcoal) verticalCheck += 1;
             if (this.y_offset + y === 19) this.verticalCollision = true;
-            else if (gridBelow !== charcoal) this.verticalCollision = true;
+            else if (gridBelow !== charcoal && !this.currentPiece[y+1].includes(1)) this.verticalCollision = true;
             // else verticalCollision = false;
           }
         }
@@ -145,6 +145,7 @@ export default class Piece {
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
+    
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
     const y = this.currentPiece.length - 1;

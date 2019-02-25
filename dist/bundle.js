@@ -619,8 +619,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Piece; });
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
 /* harmony import */ var _modules_modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modules */ "./javascripts/modules/modules.js");
-/* harmony import */ var _dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom_manipulation/next_piece */ "./javascripts/dom_manipulation/next_piece.js");
-
 
 
 
@@ -862,9 +860,9 @@ class Piece {
   }
 
   resetPiece() {
-    // helper method for frameRate()
-    const nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
 
+    // helper method for frameRate()
+    let nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
     // Gets rid of old next piece preview
     if (nPiece[0] !== "hide-tetromino") {
       nPiece.remove(`${this.nextPiece.type}`);
@@ -885,7 +883,12 @@ class Piece {
     this.horizontalRightCollision = false;
 
     // Creates new next piece preview
-    Object(_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_2__["nextPiece"])(this.nextPiece.type);
+    // nextPiece(this.nextPiece.type);
+    nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
+    if (nPiece[0] === "hide-tetromino") {
+      nPiece.remove("hide-tetromino");
+      nPiece.add(`${this.nextPiece.type}`);
+    }
   }
 }
 

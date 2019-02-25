@@ -1,6 +1,5 @@
 import { charcoal, ash } from './colors';
 import { randomPiece } from './modules/modules';
-import { nextPiece } from './dom_manipulation/next_piece';
 
 export default class Piece {
   constructor(context, board, tetrominoes) {
@@ -240,9 +239,9 @@ export default class Piece {
   }
 
   resetPiece() {
-    // helper method for frameRate()
-    const nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
 
+    // helper method for frameRate()
+    let nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
     // Gets rid of old next piece preview
     if (nPiece[0] !== "hide-tetromino") {
       nPiece.remove(`${this.nextPiece.type}`);
@@ -263,6 +262,11 @@ export default class Piece {
     this.horizontalRightCollision = false;
 
     // Creates new next piece preview
-    nextPiece(this.nextPiece.type);
+    // nextPiece(this.nextPiece.type);
+    nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
+    if (nPiece[0] === "hide-tetromino") {
+      nPiece.remove("hide-tetromino");
+      nPiece.add(`${this.nextPiece.type}`);
+    }
   }
 }

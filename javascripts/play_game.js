@@ -1,8 +1,10 @@
 export default class PlayGame {
-  constructor(currentPiece, board, currentSong) {
+  constructor(currentPiece, shadowPiece, board, currentSong) {
     this.currentPiece = currentPiece;
+    this.shadowPiece = shadowPiece;
     this.board = board;
     this.currentSong = currentSong;
+
     this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
@@ -30,13 +32,19 @@ export default class PlayGame {
         return;
       }
       this.currentPiece.moveDown();
+      this.shadowPiece.instantFall();
     }
 
     else { // this.currentPiece.verticalCollision === true
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
+      
       this.currentPiece.resetPiece();
       this.currentPiece.drawPiece();
+
+      this.shadowPiece.resetPiece(this.currentPiece);
+      this.shadowPiece.drawPiece();
+      this.shadowPiece.instantFall();
     }
 
     setTimeout(() => {

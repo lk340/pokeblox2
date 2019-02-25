@@ -345,44 +345,97 @@ const header = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "movePiece", function() { return movePiece; });
-const movePiece = (currentPiece, game) => {
+const movePiece = (currentPiece, shadowPiece, game) => {
   document.addEventListener("keydown", event => {
     if (game.start === true) {
       switch(event.which) {
         case 87: // w
           document.getElementById("move-piece").play();
-          return currentPiece.rotate();
+          currentPiece.rotate();
+          shadowPiece.rotate();
+          break;
         case 65: // a
           document.getElementById("move-piece").play();
-          return currentPiece.moveLeft();
+          currentPiece.moveLeft();
+          shadowPiece.moveLeft();
+          break;
         case 83: // s
           document.getElementById("move-piece").play();
-          return currentPiece.moveDown();
+          currentPiece.moveDown();
+          break;
         case 68: // d
           document.getElementById("move-piece").play();
-          return currentPiece.moveRight();
+          currentPiece.moveRight();
+          shadowPiece.moveRight();
+          break;
         case 38: // up
           event.preventDefault();
           document.getElementById("move-piece").play();
-          return currentPiece.rotate();
+          currentPiece.rotate();
+
+          shadowPiece.deletePiece();
+          shadowPiece.x_offset = currentPiece.x_offset;
+          shadowPiece.y_offset = currentPiece.y_offset + 3;
+          shadowPiece.verticalCollision = false;
+          shadowPiece.horizontalLeftCollision = false;
+          shadowPiece.horizontalRightCollision = false;
+          shadowPiece.instantFall();
+          shadowPiece.drawPiece();
+          shadowPiece.rotate();
+          break;
         case 37: // left
           event.preventDefault();
+
           document.getElementById("move-piece").play();
-          return currentPiece.moveLeft();
+          currentPiece.moveLeft();
+
+          shadowPiece.deletePiece();
+          shadowPiece.x_offset = currentPiece.x_offset;
+          shadowPiece.y_offset = currentPiece.y_offset + 3;
+          shadowPiece.verticalCollision = false;
+          shadowPiece.horizontalLeftCollision = false;
+          shadowPiece.horizontalRightCollision = false;
+          shadowPiece.instantFall();
+          shadowPiece.drawPiece();
+          break;
         case 40: // down
           event.preventDefault();
+
           document.getElementById("move-piece").play();
-          return currentPiece.moveDown();
+          currentPiece.moveDown();
+          break;
         case 39: // right
           event.preventDefault();
+
           document.getElementById("move-piece").play();
-          return currentPiece.moveRight();
+          currentPiece.moveRight();
+
+          shadowPiece.deletePiece();
+          shadowPiece.x_offset = currentPiece.x_offset;
+          shadowPiece.y_offset = currentPiece.y_offset + 3;
+          shadowPiece.verticalCollision = false;
+          shadowPiece.horizontalLeftCollision = false;
+          shadowPiece.horizontalRightCollision = false;
+          shadowPiece.instantFall();
+          shadowPiece.drawPiece();
+          break;
         case 32: // space-bar
           event.preventDefault();
+
           if (game.start === true) currentPiece.instantFall();
           break;
         case 16: // shift
-          return currentPiece.savePiece();
+          currentPiece.savePiece();
+
+          shadowPiece.deletePiece();
+          shadowPiece.x_offset = currentPiece.x_offset;
+          shadowPiece.y_offset = currentPiece.y_offset + 3;
+          shadowPiece.verticalCollision = false;
+          shadowPiece.horizontalLeftCollision = false;
+          shadowPiece.horizontalRightCollision = false;
+          shadowPiece.instantFall();
+          shadowPiece.drawPiece();
+          break;
       }
     }
   });
@@ -405,7 +458,6 @@ const playPause = (currentPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
-        console.log(game.start);
         if (game.start === false) {
           game.start = true;
           currentPiece.drawPiece();
@@ -990,10 +1042,12 @@ class Piece {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayGame; });
 class PlayGame {
-  constructor(currentPiece, board, currentSong) {
+  constructor(currentPiece, shadowPiece, board, currentSong) {
     this.currentPiece = currentPiece;
+    this.shadowPiece = shadowPiece;
     this.board = board;
     this.currentSong = currentSong;
+
     this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
@@ -1021,13 +1075,19 @@ class PlayGame {
         return;
       }
       this.currentPiece.moveDown();
+      this.shadowPiece.instantFall();
     }
 
     else { // this.currentPiece.verticalCollision === true
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
+      
       this.currentPiece.resetPiece();
       this.currentPiece.drawPiece();
+
+      this.shadowPiece.resetPiece(this.currentPiece);
+      this.shadowPiece.drawPiece();
+      this.shadowPiece.instantFall();
     }
 
     setTimeout(() => {
@@ -1041,6 +1101,210 @@ class PlayGame {
       this.toggleAnimation = true;
       this.frameRate();
     }
+  }
+}
+
+
+/***/ }),
+
+/***/ "./javascripts/shadow_piece.js":
+/*!*************************************!*\
+  !*** ./javascripts/shadow_piece.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ShadowPiece; });
+/* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
+
+
+class ShadowPiece {
+  constructor(context, board, currentPiece) {
+    this.context = context;
+    this.board = board;
+    this.currPiece = currentPiece;
+
+    this.shapes = currentPiece.shapes;
+    this.color = _colors__WEBPACK_IMPORTED_MODULE_0__["shadow"];
+    this.type = currentPiece.type;
+    this.currentPieceIndex = currentPiece.currentPieceIndex;
+    this.currentPiece = currentPiece.currentPiece;
+
+    this.x_offset = 3;
+    this.y_offset = currentPiece.y_offset + 3;
+
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
+  }
+
+  createGrid(x, y, blockColor, context) {
+    if (x < 10 && y < 20) {
+      const x_pos = x * 30;
+      const y_pos = y * 30;
+      context.fillStyle = blockColor;
+      context.fillRect(x_pos, y_pos, 30, 30);
+      context.strokeStyle = _colors__WEBPACK_IMPORTED_MODULE_0__["ash"];
+      context.strokeRect(x_pos, y_pos, 30, 30);
+    }
+  }
+
+  deletePiece() {
+    for (let y = 0; y < this.currentPiece.length; y++) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        if (this.currentPiece[y][x] === 1) {
+          this.createGrid(this.x_offset + x, this.y_offset + y, _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], this.context);
+        }
+      }
+    }
+  }
+
+  drawPiece() {
+    for (let y = 0; y < this.currentPiece.length; y++) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        if (this.currentPiece[y][x] === 1) {
+          this.createGrid(this.x_offset + x, this.y_offset + y, this.color, this.context);
+        }
+      }
+    }
+  }
+
+  checkVerticalCollision() {
+    if (this.y_offset >= 0) {
+      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+        for (let x = 0; x < this.currentPiece[y].length; x++) {
+          if (this.currentPiece[y][x] === 1) {
+            let gridBelow;
+            if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
+  
+            // if (gridBelow !== charcoal) verticalCheck += 1;
+            if (this.y_offset + y === 19) this.verticalCollision = true;
+            else if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.verticalCollision = true;
+            // else verticalCollision = false;
+          }
+        }
+      }
+    }
+
+    // if (this.y_offset + y === 19) this.verticalCollision = true;
+    // else if (verticalCheck > 0) this.verticalCollision = true;
+    // else this.verticalCollision = false;
+  }
+
+  checkHorizontalLeftCollision() {
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      if (this.currentPiece[y][0] === 1) {
+        if (this.x_offset === 0) this.horizontalLeftCollision = true;
+        else this.horizontalLeftCollision = false;
+      }
+    }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        const leftCollision = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
+      }
+    }
+  }
+
+  checkHorizontalRightCollision() {
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      const farRightIndex = this.currentPiece[y].length - 1;
+      if (this.currentPiece[y][farRightIndex] === 1) {
+        const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
+        const rightCollision = this.board.board[this.y_offset + y][farRightGridOnPiece];
+        if (farRightGridOnPiece > 9 || rightCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalRightCollision = true;
+        else this.horizontalRightCollision = false;
+      }
+    }
+  }
+
+  moveLeft() {
+    this.deletePiece();
+    this.checkHorizontalLeftCollision();
+    // if (this.x_offset > 0) this.x_offset -= 1;
+    if (this.horizontalLeftCollision === false) {
+      this.x_offset -= 1;
+    }
+    this.drawPiece();
+  }
+
+  moveRight() {
+    this.checkHorizontalRightCollision();
+    this.deletePiece();
+    if (this.horizontalRightCollision === false) {
+      this.x_offset += 1;
+    }
+    this.drawPiece();
+  }
+  
+  moveDown() {
+    this.checkVerticalCollision();
+    this.deletePiece();
+    if (this.verticalCollision === false) {
+      this.y_offset += 1;
+    }
+    this.drawPiece();
+  }
+
+  rotate() {
+    if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
+    else this.currentPieceIndex += 1;
+    this.deletePiece();
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    const y = this.currentPiece.length - 1;
+    const x = this.currentPiece[y].length - 1;
+
+    // Fixes piece falling off the board when rotating at the bottom
+    if (this.y_offset + y > 19) {
+      while (this.y_offset + y > 19) {
+        this.y_offset -= 1;
+      }
+    }
+
+    // Fixes piece falling off the board when rotating at the left
+    if (this.x_offset < 0) {
+      while (this.x_offset < 0) {
+        this.x_offset += 1;
+      }
+    }
+
+    // Fixes piece falling off the board when rotating at the right
+    if (this.x_offset + x > 9) {
+      while (this.x_offset + x > 9) {
+        this.x_offset -= 1;
+      }
+    }
+
+    this.drawPiece();
+  }
+
+  instantFall() {
+    while (this.verticalCollision === false) {
+      this.checkVerticalCollision();
+      this.moveDown();
+    }
+    document.getElementById("fall-piece").play();
+  }
+
+  resetPiece(piece) {
+    this.currPiece = piece;
+
+    this.shapes = piece.shapes;
+    this.color = _colors__WEBPACK_IMPORTED_MODULE_0__["shadow"];
+    this.type = piece.type;
+    this.currentPieceIndex = piece.currentPieceIndex;
+    this.currentPiece = piece.currentPiece;
+
+    this.x_offset = 3;
+    this.y_offset = piece.y_offset + 1;
+
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
   }
 }
 
@@ -1229,14 +1493,16 @@ const L = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_board__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./javascripts/board */ "./javascripts/board.js");
 /* harmony import */ var _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./javascripts/piece */ "./javascripts/piece.js");
-/* harmony import */ var _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/play_game */ "./javascripts/play_game.js");
-/* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
-/* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
-/* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
-/* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
-/* harmony import */ var _javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist */ "./javascripts/dom_manipulation/playlist.js");
-/* harmony import */ var _javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./javascripts/dom_manipulation/guide_modal */ "./javascripts/dom_manipulation/guide_modal.js");
-/* harmony import */ var _javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./javascripts/dom_manipulation/header */ "./javascripts/dom_manipulation/header.js");
+/* harmony import */ var _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./javascripts/shadow_piece */ "./javascripts/shadow_piece.js");
+/* harmony import */ var _javascripts_play_game__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./javascripts/play_game */ "./javascripts/play_game.js");
+/* harmony import */ var _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./javascripts/tetrominoes */ "./javascripts/tetrominoes.js");
+/* harmony import */ var _javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./javascripts/dom_manipulation/piece_controls */ "./javascripts/dom_manipulation/piece_controls.js");
+/* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
+/* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
+/* harmony import */ var _javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist */ "./javascripts/dom_manipulation/playlist.js");
+/* harmony import */ var _javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./javascripts/dom_manipulation/guide_modal */ "./javascripts/dom_manipulation/guide_modal.js");
+/* harmony import */ var _javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./javascripts/dom_manipulation/header */ "./javascripts/dom_manipulation/header.js");
+
 
 
 
@@ -1262,25 +1528,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_3__["L"]];
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
-  const shadow = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
+  const shadow = new _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__["default"](context, gameBoard, currentPiece);
   // currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
   // GAME-PLAY LOGIC START
   let currentSong = document.getElementById("battle-team-rocket");
-  const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard, currentSong);
+  const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_3__["default"](currentPiece, shadow, gameBoard, currentSong);
   // game.frameRate();
   // GAME-PLAY LOGIC END
   // =============================================================
   // PIECE DOM MANIPULATION START
-  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece, game);
-  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(currentPiece, game);
-  Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
-  Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])(currentSong);
-  Object(_javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_8__["guideModal"])();
-  Object(_javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_9__["header"])();
+  Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_5__["movePiece"])(currentPiece, shadow, game);
+  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_6__["playPause"])(currentPiece, game);
+  Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_7__["playlistHighscore"])();
+  Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_8__["playlist"])(currentSong);
+  Object(_javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_9__["guideModal"])();
+  Object(_javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_10__["header"])();
   // PIECE DOM MANIPULATION END
 });
 

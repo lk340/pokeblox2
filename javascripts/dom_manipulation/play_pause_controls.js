@@ -2,7 +2,6 @@ export const playPause = (currentPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
-        console.log(game.start);
         if (game.start === false) {
           game.start = true;
           currentPiece.drawPiece();

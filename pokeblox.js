@@ -1,5 +1,6 @@
 import Board from './javascripts/board';
 import Piece from './javascripts/piece';
+import ShadowPiece from './javascripts/shadow_piece';
 import PlayGame from './javascripts/play_game';
 
 import { I, O, T, S, Z, J, L } from './javascripts/tetrominoes';
@@ -25,18 +26,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW PIECE START
   const tetrominoes = [I, O, T, S, Z, J, L];
   const currentPiece = new Piece(context, gameBoard, tetrominoes);
-  const shadow = new Piece(context, gameBoard, tetrominoes);
+  const shadow = new ShadowPiece(context, gameBoard, currentPiece);
   // currentPiece.drawPiece();
   // DRAW PIECE END
   // =============================================================
   // GAME-PLAY LOGIC START
   let currentSong = document.getElementById("battle-team-rocket");
-  const game = new PlayGame(currentPiece, gameBoard, currentSong);
+  const game = new PlayGame(currentPiece, shadow, gameBoard, currentSong);
   // game.frameRate();
   // GAME-PLAY LOGIC END
   // =============================================================
   // PIECE DOM MANIPULATION START
-  movePiece(currentPiece, game);
+  movePiece(currentPiece, shadow, game);
   playPause(currentPiece, game);
   playlistHighscore();
   playlist(currentSong);

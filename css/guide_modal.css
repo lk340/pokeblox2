@@ -38,6 +38,24 @@
   grid-gap: 10px;
 }
 
+.guide-controls {
+  animation: guideModalFloat 1.3s linear infinite;
+}
+
+.guide-music-options {
+  animation: guideModalFloat 0.9s linear infinite;
+}
+
+@keyframes guideModalFloat {
+  0%, 100% {
+    transform: translateY(5px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
 .guide-controls-main, .guide-music-choices {
   /* height: 90%; */
   height: calc(500px*0.9);

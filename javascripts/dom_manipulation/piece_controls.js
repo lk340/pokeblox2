@@ -1,5 +1,16 @@
 export const movePiece = (currentPiece, shadowPiece, game) => {
   document.addEventListener("keydown", event => {
+    function resetShadow() {
+      shadowPiece.deletePiece();
+      shadowPiece.x_offset = currentPiece.x_offset;
+      shadowPiece.y_offset = currentPiece.y_offset + 3;
+      shadowPiece.verticalCollision = false;
+      shadowPiece.horizontalLeftCollision = false;
+      shadowPiece.horizontalRightCollision = false;
+      shadowPiece.instantFall();
+      shadowPiece.drawPiece();
+    }
+
     if (game.start === true) {
       switch(event.which) {
         case 87: // w
@@ -26,14 +37,7 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
           document.getElementById("move-piece").play();
           currentPiece.rotate();
 
-          shadowPiece.deletePiece();
-          shadowPiece.x_offset = currentPiece.x_offset;
-          shadowPiece.y_offset = currentPiece.y_offset + 3;
-          shadowPiece.verticalCollision = false;
-          shadowPiece.horizontalLeftCollision = false;
-          shadowPiece.horizontalRightCollision = false;
-          shadowPiece.instantFall();
-          shadowPiece.drawPiece();
+          resetShadow();
           shadowPiece.rotate();
           break;
         case 37: // left
@@ -42,14 +46,7 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
           document.getElementById("move-piece").play();
           currentPiece.moveLeft();
 
-          shadowPiece.deletePiece();
-          shadowPiece.x_offset = currentPiece.x_offset;
-          shadowPiece.y_offset = currentPiece.y_offset + 3;
-          shadowPiece.verticalCollision = false;
-          shadowPiece.horizontalLeftCollision = false;
-          shadowPiece.horizontalRightCollision = false;
-          shadowPiece.instantFall();
-          shadowPiece.drawPiece();
+          resetShadow();
           break;
         case 40: // down
           event.preventDefault();
@@ -63,14 +60,7 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
           document.getElementById("move-piece").play();
           currentPiece.moveRight();
 
-          shadowPiece.deletePiece();
-          shadowPiece.x_offset = currentPiece.x_offset;
-          shadowPiece.y_offset = currentPiece.y_offset + 3;
-          shadowPiece.verticalCollision = false;
-          shadowPiece.horizontalLeftCollision = false;
-          shadowPiece.horizontalRightCollision = false;
-          shadowPiece.instantFall();
-          shadowPiece.drawPiece();
+          resetShadow();
           break;
         case 32: // space-bar
           event.preventDefault();
@@ -81,8 +71,12 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
           currentPiece.savePiece();
 
           shadowPiece.deletePiece();
-          shadowPiece.x_offset = currentPiece.x_offset;
+          shadowPiece.x_offset = 3;
           shadowPiece.y_offset = currentPiece.y_offset + 3;
+          shadowPiece.shapes = currentPiece.shapes;
+          shadowPiece.type = currentPiece.type;
+          shadowPiece.currentPieceIndex = currentPiece.currentPieceIndex;
+          shadowPiece.currentPiece = currentPiece.currentPiece;
           shadowPiece.verticalCollision = false;
           shadowPiece.horizontalLeftCollision = false;
           shadowPiece.horizontalRightCollision = false;

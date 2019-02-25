@@ -186,6 +186,7 @@ class Board {
         this.board.splice(lastRowIndex, 1);
         this.board.unshift([_colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"], _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]]);
         this.drawBoard(); 
+        this.pointCounter += 1;
         document.getElementById("clear-row").play();
       }
 
@@ -201,21 +202,31 @@ class Board {
       row = this.board[lastRowIndex];
       rowCheck = this.checkIfRowIsEmpty(row);
     }
+
+    this.handlePoints();
   }
 
   handlePoints() {
     switch(this.pointCounter) {
       case 1:
         this.points += this.pointCounter * 10;
+        document.getElementById("points").innerHTML = this.points;
+        this.pointCounter = 0;
         break;
       case 2:
         this.points += (this.pointCounter * 20) + 10;
+        document.getElementById("points").innerHTML = this.points;
+        this.pointCounter = 0;
         break;
       case 3:
         this.points += (this.pointCounter * 30) + 20;
+        document.getElementById("points").innerHTML = this.points;
+        this.pointCounter = 0;
         break;
       case 4:
         this.points += (this.pointCounter * 40) + 30;
+        document.getElementById("points").innerHTML = this.points;
+        this.pointCounter = 0;
         break;
     }
   }

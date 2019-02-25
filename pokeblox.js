@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW PIECE END
   // =============================================================
   // GAME-PLAY LOGIC START
-  const game = new PlayGame(currentPiece, gameBoard);
+  let currentSong = document.getElementById("battle-team-rocket");
+  const game = new PlayGame(currentPiece, gameBoard, currentSong);
   // game.frameRate();
   // GAME-PLAY LOGIC END
   // =============================================================
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   movePiece(currentPiece, game);
   playPause(currentPiece, game);
   playlistHighscore();
-  playlist();
+  playlist(currentSong);
   guideModal();
   header();
   // PIECE DOM MANIPULATION END

@@ -1,7 +1,8 @@
 export default class PlayGame {
-  constructor(currentPiece, board) {
+  constructor(currentPiece, board, currentSong) {
     this.currentPiece = currentPiece;
     this.board = board;
+    this.currentSong = currentSong;
     this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
@@ -9,6 +10,7 @@ export default class PlayGame {
   }
 
   frameRate() {
+    // More accessible to different browsers and browser versions
     const requestAnimationFrame = 
       window.requestAnimationFrame || 
       window.mozRequestAnimationFrame || 
@@ -18,25 +20,23 @@ export default class PlayGame {
     const cancelAnimationFrame = 
       window.cancelAnimationFrame || 
       window.mozCancelAnimationFrame;
+    // More accessible to different browsers and browser versions
 
     if (this.currentPiece.verticalCollision === false) {
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
-        setTimeout(() => {
-          cancelAnimationFrame(this.animation);
-        }, 400);
+        cancelAnimationFrame(this.animation);
         document.getElementById("game-over").play();
         return;
       }
       this.currentPiece.moveDown();
-
-      // console.log(this.board.board);
     }
 
     else { // this.currentPiece.verticalCollision === true
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
       this.currentPiece.resetPiece();
+      this.currentPiece.drawPiece();
     }
 
     setTimeout(() => {

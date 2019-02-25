@@ -434,8 +434,8 @@ const playPause = (currentPiece, game) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playlist", function() { return playlist; });
-const playlist = () => {
-  let currentSong = document.getElementById("battle-team-rocket");
+const playlist = (currentSong) => {
+  // let currentSong = document.getElementById("battle-team-rocket");
   const playlistBackground = document.getElementById("playlist-background").classList;
   let pause = false;
 
@@ -962,7 +962,7 @@ class Piece {
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
     this.x_offset = 3;
-    this.y_offset = -1;
+    this.y_offset = this.currPiece.type === "I" ? -1 : 0;
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
@@ -990,9 +990,10 @@ class Piece {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PlayGame; });
 class PlayGame {
-  constructor(currentPiece, board) {
+  constructor(currentPiece, board, currentSong) {
     this.currentPiece = currentPiece;
     this.board = board;
+    this.currentSong = currentSong;
     this.toggleAnimation = true;
     this.animation = null;
     this.frameRate = this.frameRate.bind(this);
@@ -1000,6 +1001,7 @@ class PlayGame {
   }
 
   frameRate() {
+    // More accessible to different browsers and browser versions
     const requestAnimationFrame = 
       window.requestAnimationFrame || 
       window.mozRequestAnimationFrame || 
@@ -1009,25 +1011,23 @@ class PlayGame {
     const cancelAnimationFrame = 
       window.cancelAnimationFrame || 
       window.mozCancelAnimationFrame;
+    // More accessible to different browsers and browser versions
 
     if (this.currentPiece.verticalCollision === false) {
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
-        setTimeout(() => {
-          cancelAnimationFrame(this.animation);
-        }, 400);
+        cancelAnimationFrame(this.animation);
         document.getElementById("game-over").play();
         return;
       }
       this.currentPiece.moveDown();
-
-      // console.log(this.board.board);
     }
 
     else { // this.currentPiece.verticalCollision === true
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
       this.currentPiece.resetPiece();
+      this.currentPiece.drawPiece();
     }
 
     setTimeout(() => {
@@ -1269,7 +1269,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW PIECE END
   // =============================================================
   // GAME-PLAY LOGIC START
-  const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard);
+  let currentSong = document.getElementById("battle-team-rocket");
+  const game = new _javascripts_play_game__WEBPACK_IMPORTED_MODULE_2__["default"](currentPiece, gameBoard, currentSong);
   // game.frameRate();
   // GAME-PLAY LOGIC END
   // =============================================================
@@ -1277,7 +1278,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_4__["movePiece"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
-  Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])();
+  Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])(currentSong);
   Object(_javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_8__["guideModal"])();
   Object(_javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_9__["header"])();
   // PIECE DOM MANIPULATION END

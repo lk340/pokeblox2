@@ -1,5 +1,5 @@
-export const playlist = () => {
-  let currentSong = document.getElementById("battle-team-rocket");
+export const playlist = (currentSong) => {
+  // let currentSong = document.getElementById("battle-team-rocket");
   const playlistBackground = document.getElementById("playlist-background").classList;
   let pause = false;
 

@@ -1,0 +1,39 @@
+.guide-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+
+  border: red solid 1px;
+}
+
+.guide-modal .guide-modal-background {
+  background-color: black;
+  opacity: 0.6;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.guide-modal .guide {
+  width: 900px;
+  height: 500px;
+  position: fixed;
+  z-index: 4;
+  background-color: white;
+}
+
+.guide-modal .guide .guide-controls {
+
+}
+
+.guide-modal .guide .guide-music-choice {
+  
+}

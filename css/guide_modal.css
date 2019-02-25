@@ -11,6 +11,10 @@
   border: red solid 1px;
 }
 
+.guide-modal-close {
+  display: none;
+}
+
 .guide-modal .guide-modal-background {
   background-color: black;
   opacity: 0.6;
@@ -23,17 +27,39 @@
 }
 
 .guide-modal .guide {
-  width: 900px;
-  height: 500px;
+  width: 60%;
+  height: 50%;
   position: fixed;
   z-index: 4;
+  /* background-color: white; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.guide-controls-main, .guide-music-choices {
+  height: 90%;
   background-color: white;
+  display: flex;
+  justify-content: center;
 }
 
-.guide-modal .guide .guide-controls {
-
+.guide-controls-main h3, .guide-music-choices h3 {
+  padding: 0;
+  margin: 0;
+  color: var(--ash);
+  padding-top: 14px;
+  font-size: 1rem;
 }
 
-.guide-modal .guide .guide-music-choice {
-  
+.guide-controls-main {
+  border-top-left-radius: 20px;
+}
+
+.guide-music-choices {
+  border-bottom-right-radius: 20px;
+}
+
+.guide-splitter {
+  height: 10%;
 }

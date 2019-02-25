@@ -358,6 +358,21 @@ const movePiece = (currentPiece, shadowPiece, game) => {
       shadowPiece.drawPiece();
     }
 
+    function resetShadowShift() {
+      shadowPiece.deletePiece();
+      shadowPiece.x_offset = 3;
+      shadowPiece.y_offset = currentPiece.y_offset + 3;
+      shadowPiece.shapes = currentPiece.shapes;
+      shadowPiece.type = currentPiece.type;
+      shadowPiece.currentPieceIndex = currentPiece.currentPieceIndex;
+      shadowPiece.currentPiece = currentPiece.currentPiece;
+      shadowPiece.verticalCollision = false;
+      shadowPiece.horizontalLeftCollision = false;
+      shadowPiece.horizontalRightCollision = false;
+      shadowPiece.instantFall();
+      shadowPiece.drawPiece();
+    }
+
     if (game.start === true) {
       switch(event.which) {
         case 87: // w
@@ -417,18 +432,7 @@ const movePiece = (currentPiece, shadowPiece, game) => {
         case 16: // shift
           currentPiece.savePiece();
 
-          shadowPiece.deletePiece();
-          shadowPiece.x_offset = 3;
-          shadowPiece.y_offset = currentPiece.y_offset + 3;
-          shadowPiece.shapes = currentPiece.shapes;
-          shadowPiece.type = currentPiece.type;
-          shadowPiece.currentPieceIndex = currentPiece.currentPieceIndex;
-          shadowPiece.currentPiece = currentPiece.currentPiece;
-          shadowPiece.verticalCollision = false;
-          shadowPiece.horizontalLeftCollision = false;
-          shadowPiece.horizontalRightCollision = false;
-          shadowPiece.instantFall();
-          shadowPiece.drawPiece();
+          resetShadowShift();
           break;
       }
     }

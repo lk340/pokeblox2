@@ -18,9 +18,43 @@ export const playlist = () => {
     }
   });
   
-  // MODAL START
+  // GUIDE MODAL START
+  document.getElementById("guide-modal-battle-team-rocket").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("battle-team-rocket");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-battleTeamRocket");
+  });
 
-  // MODAL END
+  document.getElementById("guide-modal-gsc-champion").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("gsc-champion");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-gscChampion");
+  });
+
+  document.getElementById("guide-modal-usum-theme").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("usum-theme");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-usumTheme");
+  });
+
+  document.getElementById("guide-modal-route-47").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("route-47");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-route47");
+  });
+  // GUIDE MODAL END
   
   document.getElementById("tearsOfLife").addEventListener("click", () => {
     currentSong.pause();

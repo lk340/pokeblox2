@@ -270,9 +270,37 @@ const ash = "rgb(92, 92, 92)";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "guideModal", function() { return guideModal; });
 const guideModal = () => {
+  const guide_modal = document.getElementById("guide-modal").classList;
+
   document.getElementById("guide-modal-background").addEventListener("click", () => {
-    const guide_modal = document.getElementById("guide-modal").classList;
-    
+    if (guide_modal[0] === "guide-modal") {
+      guide_modal.remove("guide-modal");
+      guide_modal.add("guide-modal-close");
+    }
+  });
+
+  document.getElementById("guide-modal-battle-team-rocket").addEventListener("click", () => {
+    if (guide_modal[0] === "guide-modal") {
+      guide_modal.remove("guide-modal");
+      guide_modal.add("guide-modal-close");
+    }
+  });
+
+  document.getElementById("guide-modal-gsc-champion").addEventListener("click", () => {
+    if (guide_modal[0] === "guide-modal") {
+      guide_modal.remove("guide-modal");
+      guide_modal.add("guide-modal-close");
+    }
+  });
+
+  document.getElementById("guide-modal-usum-theme").addEventListener("click", () => {
+    if (guide_modal[0] === "guide-modal") {
+      guide_modal.remove("guide-modal");
+      guide_modal.add("guide-modal-close");
+    }
+  });
+
+  document.getElementById("guide-modal-route-47").addEventListener("click", () => {
     if (guide_modal[0] === "guide-modal") {
       guide_modal.remove("guide-modal");
       guide_modal.add("guide-modal-close");
@@ -426,9 +454,43 @@ const playlist = () => {
     }
   });
   
-  // MODAL START
+  // GUIDE MODAL START
+  document.getElementById("guide-modal-battle-team-rocket").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("battle-team-rocket");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-battleTeamRocket");
+  });
 
-  // MODAL END
+  document.getElementById("guide-modal-gsc-champion").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("gsc-champion");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-gscChampion");
+  });
+
+  document.getElementById("guide-modal-usum-theme").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("usum-theme");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-usumTheme");
+  });
+
+  document.getElementById("guide-modal-route-47").addEventListener("click", () => {
+    currentSong.pause();
+    currentSong = document.getElementById("route-47");
+    currentSong.play();
+    currentSong.loop = true;
+    playlistBackground.remove(playlistBackground[0]);
+    playlistBackground.add("bg-route47");
+  });
+  // GUIDE MODAL END
   
   document.getElementById("tearsOfLife").addEventListener("click", () => {
     currentSong.pause();

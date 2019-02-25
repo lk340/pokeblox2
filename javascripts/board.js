@@ -76,7 +76,7 @@ export default class Board {
     }
   }
 
-  deleteRow() {
+  deleteRow(g) {
     // will check the board from bottom-up and delete rows as it goes along
     let lastRowIndex = this.board.length - 1;
     let row = this.board[lastRowIndex];

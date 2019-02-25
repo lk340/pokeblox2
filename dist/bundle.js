@@ -259,28 +259,49 @@ const ash = "rgb(92, 92, 92)";
 
 /***/ }),
 
-/***/ "./javascripts/dom_manipulation/next_piece.js":
-/*!****************************************************!*\
-  !*** ./javascripts/dom_manipulation/next_piece.js ***!
-  \****************************************************/
-/*! exports provided: nextPiece */
+/***/ "./javascripts/dom_manipulation/guide_modal.js":
+/*!*****************************************************!*\
+  !*** ./javascripts/dom_manipulation/guide_modal.js ***!
+  \*****************************************************/
+/*! exports provided: guideModal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nextPiece", function() { return nextPiece; });
-const nextPiece = nextPieceType => {
-  const nextPiece = document.getElementById(`next-${nextPieceType}`).classList;
-  
-  if (nextPiece[0] === "hide-tetromino") {
-    nextPiece.remove("hide-tetromino");
-    nextPiece.add(`${nextPieceType}`);
-  }
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "guideModal", function() { return guideModal; });
+const guideModal = () => {
+  document.getElementById("guide-modal-background").addEventListener("click", () => {
+    const guide_modal = document.getElementById("guide-modal").classList;
+    
+    if (guide_modal[0] === "guide-modal") {
+      guide_modal.remove("guide-modal");
+      guide_modal.add("guide-modal-close");
+    }
+  });
+};
 
-  else {
-    nextPiece.remove(`${nextPieceType}`);
-    nextPiece.add("hide-tetromino");
-  }
+
+/***/ }),
+
+/***/ "./javascripts/dom_manipulation/header.js":
+/*!************************************************!*\
+  !*** ./javascripts/dom_manipulation/header.js ***!
+  \************************************************/
+/*! exports provided: header */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "header", function() { return header; });
+const header = () => {
+  document.getElementById("guide").addEventListener("click", () => {
+    const guide_modal = document.getElementById("guide-modal").classList;
+    
+    if (guide_modal[0] === "guide-modal-close") {
+      guide_modal.remove("guide-modal-close");
+      guide_modal.add("guide-modal");
+    }
+  });
 };
 
 
@@ -298,41 +319,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "movePiece", function() { return movePiece; });
 const movePiece = (currentPiece, game) => {
   document.addEventListener("keydown", event => {
-    switch(event.which) {
-      case 87: // w
-        document.getElementById("move-piece").play();
-        return currentPiece.rotate();
-      case 65: // a
-        document.getElementById("move-piece").play();
-        return currentPiece.moveLeft();
-      case 83: // s
-        document.getElementById("move-piece").play();
-        return currentPiece.moveDown();
-      case 68: // d
-        document.getElementById("move-piece").play();
-        return currentPiece.moveRight();
-      case 38: // up
-        event.preventDefault();
-        document.getElementById("move-piece").play();
-        return currentPiece.rotate();
-      case 37: // left
-        event.preventDefault();
-        document.getElementById("move-piece").play();
-        return currentPiece.moveLeft();
-      case 40: // down
-        event.preventDefault();
-        document.getElementById("move-piece").play();
-        return currentPiece.moveDown();
-      case 39: // right
-        event.preventDefault();
-        document.getElementById("move-piece").play();
-        return currentPiece.moveRight();
-      case 32: // space-bar
-        event.preventDefault();
-        if (game.start === true) currentPiece.instantFall();
-        break;
-      case 16: // shift
-        return currentPiece.savePiece();
+    if (game.start === true) {
+      switch(event.which) {
+        case 87: // w
+          document.getElementById("move-piece").play();
+          return currentPiece.rotate();
+        case 65: // a
+          document.getElementById("move-piece").play();
+          return currentPiece.moveLeft();
+        case 83: // s
+          document.getElementById("move-piece").play();
+          return currentPiece.moveDown();
+        case 68: // d
+          document.getElementById("move-piece").play();
+          return currentPiece.moveRight();
+        case 38: // up
+          event.preventDefault();
+          document.getElementById("move-piece").play();
+          return currentPiece.rotate();
+        case 37: // left
+          event.preventDefault();
+          document.getElementById("move-piece").play();
+          return currentPiece.moveLeft();
+        case 40: // down
+          event.preventDefault();
+          document.getElementById("move-piece").play();
+          return currentPiece.moveDown();
+        case 39: // right
+          event.preventDefault();
+          document.getElementById("move-piece").play();
+          return currentPiece.moveRight();
+        case 32: // space-bar
+          event.preventDefault();
+          if (game.start === true) currentPiece.instantFall();
+          break;
+        case 16: // shift
+          return currentPiece.savePiece();
+      }
     }
   });
 };
@@ -1150,7 +1173,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
 /* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
 /* harmony import */ var _javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist */ "./javascripts/dom_manipulation/playlist.js");
-/* harmony import */ var _javascripts_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./javascripts/dom_manipulation/next_piece */ "./javascripts/dom_manipulation/next_piece.js");
+/* harmony import */ var _javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./javascripts/dom_manipulation/guide_modal */ "./javascripts/dom_manipulation/guide_modal.js");
+/* harmony import */ var _javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./javascripts/dom_manipulation/header */ "./javascripts/dom_manipulation/header.js");
+
 
 
 
@@ -1191,6 +1216,8 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
   Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])();
+  Object(_javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_8__["guideModal"])();
+  Object(_javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_9__["header"])();
   // PIECE DOM MANIPULATION END
 });
 

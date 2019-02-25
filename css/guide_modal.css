@@ -15,7 +15,7 @@
   display: none;
 }
 
-.guide-modal .guide-modal-background {
+.guide-modal-background {
   background-color: black;
   opacity: 0.6;
   position: fixed;
@@ -39,11 +39,11 @@
 }
 
 .guide-controls {
-  animation: guideModalFloat 1.3s linear infinite;
+  animation: guideModalFloat 2.3s linear infinite;
 }
 
 .guide-music-options {
-  animation: guideModalFloat 0.9s linear infinite;
+  animation: guideModalFloat 1.7s linear infinite;
 }
 
 @keyframes guideModalFloat {

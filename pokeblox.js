@@ -7,7 +7,8 @@ import { movePiece } from './javascripts/dom_manipulation/piece_controls';
 import { playPause } from './javascripts/dom_manipulation/play_pause_controls';
 import { playlistHighscore } from './javascripts/dom_manipulation/playlist_highscore';
 import { playlist } from './javascripts/dom_manipulation/playlist';
-import { nextPiece } from './javascripts/dom_manipulation/next_piece';
+import { guideModal } from './javascripts/dom_manipulation/guide_modal';
+import { header } from './javascripts/dom_manipulation/header';
 
 document.addEventListener("DOMContentLoaded", () => {
   // CANVAS START
@@ -38,5 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
   playPause(currentPiece, game);
   playlistHighscore();
   playlist();
+  guideModal();
+  header();
   // PIECE DOM MANIPULATION END
 });

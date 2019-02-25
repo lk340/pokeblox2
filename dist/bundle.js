@@ -270,7 +270,8 @@ const ash = "rgb(92, 92, 92)";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nextPiece", function() { return nextPiece; });
 const nextPiece = nextPieceType => {
-  const nextPiece = document.getElementById(`${nextPieceType}`).classList;
+  const nextPiece = document.getElementById(`next-${nextPieceType}`).classList;
+  
   if (nextPiece[0] === "hide-tetromino") {
     nextPiece.remove("hide-tetromino");
     nextPiece.add(`${nextPieceType}`);
@@ -584,23 +585,6 @@ const playlistHighscore = () => {
 
 /***/ }),
 
-/***/ "./javascripts/dom_manipulation/saved_piece.js":
-/*!*****************************************************!*\
-  !*** ./javascripts/dom_manipulation/saved_piece.js ***!
-  \*****************************************************/
-/*! exports provided: savedPiece */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "savedPiece", function() { return savedPiece; });
-const savedPiece = piece => {
-
-};
-
-
-/***/ }),
-
 /***/ "./javascripts/modules/modules.js":
 /*!****************************************!*\
   !*** ./javascripts/modules/modules.js ***!
@@ -840,6 +824,13 @@ class Piece {
         this.deletePiece();
         this.savedPiece = this.currPiece;
         this.currPiece = this.nextPiece;
+
+        const savedPiece = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece[0] === "hide-tetromino") {
+          savedPiece.remove("hide-tetromino");
+          savedPiece.add(`${this.savedPiece.type}`);
+        }
+        
         this.nextPiece = Object(_modules_modules__WEBPACK_IMPORTED_MODULE_1__["randomPiece"])(this.tetrominoes);
         this.resetForSavePiece();
         this.drawPiece();
@@ -848,8 +839,22 @@ class Piece {
       else {
         this.deletePiece();
         const temp = this.savedPiece;
+        
+        const savedPiece = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece[0] !== "hide-tetromino") {
+          savedPiece.remove(`${this.savedPiece.type}`);
+          savedPiece.add("hide-tetromino");
+        }
+        
         this.savedPiece = this.currPiece;
         this.currPiece = temp;
+
+        const savedPiece2 = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece2[0] === "hide-tetromino") {
+          savedPiece2.remove("hide-tetromino");
+          savedPiece2.add(`${this.savedPiece.type}`);
+        }
+
         this.resetForSavePiece();
         this.drawPiece();
       }
@@ -858,12 +863,14 @@ class Piece {
 
   resetPiece() {
     // helper method for frameRate()
+    const nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
 
-    // Removes old nextPiece image.
-    const oldNextPiece = document.getElementById(`${this.nextPiece.type}`).classList;
-    oldNextPiece.remove(`${this.nextPiece.type}`);
-    oldNextPiece.add("hide-tetromino");
-
+    // Gets rid of old next piece preview
+    if (nPiece[0] !== "hide-tetromino") {
+      nPiece.remove(`${this.nextPiece.type}`);
+      nPiece.add("hide-tetromino");
+    }
+    
     this.currPiece = this.nextPiece;
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
@@ -877,29 +884,8 @@ class Piece {
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
 
-    // Replaces old nextPiece image with new one.
+    // Creates new next piece preview
     Object(_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_2__["nextPiece"])(this.nextPiece.type);
-  }
-  
-  frameRate(board) {
-    // use requestAnimationFrame
-      // do NOT use setTimeout, as it will lag a frame behind
-    // utilize this.verticalCollision's value to reset the frame and reset the piece's position
-      // remember to first delete the piece, reset its value, and then draw the piece again
-    // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
-      // clearing logic this way
-
-    const test = setInterval(() => {
-      if (this.verticalCollision === false) {
-        this.moveDown();
-        board.updateBoard(this);
-        console.log(board.board);
-      }
-  
-      else {
-        clearInterval(test);
-      }
-    }, 500);
   }
 }
 
@@ -1162,8 +1148,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
 /* harmony import */ var _javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist */ "./javascripts/dom_manipulation/playlist.js");
 /* harmony import */ var _javascripts_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./javascripts/dom_manipulation/next_piece */ "./javascripts/dom_manipulation/next_piece.js");
-/* harmony import */ var _javascripts_dom_manipulation_saved_piece__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./javascripts/dom_manipulation/saved_piece */ "./javascripts/dom_manipulation/saved_piece.js");
-
 
 
 
@@ -1204,10 +1188,7 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
   Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])();
-  Object(_javascripts_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_8__["nextPiece"])(currentPiece.nextPiece.type);
   // PIECE DOM MANIPULATION END
-
-  console.log(currentPiece.nextPiece.type);
 });
 
 

@@ -202,6 +202,13 @@ export default class Piece {
         this.deletePiece();
         this.savedPiece = this.currPiece;
         this.currPiece = this.nextPiece;
+
+        const savedPiece = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece[0] === "hide-tetromino") {
+          savedPiece.remove("hide-tetromino");
+          savedPiece.add(`${this.savedPiece.type}`);
+        }
+        
         this.nextPiece = randomPiece(this.tetrominoes);
         this.resetForSavePiece();
         this.drawPiece();
@@ -210,8 +217,22 @@ export default class Piece {
       else {
         this.deletePiece();
         const temp = this.savedPiece;
+        
+        const savedPiece = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece[0] !== "hide-tetromino") {
+          savedPiece.remove(`${this.savedPiece.type}`);
+          savedPiece.add("hide-tetromino");
+        }
+        
         this.savedPiece = this.currPiece;
         this.currPiece = temp;
+
+        const savedPiece2 = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece2[0] === "hide-tetromino") {
+          savedPiece2.remove("hide-tetromino");
+          savedPiece2.add(`${this.savedPiece.type}`);
+        }
+
         this.resetForSavePiece();
         this.drawPiece();
       }
@@ -220,12 +241,14 @@ export default class Piece {
 
   resetPiece() {
     // helper method for frameRate()
+    const nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
 
-    // Removes old nextPiece image.
-    const oldNextPiece = document.getElementById(`${this.nextPiece.type}`).classList;
-    oldNextPiece.remove(`${this.nextPiece.type}`);
-    oldNextPiece.add("hide-tetromino");
-
+    // Gets rid of old next piece preview
+    if (nPiece[0] !== "hide-tetromino") {
+      nPiece.remove(`${this.nextPiece.type}`);
+      nPiece.add("hide-tetromino");
+    }
+    
     this.currPiece = this.nextPiece;
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
@@ -239,28 +262,7 @@ export default class Piece {
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
 
-    // Replaces old nextPiece image with new one.
+    // Creates new next piece preview
     nextPiece(this.nextPiece.type);
-  }
-  
-  frameRate(board) {
-    // use requestAnimationFrame
-      // do NOT use setTimeout, as it will lag a frame behind
-    // utilize this.verticalCollision's value to reset the frame and reset the piece's position
-      // remember to first delete the piece, reset its value, and then draw the piece again
-    // Work on this AFTER getting board clearing logic down - it's just easier to debug the board
-      // clearing logic this way
-
-    const test = setInterval(() => {
-      if (this.verticalCollision === false) {
-        this.moveDown();
-        board.updateBoard(this);
-        console.log(board.board);
-      }
-  
-      else {
-        clearInterval(test);
-      }
-    }, 500);
   }
 }

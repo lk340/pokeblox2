@@ -76,7 +76,7 @@
   border: white solid 2px;
 }
 
-.L > div:nth-child(1g),
+.L > div:nth-child(1),
 .L > div:nth-child(4),
 .L > div:nth-child(5),
 .L > div:nth-child(6) {

@@ -8,7 +8,6 @@ import { playPause } from './javascripts/dom_manipulation/play_pause_controls';
 import { playlistHighscore } from './javascripts/dom_manipulation/playlist_highscore';
 import { playlist } from './javascripts/dom_manipulation/playlist';
 import { nextPiece } from './javascripts/dom_manipulation/next_piece';
-import { savedPiece } from './javascripts/dom_manipulation/saved_piece';
 
 document.addEventListener("DOMContentLoaded", () => {
   // CANVAS START
@@ -39,8 +38,5 @@ document.addEventListener("DOMContentLoaded", () => {
   playPause(currentPiece, game);
   playlistHighscore();
   playlist();
-  nextPiece(currentPiece.nextPiece.type);
   // PIECE DOM MANIPULATION END
-
-  console.log(currentPiece.nextPiece.type);
 });

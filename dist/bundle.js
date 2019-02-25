@@ -175,7 +175,7 @@ class Board {
     }
   }
 
-  deleteRow(g) {
+  deleteRow() {
     // will check the board from bottom-up and delete rows as it goes along
     let lastRowIndex = this.board.length - 1;
     let row = this.board[lastRowIndex];
@@ -269,8 +269,17 @@ const ash = "rgb(92, 92, 92)";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nextPiece", function() { return nextPiece; });
-const nextPiece = piece => {
-  
+const nextPiece = nextPieceType => {
+  const nextPiece = document.getElementById(`${nextPieceType}`).classList;
+  if (nextPiece[0] === "hide-tetromino") {
+    nextPiece.remove("hide-tetromino");
+    nextPiece.add(`${nextPieceType}`);
+  }
+
+  else {
+    nextPiece.remove(`${nextPieceType}`);
+    nextPiece.add("hide-tetromino");
+  }
 };
 
 
@@ -626,6 +635,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Piece; });
 /* harmony import */ var _colors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./colors */ "./javascripts/colors.js");
 /* harmony import */ var _modules_modules__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modules */ "./javascripts/modules/modules.js");
+/* harmony import */ var _dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom_manipulation/next_piece */ "./javascripts/dom_manipulation/next_piece.js");
+
 
 
 
@@ -847,6 +858,12 @@ class Piece {
 
   resetPiece() {
     // helper method for frameRate()
+
+    // Removes old nextPiece image.
+    const oldNextPiece = document.getElementById(`${this.nextPiece.type}`).classList;
+    oldNextPiece.remove(`${this.nextPiece.type}`);
+    oldNextPiece.add("hide-tetromino");
+
     this.currPiece = this.nextPiece;
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
@@ -859,6 +876,9 @@ class Piece {
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
+
+    // Replaces old nextPiece image with new one.
+    Object(_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_2__["nextPiece"])(this.nextPiece.type);
   }
   
   frameRate(board) {
@@ -1184,7 +1204,10 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__["playPause"])(currentPiece, game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__["playlistHighscore"])();
   Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__["playlist"])();
+  Object(_javascripts_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_8__["nextPiece"])(currentPiece.nextPiece.type);
   // PIECE DOM MANIPULATION END
+
+  console.log(currentPiece.nextPiece.type);
 });
 
 

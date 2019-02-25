@@ -1,5 +1,6 @@
 import { charcoal, ash } from './colors';
 import { randomPiece } from './modules/modules';
+import { nextPiece } from './dom_manipulation/next_piece';
 
 export default class Piece {
   constructor(context, board, tetrominoes) {
@@ -219,6 +220,12 @@ export default class Piece {
 
   resetPiece() {
     // helper method for frameRate()
+
+    // Removes old nextPiece image.
+    const oldNextPiece = document.getElementById(`${this.nextPiece.type}`).classList;
+    oldNextPiece.remove(`${this.nextPiece.type}`);
+    oldNextPiece.add("hide-tetromino");
+
     this.currPiece = this.nextPiece;
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
@@ -231,6 +238,9 @@ export default class Piece {
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
+
+    // Replaces old nextPiece image with new one.
+    nextPiece(this.nextPiece.type);
   }
   
   frameRate(board) {

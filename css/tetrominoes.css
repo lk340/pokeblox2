@@ -1,11 +1,13 @@
+.hide-tetromino {
+  display: none;
+}
+
 .I {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   justify-content: center;
   align-items: center;
   position: absolute;
-
-  display: none;
 }
 
 .I > div {
@@ -19,8 +21,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   position: absolute;
-
-  display: none;
 }
 
 .O > div {
@@ -34,8 +34,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   position: absolute;
-
-  display: none;
 }
 
 .T > div:nth-child(2),

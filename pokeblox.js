@@ -39,5 +39,8 @@ document.addEventListener("DOMContentLoaded", () => {
   playPause(currentPiece, game);
   playlistHighscore();
   playlist();
+  nextPiece(currentPiece.nextPiece.type);
   // PIECE DOM MANIPULATION END
+
+  console.log(currentPiece.nextPiece.type);
 });

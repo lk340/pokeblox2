@@ -12,13 +12,11 @@ export const playPause = (currentPiece, game) => {
         break;
       case 80: // p
         console.log("p");
+        if (game.start === true) game.pauseGame();
         break;
       case 69: // e
         console.log("e");
-        game.pauseGame();
-        break;
-      case 82: // r
-        console.log("r");
+        if (game.start === true) game.pauseGame();
         break;
     }
   });

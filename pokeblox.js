@@ -7,6 +7,8 @@ import { movePiece } from './javascripts/dom_manipulation/piece_controls';
 import { playPause } from './javascripts/dom_manipulation/play_pause_controls';
 import { playlistHighscore } from './javascripts/dom_manipulation/playlist_highscore';
 import { playlist } from './javascripts/dom_manipulation/playlist';
+import { nextPiece } from './javascripts/dom_manipulation/next_piece';
+import { savedPiece } from './javascripts/dom_manipulation/saved_piece';
 
 document.addEventListener("DOMContentLoaded", () => {
   // CANVAS START

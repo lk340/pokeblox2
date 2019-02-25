@@ -259,6 +259,23 @@ const ash = "rgb(92, 92, 92)";
 
 /***/ }),
 
+/***/ "./javascripts/dom_manipulation/next_piece.js":
+/*!****************************************************!*\
+  !*** ./javascripts/dom_manipulation/next_piece.js ***!
+  \****************************************************/
+/*! exports provided: nextPiece */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "nextPiece", function() { return nextPiece; });
+const nextPiece = piece => {
+  
+};
+
+
+/***/ }),
+
 /***/ "./javascripts/dom_manipulation/piece_controls.js":
 /*!********************************************************!*\
   !*** ./javascripts/dom_manipulation/piece_controls.js ***!
@@ -347,13 +364,11 @@ const playPause = (currentPiece, game) => {
         break;
       case 80: // p
         console.log("p");
+        if (game.start === true) game.pauseGame();
         break;
       case 69: // e
         console.log("e");
-        game.pauseGame();
-        break;
-      case 82: // r
-        console.log("r");
+        if (game.start === true) game.pauseGame();
         break;
     }
   });
@@ -374,6 +389,26 @@ __webpack_require__.r(__webpack_exports__);
 const playlist = () => {
   let currentSong = document.getElementById("battle-team-rocket");
   const playlistBackground = document.getElementById("playlist-background").classList;
+  let pause = false;
+
+  // Pause / Play hotkey
+  document.addEventListener("keydown", event => {
+    if (event.which === 82) {
+      if (pause === false) {
+        currentSong.pause();
+        pause = true;
+      }
+
+      else {
+        currentSong.play();
+        pause = false;
+      }
+    }
+  });
+  
+  // MODAL START
+
+  // MODAL END
   
   document.getElementById("tearsOfLife").addEventListener("click", () => {
     currentSong.pause();
@@ -548,6 +583,23 @@ const playlistHighscore = () => {
       }
     }
   });
+};
+
+
+/***/ }),
+
+/***/ "./javascripts/dom_manipulation/saved_piece.js":
+/*!*****************************************************!*\
+  !*** ./javascripts/dom_manipulation/saved_piece.js ***!
+  \*****************************************************/
+/*! exports provided: savedPiece */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "savedPiece", function() { return savedPiece; });
+const savedPiece = piece => {
+
 };
 
 
@@ -1102,6 +1154,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./javascripts/dom_manipulation/play_pause_controls */ "./javascripts/dom_manipulation/play_pause_controls.js");
 /* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
 /* harmony import */ var _javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist */ "./javascripts/dom_manipulation/playlist.js");
+/* harmony import */ var _javascripts_dom_manipulation_next_piece__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./javascripts/dom_manipulation/next_piece */ "./javascripts/dom_manipulation/next_piece.js");
+/* harmony import */ var _javascripts_dom_manipulation_saved_piece__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./javascripts/dom_manipulation/saved_piece */ "./javascripts/dom_manipulation/saved_piece.js");
+
+
 
 
 

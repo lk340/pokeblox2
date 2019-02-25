@@ -1,6 +1,26 @@
 export const playlist = () => {
   let currentSong = document.getElementById("battle-team-rocket");
   const playlistBackground = document.getElementById("playlist-background").classList;
+  let pause = false;
+
+  // Pause / Play hotkey
+  document.addEventListener("keydown", event => {
+    if (event.which === 82) {
+      if (pause === false) {
+        currentSong.pause();
+        pause = true;
+      }
+
+      else {
+        currentSong.play();
+        pause = false;
+      }
+    }
+  });
+  
+  // MODAL START
+
+  // MODAL END
   
   document.getElementById("tearsOfLife").addEventListener("click", () => {
     currentSong.pause();

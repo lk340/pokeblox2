@@ -1126,19 +1126,21 @@ class PlayGame {
 
     if (this.currentPiece.verticalCollision === false) {
       this.currentPiece.moveDown();
-      // this.shadowPiece.instantFall();
 
-      console.log(this.board.board);
+      setTimeout(() => {
+        if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
+      }, 400);
     }
 
-    else { // this.currentPiece.verticalCollision === true
+    else {
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
         cancelAnimationFrame(this.animation);
-        this.start = false;
+        this.start = false; // prevents the use of controls in piece_controls.js
         document.getElementById("game-over").play();
         return;
       }
+      
 
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();
@@ -1149,11 +1151,60 @@ class PlayGame {
       this.shadowPiece.drawPiece();
       this.shadowPiece.instantFall();
       this.currentPiece.drawPiece();
+
+      this.frameRate();
     }
 
-    setTimeout(() => {
-      if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
-    }, 400);
+    // if (this.currentPiece.verticalCollision === false) {
+    //   this.currentPiece.moveDown();
+    //   // this.shadowPiece.instantFall();
+
+    //   console.log(this.board.board);
+    // }
+
+    // else { // this.currentPiece.verticalCollision === true
+    //   this.board.checkIfLose();
+    //   if (this.board.gameOver === true) {
+    //     cancelAnimationFrame(this.animation);
+    //     this.start = false;
+    //     document.getElementById("game-over").play();
+    //     return;
+    //   }
+
+    //   this.board.updateBoard(this.currentPiece);
+    //   this.board.deleteRow();
+      
+    //   this.currentPiece.resetPiece();
+
+    //   this.shadowPiece.resetPiece(this.currentPiece);
+    //   this.shadowPiece.drawPiece();
+    //   this.shadowPiece.instantFall();
+    //   this.currentPiece.drawPiece();
+    // }
+
+    // setTimeout(() => {
+    //   if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
+    // }, 400);
+  }
+
+  resetFrame() {
+    this.board.checkIfLose();
+    if (this.board.gameOver === true) {
+      cancelAnimationFrame(this.animation);
+      this.start = false;
+      document.getElementById("game-over").play();
+      return;
+    }
+
+    this.board.updateBoard(this.currentPiece);
+    this.board.deleteRow();
+    
+    this.currentPiece.resetPiece();
+
+    this.shadowPiece.resetPiece(this.currentPiece);
+    this.shadowPiece.drawPiece();
+    this.shadowPiece.instantFall();
+    this.currentPiece.drawPiece();
   }
 
   pauseGame() {

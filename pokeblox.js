@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  const tetrominoes = [ O, T, S, Z, J, L];
+  const tetrominoes = [I, O, T, S, Z, J, L];
   // const tetrominoes = [J];
   const currentPiece = new Piece(context, gameBoard, tetrominoes);
   const shadow = new ShadowPiece(context, gameBoard, currentPiece);

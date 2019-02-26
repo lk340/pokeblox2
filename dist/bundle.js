@@ -931,6 +931,7 @@ class Piece {
     this.checkHorizontalLeftCollision();
     this.checkHorizontalRightCollision();
     
+    // Left offset when rotating into another piece
     if (this.horizontalLeftCollision === true) {
       this.moveRight();
 
@@ -942,19 +943,22 @@ class Piece {
       }
     }
 
+    // Right offset when rotating into another piece
     else if (this.horizontalRightCollision === true) {
       this.moveLeft();
 
-      const board = this.board.board;
-      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
-        for (let x = 0; x < this.currentPiece[y].length; x++) {
-          const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
-          if (rightPieceCollision === _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.moveRight();
-        }
-      }
+      // const board = this.board.board;
+      // for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      //   const farRightIndex = this.currentPiece[y].length - 1;
+      //   for (let x = 0; x < this.currentPiece[y].length; x++) {
+      //     const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
+      //     if (rightPieceCollision === charcoal) this.moveRight();
+      //   }
+      // }
     }
   
-    if (this.verticalCollision === false && (this.horizontalLeftCollision === false || this.horizontalRightCollision === false)) {
+    // Rotation logic
+    if (this.verticalCollision === false) {
       this.deletePiece();
       this.currentPiece = this.shapes[this.currentPieceIndex];
       const y = this.currentPiece.length - 1;
@@ -1581,7 +1585,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  const tetrominoes = [ _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
   // const tetrominoes = [J];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   const shadow = new _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__["default"](context, gameBoard, currentPiece);

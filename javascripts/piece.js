@@ -159,6 +159,7 @@ export default class Piece {
     this.checkHorizontalLeftCollision();
     this.checkHorizontalRightCollision();
     
+    // Left offset when rotating into another piece
     if (this.horizontalLeftCollision === true) {
       this.moveRight();
 
@@ -170,19 +171,22 @@ export default class Piece {
       }
     }
 
+    // Right offset when rotating into another piece
     else if (this.horizontalRightCollision === true) {
       this.moveLeft();
 
-      const board = this.board.board;
-      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
-        for (let x = 0; x < this.currentPiece[y].length; x++) {
-          const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
-          if (rightPieceCollision === charcoal) this.moveRight();
-        }
-      }
+      // const board = this.board.board;
+      // for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      //   const farRightIndex = this.currentPiece[y].length - 1;
+      //   for (let x = 0; x < this.currentPiece[y].length; x++) {
+      //     const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
+      //     if (rightPieceCollision === charcoal) this.moveRight();
+      //   }
+      // }
     }
   
-    if (this.verticalCollision === false && (this.horizontalLeftCollision === false || this.horizontalRightCollision === false)) {
+    // Rotation logic
+    if (this.verticalCollision === false) {
       this.deletePiece();
       this.currentPiece = this.shapes[this.currentPieceIndex];
       const y = this.currentPiece.length - 1;

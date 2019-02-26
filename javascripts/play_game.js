@@ -33,6 +33,7 @@ export default class PlayGame {
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
         cancelAnimationFrame(this.animation);
+        this.start = false;
         document.getElementById("game-over").play();
         return;
       }

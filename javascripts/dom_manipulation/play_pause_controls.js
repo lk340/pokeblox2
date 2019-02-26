@@ -5,6 +5,8 @@ export const playPause = (currentPiece, shadowPiece, game) => {
         if (game.start === false) {
           game.start = true;
           currentPiece.drawPiece();
+          shadowPiece.instantFall();
+          shadowPiece.drawPiece();
           game.frameRate();
         }
         break;

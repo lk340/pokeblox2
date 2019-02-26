@@ -474,6 +474,8 @@ const playPause = (currentPiece, shadowPiece, game) => {
         if (game.start === false) {
           game.start = true;
           currentPiece.drawPiece();
+          shadowPiece.instantFall();
+          shadowPiece.drawPiece();
           game.frameRate();
         }
         break;
@@ -1086,6 +1088,7 @@ class PlayGame {
       this.board.checkIfLose();
       if (this.board.gameOver === true) {
         cancelAnimationFrame(this.animation);
+        this.start = false;
         document.getElementById("game-over").play();
         return;
       }

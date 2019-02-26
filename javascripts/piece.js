@@ -105,6 +105,7 @@ export default class Piece {
   }
 
   checkHorizontalRightCollision() {
+    this.horizontalRightCollision = false;
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {

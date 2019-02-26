@@ -877,6 +877,7 @@ class Piece {
   }
 
   checkHorizontalRightCollision() {
+    this.horizontalRightCollision = false;
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
@@ -1550,7 +1551,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
+  // const tetrominoes = [I, O, T, S, Z, J, L];
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"]];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   const shadow = new _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__["default"](context, gameBoard, currentPiece);
   // currentPiece.drawPiece();

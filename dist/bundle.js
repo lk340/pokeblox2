@@ -926,7 +926,7 @@ class Piece {
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
-    
+  
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
     const y = this.currentPiece.length - 1;
@@ -1275,6 +1275,7 @@ class ShadowPiece {
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
+    
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
     const y = this.currentPiece.length - 1;
@@ -1549,8 +1550,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  // const tetrominoes = [I, O, T, S, Z, J, L];
-  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"]];
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   const shadow = new _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__["default"](context, gameBoard, currentPiece);
   // currentPiece.drawPiece();

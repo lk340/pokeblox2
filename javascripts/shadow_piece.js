@@ -127,6 +127,7 @@ export default class ShadowPiece {
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
+    
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
     const y = this.currentPiece.length - 1;

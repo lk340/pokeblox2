@@ -152,67 +152,69 @@ export default class Piece {
     this.drawPiece();
   }
 
+  rotateHelperLeftCollision() {
+    // Left offset when rotating into another piece
+    this.moveRight();
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        if (board[this.y_offset + y][this.x_offset + x - 1] === charcoal) this.moveLeft();
+      }
+    }
+  }
+
+  rotateHelperRightCollision() {
+    // Right offset when rotating into another piece
+    this.moveLeft();
+
+    // const board = this.board.board;
+    // for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+    //   const farRightIndex = this.currentPiece[y].length - 1;
+    //   for (let x = 0; x < this.currentPiece[y].length; x++) {
+    //     const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
+    //     if (rightPieceCollision === charcoal) this.moveRight();
+    //   }
+    // }
+  }
+
+  rotationLogic() {
+    // Rotation logic
+    this.deletePiece();
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    const y = this.currentPiece.length - 1;
+    const x = this.currentPiece[y].length - 1;
+
+    // Fixes piece falling off the board when rotating at the bottom
+    if (this.y_offset + y > 19) {
+      while (this.y_offset + y > 19) {
+        this.y_offset -= 1;
+      }
+    }
+
+    // Fixes piece falling off the board when rotating at the left
+    if (this.x_offset < 0) {
+      while (this.x_offset < 0) {
+        this.x_offset += 1;
+      }
+    }
+
+    // Fixes piece falling off the board when rotating at the right
+    if (this.x_offset + x > 9) {
+      while (this.x_offset + x > 9) {
+        this.x_offset -= 1;
+      }
+    }
+  }
+
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
-
     this.checkHorizontalLeftCollision();
     this.checkHorizontalRightCollision();
-    
-    // Left offset when rotating into another piece
-    if (this.horizontalLeftCollision === true) {
-      this.moveRight();
-
-      const board = this.board.board;
-      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
-        for (let x = 0; x < this.currentPiece[y].length; x++) {
-          if (board[this.y_offset + y][this.x_offset + x - 1] === charcoal) this.moveLeft();
-        }
-      }
-    }
-
-    // Right offset when rotating into another piece
-    else if (this.horizontalRightCollision === true) {
-      this.moveLeft();
-
-      // const board = this.board.board;
-      // for (let y = this.currentPiece.length - 1; y >= 0; y--) {
-      //   const farRightIndex = this.currentPiece[y].length - 1;
-      //   for (let x = 0; x < this.currentPiece[y].length; x++) {
-      //     const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
-      //     if (rightPieceCollision === charcoal) this.moveRight();
-      //   }
-      // }
-    }
-  
-    // Rotation logic
-    if (this.verticalCollision === false) {
-      this.deletePiece();
-      this.currentPiece = this.shapes[this.currentPieceIndex];
-      const y = this.currentPiece.length - 1;
-      const x = this.currentPiece[y].length - 1;
-
-      // Fixes piece falling off the board when rotating at the bottom
-      if (this.y_offset + y > 19) {
-        while (this.y_offset + y > 19) {
-          this.y_offset -= 1;
-        }
-      }
-
-      // Fixes piece falling off the board when rotating at the left
-      if (this.x_offset < 0) {
-        while (this.x_offset < 0) {
-          this.x_offset += 1;
-        }
-      }
-
-      // Fixes piece falling off the board when rotating at the right
-      if (this.x_offset + x > 9) {
-        while (this.x_offset + x > 9) {
-          this.x_offset -= 1;
-        }
-      }
-    }
+    if (this.horizontalLeftCollision === true) this.rotateHelperLeftCollision();
+    else if (this.horizontalRightCollision === true) this.rotateHelperRightCollision();
+    if (this.verticalCollision === false) this.rotationLogic();
   }
 
   instantFall() {

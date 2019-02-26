@@ -39,6 +39,7 @@ export default class PlayGame {
         document.getElementById("game-over").play();
         return;
       }
+      cancelAnimationFrame(this.animation);
 
       this.board.updateBoard(this.currentPiece);
       this.board.deleteRow();

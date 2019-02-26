@@ -10,7 +10,7 @@ export const I = {
       [1],
     ]
   ],
-  color: "rgb(145, 145, 245)",
+  color: "rgb(168, 121, 255)",
   type: "I",
 };
 
@@ -46,7 +46,7 @@ export const T = {
       [0, 1],
     ]
   ],
-  color: "rgb(204, 129, 204)",
+  color: "rgb(255, 189, 252)",
   type: "T"
 };
 
@@ -71,7 +71,7 @@ export const S = {
       [0, 1],
     ]
   ],
-  color: "rgb(179, 221, 179)",
+  color: "rgb(194, 255, 204)",
   type: "S",
 };
 
@@ -96,7 +96,7 @@ export const Z = {
       [1, 0],
     ]
   ],
-  color: "rgb(211, 123, 123)",
+  color: "rgb(255, 137, 137)",
   type: "Z",
 };
 
@@ -121,7 +121,7 @@ export const J = {
       [1, 1],
     ]
   ],
-  color: "rgb(73, 73, 172)",
+  color: "rgb(184, 255, 251)",
   type: "J",
 };
 
@@ -146,6 +146,6 @@ export const L = {
       [0, 1],
     ]
   ],
-  color: "rgb(255, 205, 113)",
+  color: "rgb(255, 180, 137)",
   type: "L",
 };

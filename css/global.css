@@ -3,11 +3,41 @@ html, body {
   margin: 0;
   border: none;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--panchamPurple2);
+  height: 100vh;
+  width: 100vw;
 
-  /* width: 100%;
-  height: 100%; */
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 * {
   box-sizing: border-box;
+}
+
+:root {
+  --charcoal: rgb(54, 54, 54);
+  --shadow: rgb(41, 41, 41);
+  --ash: rgb(92, 92, 92);
+  --lighterBeige: rgb(216, 201, 201);
+  --lightBeige: rgb(190, 185, 185);
+  --lightGray: rgb(206, 206, 206);
+  --panchamPurple: #626473;
+  --panchamPurple2:rgb(77, 79, 94);
+  --panchamBeige: rgb(211, 217, 169);
+  --fireRed: rgb(241, 131, 131);
+  --waterBlue: rgb(80, 156, 255);
+  --leafGreen: rgb(60, 170, 83);
+
+  /* Tetromino Piece Colors */
+  --lightBlue: rgb(145, 145, 245);
+  --yellow: rgb(255, 255, 149);
+  --purple: rgb(255, 189, 252);
+  --green: rgb(194, 255, 204);
+  --red: rgb(255, 137, 137);
+  --blue: rgb(184, 255, 251);
+  --orange: rgb(255, 180, 137);
 }

@@ -7,16 +7,347 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" type="text/css" media="screen" href="./css/global.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/header.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/guide_modal.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/board.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/sidebars.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/music_player.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/music_player_background.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/next_piece.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/saved_piece.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/tetrominoes.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/logo.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/footer.css">
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   
   <script src="./dist/bundle.js"></script>
 </head>
 <body>
+  <header>
+    <div id="guide">Guide</div>
+    <img id="logo" src="./images/logo/pokeblox_logo.png" alt="logo">
+    <div id="about">About</div>
+  </header>
 
-  <div id="board-container">
-    <canvas id="board" class="board" width="300px" height="600px"></canvas>
+  <div id="guide-modal" class="guide-modal">
+    <div id="guide-modal-background" class="guide-modal-background"></div>
+
+    <div class="guide">
+
+      <div class="guide-controls">
+        <div class="guide-controls-main">
+          <h3>Controls</h3>
+          <div class="controls-top">
+            <div class="one-handed">
+              <div></div>
+              <div style="border: white solid 1px;"><span>W</span></div>
+              <div></div>
+              <div style="border: white solid 1px;"><span>A</span></div>
+              <div style="border: white solid 1px;"><span>S</span></div>
+              <div style="border: white solid 1px;"><span>D</span></div>
+            </div>
+
+            <div class="two-handed">
+                <div></div>
+                <div style="border: white solid 1px;"><span>^</span></div>
+                <div></div>
+                <div style="border: white solid 1px;"><span><</span></div>
+                <div style="border: white solid 1px;"><span>v</span></div>
+                <div style="border: white solid 1px;"><span>></span></div>
+            </div>
+          </div>
+
+          <div class="controls-bottom">
+            <div class="hotkeys">
+              <div>
+                <div class="hk" style="text-shadow: 0 0 5px white;">spacebar</div>
+                <div>instant drop</div>
+              </div>
+              
+              <div>
+                <div class="hk" style="text-shadow: 0 0 5px white;">shift</div>
+                <div>save piece</div>
+              </div>
+
+              <div>
+                <div class="hk" style="text-shadow: 0 0 5px white;">q</div>
+                <div>start game</div>
+              </div>
+
+              <div>
+                <div class="hk" style="text-shadow: 0 0 5px white;">e</div>
+                <div>pause / continue game</div>
+              </div>
+
+              <div>
+                <div class="hk" style="text-shadow: 0 0 5px white;">r</div>
+                <div>pause / continue music</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-splitter"></div>
+      </div>
+
+      <div class="guide-music-options">
+          <div class="guide-splitter"></div>
+
+          <div class="guide-music-choices">
+            <h3>Choose a background song!</h3>
+            <div style="font-size: 12px; text-align: center; color: var(--ash); margin-bottom: 10px; cursor: default;">Best played on a 1920x1080 monitor!</div>
+            <div class="guide-music-grid">
+              <div id="guide-modal-battle-team-rocket"><img src="./images/playlist_images/team_rocket.jpg" alt=""></div>
+              <div id="guide-modal-gsc-champion"><img src="./images/playlist_images/champion_lance.png" alt=""></div>
+              <div id="guide-modal-usum-theme"><img src="./images/playlist_images/alola.jpg" alt=""></div>
+              <div id="guide-modal-route-47"><img src="./images/playlist_images/pikachu.png" alt=""></div>
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+  
+  <div id="master-container">
+    <div id="left-sidebar" class="left-sidebar">
+      <div id="high-score" class="high-score">
+        <h3>High Scores</h3>
+        <div id="high-score-scores"></div>
+      </div>
+
+      <div id="playlist" class="playlist">
+        <div id="playlist-enlarge" class="playlist-enlarge"><i class="fas fa-angle-left"></i></div>
+
+        <div id="playlist-background" class="bg-battleTeamRocket"></div>
+
+        <div id="playlist-songs" class="playlist-songs">
+          <span id="tearsOfLife">Tears of Life</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="johtoOpening">Johto Opening</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="viridianCity">Viridian City</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="viridianForest">Viridian Forest</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="battleTeamRocket">Battle! Team Rocket</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="route47">Route 47</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="gscChampion">GSC Champion</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="dppChampion">DPP Champion</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="nTheme">N's Theme</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="snowbelleCity">Snowbelle City</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="usumTheme">USUM Theme</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="originalTetris">Original Tetris</span>
+          
+          <div id="playlist-spacer"></div>
+          
+          <span id="tetris_99">Tetris 99</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="board-container">
+      <canvas id="board" class="board" width="300px" height="600px"></canvas>
+    </div>
+
+    <div id="right-sidebar">
+      <div>
+        <div id="next-piece-title">Next Piece</div>
+        <div id="next-piece">
+          <div id="next-I" class="hide-tetromino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <div id="next-O" class="hide-tetromino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <div id="next-T" class="hide-tetromino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <div id="next-S" class="hide-tetromino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <div id="next-Z" class="hide-tetromino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <div id="next-J" class="hide-tetromino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+
+          <div id="next-L" class="hide-tetromino">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div id="saved-piece-title">Saved Piece</div>
+        <div id="saved-piece">
+            <div id="saved-I" class="hide-tetromino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+  
+            <div id="saved-O" class="hide-tetromino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+  
+            <div id="saved-T" class="hide-tetromino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+  
+            <div id="saved-S" class="hide-tetromino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+  
+            <div id="saved-Z" class="hide-tetromino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+  
+            <div id="saved-J" class="hide-tetromino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+  
+            <div id="saved-L" class="hide-tetromino">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+        </div>
+      </div>
+
+      <div>
+        <div id="points-title">Points</div>
+        <div id="points">0</div>
+      </div>
+    </div>
   </div>
 
-  <a href="https://github.com/lk340/pokeblox2" target="_blank">GitHub Repo</a>
+  <footer>
+    <div id="email">loyd.hkim@gmail.com</div>
+    <div id="social">
+      <a href="https://github.com/lk340/pokeblox2" target="_blank"><img src="./images/links/github.png" alt="github"></a>
+      <a href="https://www.linkedin.com/in/loyd-k-b58176166/" target="_blank"><img src="./images/links/linkedin.png" alt="linkedin"></a>
+      <a href="https://angel.co/lk340" target="_blank"><img src="./images/links/angellist.png" alt="angel-list"></a>
+      <a href="http://www.loydkim.com/" target="_blank"><img src="./images/links/website.png" alt="portfolio"></a>
+    </div>
+  </footer>
+
+
+  <!-- SOUND EFFECTS START -->
+  <audio id="move-piece" src="./soundeffects/move_piece_trimmed.mp3"></audio>
+  <audio id="fall-piece" src="./soundeffects/fall_piece.mp3"></audio>
+  <audio id="clear-row" src="./soundeffects/clear_trimmed.mp3"></audio>
+  <audio id="game-over" src="./soundeffects/gameover.mp3"></audio>
+  <!-- SOUND EFFECTS END -->
+  
+  <!-- SOUNDTRACK START -->
+  <audio id="tears-of-life" src="./soundtrack/tears_of_life.mp3"></audio>
+  <audio id="johto-opening" src="./soundtrack/johto_opening.mp3"></audio>
+  <audio id="viridian-city" src="./soundtrack/rby_viridian_city.mp3"></audio>
+  <audio id="viridian-forest" src="./soundtrack/rby_viridian_forest.mp3"></audio>
+  <audio id="battle-team-rocket" src="./soundtrack/gsc_battle_team_rocket.mp3"></audio>
+  <audio id="route-47" src="./soundtrack/hgss_route_47.mp3"></audio>
+  <audio id="gsc-champion" src="./soundtrack/gsc_champion.mp3"></audio>
+  <audio id="dpp-champion" src="./soundtrack/dpp_champion.mp3"></audio>
+  <audio id="n-theme" src="./soundtrack/bw_n_theme.mp3"></audio>
+  <audio id="snowbelle-city" src="./soundtrack/xy_snowbelle_city.mp3"></audio>
+  <audio id="usum-theme" src="./soundtrack/usum_theme.mp3"></audio>
+  <audio id="original-tetris" src="./soundtrack/original_tetris_theme.mp3"></audio>
+  <audio id="tetris99" src="./soundtrack/tetris99_theme.mp3"></audio>
+  <audio id="kanto-gym" src="./soundtrack/kanto_gym.mp3"></audio>
+  <!-- SOUNDTRACK END -->
 </body>
 </html>

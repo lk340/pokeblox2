@@ -1,10 +1,21 @@
-export const playPause = () => {
+export const playPause = (currentPiece, shadowPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
+        if (game.start === false) {
+          game.start = true;
+          currentPiece.drawPiece();
+          shadowPiece.instantFall();
+          shadowPiece.drawPiece();
+          game.frameRate();
+        }
+        break;
+      case 80: // p
+        if (game.start === true) game.pauseGame();
+        break;
       case 69: // e
-      case 82: // u
-      case 73: // i
+        if (game.start === true) game.pauseGame();
+        break;
     }
   });
 };

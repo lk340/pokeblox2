@@ -1,0 +1,201 @@
+.guide-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+}
+
+.guide-modal-close {
+  display: none;
+}
+
+.guide-modal-background {
+  background-color: black;
+  opacity: 0.6;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.guide-modal .guide {
+  /* width: 60%; */
+  /* height: 50%; */
+  width: 1000px;
+  height: 500px;
+  position: fixed;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+}
+
+.guide-controls {
+  animation: guideModalFloat 2.3s linear infinite;
+}
+
+.guide-music-options {
+  animation: guideModalFloat 1.7s linear infinite;
+}
+
+@keyframes guideModalFloat {
+  0%, 100% {
+    transform: translateY(5px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.guide-controls-main, .guide-music-choices {
+  /* height: 90%; */
+  height: calc(500px*0.9);
+  background-color: var(--charcoal);
+}
+
+.guide-controls-main {
+  border-top-left-radius: 20px;
+}
+
+.guide-music-choices {
+  border-bottom-right-radius: 20px;
+}
+
+.guide-controls-main h3, .guide-music-choices h3 {
+  padding: 0;
+  margin: 0;
+  color: var(--ash);
+  padding: 14px 0;
+  font-size: 1rem;
+  cursor: default;
+  text-align: center;
+}
+
+.controls-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 163px;
+  grid-gap: 10px;
+  padding: 0 10px;
+}
+
+.one-handed, .two-handed {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+  padding: 10px 8px;
+}
+
+.one-handed > div, .two-handed > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-duration: 0.3s;
+}
+
+.one-handed > div span, .two-handed > div span {
+  color: white;
+  cursor: default;
+}
+
+.one-handed > div:nth-child(2):hover,
+.one-handed > div:nth-child(4):hover,
+.one-handed > div:nth-child(5):hover,
+.one-handed > div:nth-child(6):hover,
+.two-handed > div:nth-child(2):hover,
+.two-handed > div:nth-child(4):hover,
+.two-handed > div:nth-child(5):hover,
+.two-handed > div:nth-child(6):hover {
+  background-color: rgba(255, 255, 255, 0.445);
+  text-shadow: 0 0 10px white;
+}
+
+.controls-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.hotkeys {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  color: white;
+  cursor: default;
+}
+
+.hotkeys > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.hk {
+  border: white solid 1px;
+  padding: 10px;
+  margin-right: 15px;
+  width: 100px;
+  text-align: center;
+  transition-duration: 0.3s;
+}
+
+.hk:hover {
+  background-color: rgba(255, 255, 255, 0.445);
+}
+
+.guide-music-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: 370px;
+}
+
+.guide-music-grid > div {
+  height: calc(370px/2);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.guide-music-grid > div:nth-child(1) img {
+  width: 100%;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  padding-top: 160px;
+}
+
+.guide-music-grid > div:nth-child(2) img {
+  width: 100%;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  padding-top: 200px;
+}
+
+.guide-music-grid > div:nth-child(3) img {
+  width: 100%;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.guide-music-grid > div:nth-child(4) img {
+  width: 100%;
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.guide-music-grid > div img:hover {
+  width: 150%;
+  cursor: pointer;
+}
+
+.guide-splitter {
+  /* height: 10%; */
+  height: calc(500px*0.1);
+}

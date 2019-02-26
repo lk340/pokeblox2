@@ -1,9 +1,29 @@
+#master-container {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+}
+
+#master-container {
+  border-top: var(--charcoal) solid 4px;
+  border-bottom: var(--charcoal) solid 4px;
+  padding: 30px 0;
+
+  background-image: url('../images/background/pancham.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-position-y: -300px;
+  background-color: var(--panchamPurple);
+}
+
 #board-container {
   display: flex;
   justify-content: center;
-  border: red solid 1px;
 }
 
 .board {
-  border: green solid 3px;
+  height: 600px;
+  width: 300px;
+  border: var(--charcoal) solid 10px;
+  border-radius: 7px;
 }

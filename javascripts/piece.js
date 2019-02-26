@@ -1,20 +1,26 @@
 import { charcoal, ash } from './colors';
-import { randomPiece } from './modules';
+import { randomPiece } from './modules/modules';
 
 export default class Piece {
-  constructor(context, tetrominoes) {
+  constructor(context, board, tetrominoes) {
     this.context = context;
+    this.board = board;
     this.tetrominoes = tetrominoes;
+
     this.currPiece = randomPiece(this.tetrominoes);
+    this.nextPiece = randomPiece(this.tetrominoes);
+
     this.shapes = this.currPiece.shapes;
     this.currentPieceIndex = 0;
     this.currentPiece = this.shapes[this.currentPieceIndex];
-    this.nextPiece = randomPiece(this.tetrominoes).shapes;
     this.savedPiece = null;
+
     this.color = this.currPiece.color;
     this.type = this.currPiece.type;
+
     this.x_offset = 3;
-    this.y_offset = 0;
+    this.y_offset = -1; // Note to self: was originally 0 but changed to -1 because of rAF rendering a frame faster
+
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
     this.horizontalRightCollision = false;
@@ -52,20 +58,48 @@ export default class Piece {
   }
 
   checkVerticalCollision() {
-    const y = this.currentPiece.length - 1;
-    for (let x = 0; x < this.currentPiece[y].length; x++) {
-      if (this.currentPiece[y][x] === 1) {
-        if (this.y_offset + y === 19) this.verticalCollision = true;
-        else this.verticalCollision = false;
+    // const y = this.currentPiece.length - 1;
+
+    // If there is AT LEAST one grid block that detects a grid below it, then there must be a piece.
+      // Therefore, if verticalCheck is AT LEAST 1, then we must have hit something.
+    let verticalCheck = 0;
+
+    if (this.y_offset >= 0) {
+      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+        for (let x = 0; x < this.currentPiece[y].length; x++) {
+          if (this.currentPiece[y][x] === 1) {
+            let gridBelow;
+            if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
+  
+            // if (gridBelow !== charcoal) verticalCheck += 1;
+            if (this.y_offset + y === 19) this.verticalCollision = true;
+            else if (gridBelow !== charcoal) this.verticalCollision = true;
+            // else verticalCollision = false;
+          }
+        }
       }
     }
+
+    // if (this.y_offset + y === 19) this.verticalCollision = true;
+    // else if (verticalCheck > 0) this.verticalCollision = true;
+    // else this.verticalCollision = false;
   }
 
   checkHorizontalLeftCollision() {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       if (this.currentPiece[y][0] === 1) {
-        if (this.x_offset < 0) this.horizontalLeftCollision = true;
+        // Checks wall collision
+        if (this.x_offset === 0) this.horizontalLeftCollision = true;
         else this.horizontalLeftCollision = false;
+      }
+    }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        // Checks piece collision
+        const leftPieceCollision = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftPieceCollision !== charcoal) this.horizontalLeftCollision = true;
       }
     }
   }
@@ -74,68 +108,78 @@ export default class Piece {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
-        const farRightPosition = this.x_offset + this.currentPiece[y].length;
-        if (farRightPosition > 9) this.horizontalRightCollision = true;
-        else this.horizontalRightCollision = false;
+        // Checks wall collision
+        const rightWallCollision = this.x_offset + farRightIndex + 1;
+        if (rightWallCollision > 9) this.horizontalRightCollision = true;
+      }
+    }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      const farRightIndex = this.currentPiece[y].length - 1;
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        // Checks Piece Collision
+        const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
+        if (rightPieceCollision !== charcoal) this.horizontalRightCollision = true;
       }
     }
   }
 
   moveLeft() {
     this.deletePiece();
-    if (this.x_offset > 0) this.x_offset -= 1;
-    this.drawPiece();
+    this.checkHorizontalLeftCollision();
+    // if (this.x_offset > 0) this.x_offset -= 1;
+    if (this.horizontalLeftCollision === false) {
+      this.x_offset -= 1;
+    }
   }
 
   moveRight() {
     this.checkHorizontalRightCollision();
     this.deletePiece();
-    if (this.horizontalRightCollision === false) this.x_offset += 1;
-    this.drawPiece();
-    console.log(this.x_offset);
+    if (this.horizontalRightCollision === false) {
+      this.x_offset += 1;
+    }
   }
   
   moveDown() {
     this.checkVerticalCollision();
     this.deletePiece();
-    if (this.verticalCollision === false) this.y_offset += 1;
+    if (this.verticalCollision === false) {
+      this.y_offset += 1;
+    }
     this.drawPiece();
   }
 
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
+  
     this.deletePiece();
     this.currentPiece = this.shapes[this.currentPieceIndex];
-    this.checkVerticalCollision();
-    this.checkHorizontalLeftCollision();
-    this.checkHorizontalRightCollision();
+    const y = this.currentPiece.length - 1;
+    const x = this.currentPiece[y].length - 1;
 
-    if (this.verticalCollision === true) {
-      while (this.verticalCollision === true) {
-        this.checkVerticalCollision();
-        this.deletePiece();
+    // Fixes piece falling off the board when rotating at the bottom
+    if (this.y_offset + y > 19) {
+      while (this.y_offset + y > 19) {
         this.y_offset -= 1;
-        console.log(this.y_offset);
-        this.drawPiece();
       }
     }
 
-    if (this.horizontalLeftCollision === true) {
-      while (this.horizontalLeftCollision === true) {
-        this.checkHorizontalLeftCollision();
+    // Fixes piece falling off the board when rotating at the left
+    if (this.x_offset < 0) {
+      while (this.x_offset < 0) {
         this.x_offset += 1;
       }
     }
 
-    else if (this.horizontalRightCollision === true) {
-      while (this.horizontalRightCollision === true) {
-        this.checkHorizontalRightCollision();
+    // Fixes piece falling off the board when rotating at the right
+    if (this.x_offset + x > 9) {
+      while (this.x_offset + x > 9) {
         this.x_offset -= 1;
       }
     }
-
-    this.drawPiece();
   }
 
   instantFall() {
@@ -143,26 +187,94 @@ export default class Piece {
       this.checkVerticalCollision();
       this.moveDown();
     }
+    document.getElementById("fall-piece").play();
+  }
+
+  resetForSavePiece() {
+    this.shapes = this.currPiece.shapes;
+    this.currentPieceIndex = 0;
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    this.color = this.currPiece.color;
+    this.type = this.currPiece.type;
+    this.x_offset = 3;
+    this.y_offset = 0;
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
   }
 
   savePiece() {
-    if (this.savedPiece === null) {
-      this.savedPiece = this.currentPiece;
-      this.currentPiece = nextPiece;
-      this.nextPiece = randomPiece(this.tetrominoes).shapes;
-    }
+    if (this.verticalCollision === false) {
+      if (this.savedPiece === null) {
+        this.deletePiece();
+        this.savedPiece = this.currPiece;
+        this.currPiece = this.nextPiece;
 
-    else {
-      const temp = this.savedPiece;
-      this.savedPiece = this.currentPiece;
-      this.currentPiece = temp;
+        const savedPiece = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece[0] === "hide-tetromino") {
+          savedPiece.remove("hide-tetromino");
+          savedPiece.add(`${this.savedPiece.type}`);
+        }
+        
+        this.nextPiece = randomPiece(this.tetrominoes);
+        this.resetForSavePiece();
+        this.drawPiece();
+      }
+  
+      else {
+        this.deletePiece();
+        const temp = this.savedPiece;
+        
+        const savedPiece = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece[0] !== "hide-tetromino") {
+          savedPiece.remove(`${this.savedPiece.type}`);
+          savedPiece.add("hide-tetromino");
+        }
+        
+        this.savedPiece = this.currPiece;
+        this.currPiece = temp;
+
+        const savedPiece2 = document.getElementById(`saved-${this.savedPiece.type}`).classList;
+        if (savedPiece2[0] === "hide-tetromino") {
+          savedPiece2.remove("hide-tetromino");
+          savedPiece2.add(`${this.savedPiece.type}`);
+        }
+
+        this.resetForSavePiece();
+        this.drawPiece();
+      }
     }
   }
 
-  frameRate() {
-    // use requestAnimationFrame
-    // do NOT use setTimeout, as it will lag a frame behind
-    // utilize this.verticalCollision's value to reset the frame and reset the piece's position
-      // remember to first delete the piece, reset its value, and then draw the piece again
+  resetPiece() {
+
+    // helper method for frameRate()
+    let nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
+    // Gets rid of old next piece preview
+    if (nPiece[0] !== "hide-tetromino") {
+      nPiece.remove(`${this.nextPiece.type}`);
+      nPiece.add("hide-tetromino");
+    }
+    
+    this.currPiece = this.nextPiece;
+    this.shapes = this.currPiece.shapes;
+    this.currentPieceIndex = 0;
+    this.currentPiece = this.shapes[this.currentPieceIndex];
+    this.nextPiece = randomPiece(this.tetrominoes);
+    this.color = this.currPiece.color;
+    this.type = this.currPiece.type;
+    this.x_offset = 3;
+    this.y_offset = this.currPiece.type === "I" ? -1 : 0;
+    this.verticalCollision = false;
+    this.horizontalLeftCollision = false;
+    this.horizontalRightCollision = false;
+
+    // Creates new next piece preview
+    // nextPiece(this.nextPiece.type);
+    nPiece = document.getElementById(`next-${this.nextPiece.type}`).classList;
+    if (nPiece[0] === "hide-tetromino") {
+      nPiece.remove("hide-tetromino");
+      nPiece.add(`${this.nextPiece.type}`);
+    }
   }
 }

@@ -27,6 +27,8 @@ export default class PlayGame {
     if (this.currentPiece.verticalCollision === false) {
       this.currentPiece.moveDown();
       // this.shadowPiece.instantFall();
+
+      console.log(this.board.board);
     }
 
     else { // this.currentPiece.verticalCollision === true

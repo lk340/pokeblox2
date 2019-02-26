@@ -927,30 +927,58 @@ class Piece {
   rotate() {
     if (this.currentPieceIndex === this.shapes.length - 1) this.currentPieceIndex = 0;
     else this.currentPieceIndex += 1;
+
+    this.checkHorizontalLeftCollision();
+    this.checkHorizontalRightCollision();
+    
+    if (this.horizontalLeftCollision === true) {
+      this.moveRight();
+
+      const board = this.board.board;
+      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+        for (let x = 0; x < this.currentPiece[y].length; x++) {
+          if (board[this.y_offset + y][this.x_offset + x - 1] === _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.moveLeft();
+        }
+      }
+    }
+
+    else if (this.horizontalRightCollision === true) {
+      this.moveLeft();
+
+      const board = this.board.board;
+      for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+        for (let x = 0; x < this.currentPiece[y].length; x++) {
+          const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
+          if (rightPieceCollision === _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.moveRight();
+        }
+      }
+    }
   
-    this.deletePiece();
-    this.currentPiece = this.shapes[this.currentPieceIndex];
-    const y = this.currentPiece.length - 1;
-    const x = this.currentPiece[y].length - 1;
+    if (this.verticalCollision === false && (this.horizontalLeftCollision === false || this.horizontalRightCollision === false)) {
+      this.deletePiece();
+      this.currentPiece = this.shapes[this.currentPieceIndex];
+      const y = this.currentPiece.length - 1;
+      const x = this.currentPiece[y].length - 1;
 
-    // Fixes piece falling off the board when rotating at the bottom
-    if (this.y_offset + y > 19) {
-      while (this.y_offset + y > 19) {
-        this.y_offset -= 1;
+      // Fixes piece falling off the board when rotating at the bottom
+      if (this.y_offset + y > 19) {
+        while (this.y_offset + y > 19) {
+          this.y_offset -= 1;
+        }
       }
-    }
 
-    // Fixes piece falling off the board when rotating at the left
-    if (this.x_offset < 0) {
-      while (this.x_offset < 0) {
-        this.x_offset += 1;
+      // Fixes piece falling off the board when rotating at the left
+      if (this.x_offset < 0) {
+        while (this.x_offset < 0) {
+          this.x_offset += 1;
+        }
       }
-    }
 
-    // Fixes piece falling off the board when rotating at the right
-    if (this.x_offset + x > 9) {
-      while (this.x_offset + x > 9) {
-        this.x_offset -= 1;
+      // Fixes piece falling off the board when rotating at the right
+      if (this.x_offset + x > 9) {
+        while (this.x_offset + x > 9) {
+          this.x_offset -= 1;
+        }
       }
     }
   }
@@ -1093,6 +1121,8 @@ class PlayGame {
     if (this.currentPiece.verticalCollision === false) {
       this.currentPiece.moveDown();
       // this.shadowPiece.instantFall();
+
+      console.log(this.board.board);
     }
 
     else { // this.currentPiece.verticalCollision === true
@@ -1551,8 +1581,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  // const tetrominoes = [I, O, T, S, Z, J, L];
-  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"]];
+  const tetrominoes = [ _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
+  // const tetrominoes = [J];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   const shadow = new _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__["default"](context, gameBoard, currentPiece);
   // currentPiece.drawPiece();

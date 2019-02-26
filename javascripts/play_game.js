@@ -55,8 +55,12 @@ export default class PlayGame {
   }
 
   pauseGame() {
-    if (this.toggleAnimation === true) this.toggleAnimation = false;
+    if (this.toggleAnimation === true) {
+      // this.start = false;
+      this.toggleAnimation = false;
+    }
     else {
+      // this.start = true;
       this.toggleAnimation = true;
       this.frameRate();
     }

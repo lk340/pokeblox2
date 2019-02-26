@@ -374,7 +374,6 @@ const movePiece = (currentPiece, shadowPiece, game) => {
     }
 
     function resetShadowRotate() {
-
       shadowPiece.deletePiece();
       shadowPiece.x_offset = currentPiece.x_offset;
       shadowPiece.y_offset = currentPiece.y_offset;
@@ -861,6 +860,7 @@ class Piece {
   checkHorizontalLeftCollision() {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       if (this.currentPiece[y][0] === 1) {
+        // Checks wall collision
         if (this.x_offset === 0) this.horizontalLeftCollision = true;
         else this.horizontalLeftCollision = false;
       }
@@ -869,8 +869,9 @@ class Piece {
     const board = this.board.board;
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       for (let x = 0; x < this.currentPiece[y].length; x++) {
-        const leftCollision = board[this.y_offset + y][this.x_offset + x - 1];
-        if (leftCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
+        // Checks piece collision
+        const leftPieceCollision = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftPieceCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalLeftCollision = true;
       }
     }
   }
@@ -879,10 +880,19 @@ class Piece {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
-        const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
-        const rightCollision = this.board.board[this.y_offset + y][farRightGridOnPiece];
-        if (farRightGridOnPiece > 9 || rightCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalRightCollision = true;
-        else this.horizontalRightCollision = false;
+        // Checks wall collision
+        const rightWallCollision = this.x_offset + farRightIndex + 1;
+        if (rightWallCollision > 9) this.horizontalRightCollision = true;
+      }
+    }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      const farRightIndex = this.currentPiece[y].length - 1;
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        // Checks Piece Collision
+        const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
+        if (rightPieceCollision !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.horizontalRightCollision = true;
       }
     }
   }
@@ -1110,8 +1120,12 @@ class PlayGame {
   }
 
   pauseGame() {
-    if (this.toggleAnimation === true) this.toggleAnimation = false;
+    if (this.toggleAnimation === true) {
+      // this.start = false;
+      this.toggleAnimation = false;
+    }
     else {
+      // this.start = true;
       this.toggleAnimation = true;
       this.frameRate();
     }
@@ -1535,7 +1549,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
+  // const tetrominoes = [I, O, T, S, Z, J, L];
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"]];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   const shadow = new _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__["default"](context, gameBoard, currentPiece);
   // currentPiece.drawPiece();

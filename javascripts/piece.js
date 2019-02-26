@@ -88,6 +88,7 @@ export default class Piece {
   checkHorizontalLeftCollision() {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       if (this.currentPiece[y][0] === 1) {
+        // Checks wall collision
         if (this.x_offset === 0) this.horizontalLeftCollision = true;
         else this.horizontalLeftCollision = false;
       }
@@ -96,8 +97,9 @@ export default class Piece {
     const board = this.board.board;
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       for (let x = 0; x < this.currentPiece[y].length; x++) {
-        const leftCollision = board[this.y_offset + y][this.x_offset + x - 1];
-        if (leftCollision !== charcoal) this.horizontalLeftCollision = true;
+        // Checks piece collision
+        const leftPieceCollision = board[this.y_offset + y][this.x_offset + x - 1];
+        if (leftPieceCollision !== charcoal) this.horizontalLeftCollision = true;
       }
     }
   }
@@ -106,10 +108,19 @@ export default class Piece {
     for (let y = this.currentPiece.length - 1; y >= 0; y--) {
       const farRightIndex = this.currentPiece[y].length - 1;
       if (this.currentPiece[y][farRightIndex] === 1) {
-        const farRightGridOnPiece = this.x_offset + this.currentPiece[y].length;
-        const rightCollision = this.board.board[this.y_offset + y][farRightGridOnPiece];
-        if (farRightGridOnPiece > 9 || rightCollision !== charcoal) this.horizontalRightCollision = true;
-        else this.horizontalRightCollision = false;
+        // Checks wall collision
+        const rightWallCollision = this.x_offset + farRightIndex + 1;
+        if (rightWallCollision > 9) this.horizontalRightCollision = true;
+      }
+    }
+
+    const board = this.board.board;
+    for (let y = this.currentPiece.length - 1; y >= 0; y--) {
+      const farRightIndex = this.currentPiece[y].length - 1;
+      for (let x = 0; x < this.currentPiece[y].length; x++) {
+        // Checks Piece Collision
+        const rightPieceCollision = board[this.y_offset + y][this.x_offset + farRightIndex + 1];
+        if (rightPieceCollision !== charcoal) this.horizontalRightCollision = true;
       }
     }
   }

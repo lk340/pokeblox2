@@ -27,7 +27,6 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
     }
 
     function resetShadowRotate() {
-
       shadowPiece.deletePiece();
       shadowPiece.x_offset = currentPiece.x_offset;
       shadowPiece.y_offset = currentPiece.y_offset;

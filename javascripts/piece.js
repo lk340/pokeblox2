@@ -73,7 +73,7 @@ export default class Piece {
   
             // if (gridBelow !== charcoal) verticalCheck += 1;
             if (this.y_offset + y === 19) this.verticalCollision = true;
-            else if (gridBelow !== charcoal && !this.currentPiece[y+1].includes(1)) this.verticalCollision = true;
+            else if (gridBelow !== charcoal) this.verticalCollision = true;
             // else verticalCollision = false;
           }
         }
@@ -121,7 +121,6 @@ export default class Piece {
     if (this.horizontalLeftCollision === false) {
       this.x_offset -= 1;
     }
-    this.drawPiece();
   }
 
   moveRight() {
@@ -130,7 +129,6 @@ export default class Piece {
     if (this.horizontalRightCollision === false) {
       this.x_offset += 1;
     }
-    this.drawPiece();
   }
   
   moveDown() {
@@ -171,8 +169,6 @@ export default class Piece {
         this.x_offset -= 1;
       }
     }
-
-    this.drawPiece();
   }
 
   instantFall() {

@@ -350,7 +350,7 @@ const movePiece = (currentPiece, shadowPiece, game) => {
     function resetShadow() {
       shadowPiece.deletePiece();
       shadowPiece.x_offset = currentPiece.x_offset;
-      shadowPiece.y_offset = currentPiece.y_offset + 3;
+      shadowPiece.y_offset = currentPiece.y_offset;
       shadowPiece.verticalCollision = false;
       shadowPiece.horizontalLeftCollision = false;
       shadowPiece.horizontalRightCollision = false;
@@ -361,7 +361,23 @@ const movePiece = (currentPiece, shadowPiece, game) => {
     function resetShadowShift() {
       shadowPiece.deletePiece();
       shadowPiece.x_offset = 3;
-      shadowPiece.y_offset = currentPiece.y_offset + 3;
+      shadowPiece.y_offset = currentPiece.y_offset;
+      shadowPiece.shapes = currentPiece.shapes;
+      shadowPiece.type = currentPiece.type;
+      shadowPiece.currentPieceIndex = currentPiece.currentPieceIndex;
+      shadowPiece.currentPiece = currentPiece.currentPiece;
+      shadowPiece.verticalCollision = false;
+      shadowPiece.horizontalLeftCollision = false;
+      shadowPiece.horizontalRightCollision = false;
+      shadowPiece.instantFall();
+      shadowPiece.drawPiece();
+    }
+
+    function resetShadowRotate() {
+
+      shadowPiece.deletePiece();
+      shadowPiece.x_offset = currentPiece.x_offset;
+      shadowPiece.y_offset = currentPiece.y_offset;
       shadowPiece.shapes = currentPiece.shapes;
       shadowPiece.type = currentPiece.type;
       shadowPiece.currentPieceIndex = currentPiece.currentPieceIndex;
@@ -378,7 +394,7 @@ const movePiece = (currentPiece, shadowPiece, game) => {
         case 87: // w
           document.getElementById("move-piece").play();
           currentPiece.rotate();
-          shadowPiece.rotate();
+          resetShadowRotate();
           break;
         case 65: // a
           document.getElementById("move-piece").play();
@@ -398,17 +414,16 @@ const movePiece = (currentPiece, shadowPiece, game) => {
           event.preventDefault();
           document.getElementById("move-piece").play();
           currentPiece.rotate();
-
-          resetShadow();
-          shadowPiece.rotate();
+          resetShadowRotate();
+          currentPiece.drawPiece();
           break;
         case 37: // left
           event.preventDefault();
 
           document.getElementById("move-piece").play();
           currentPiece.moveLeft();
-
           resetShadow();
+          currentPiece.drawPiece();
           break;
         case 40: // down
           event.preventDefault();
@@ -421,8 +436,8 @@ const movePiece = (currentPiece, shadowPiece, game) => {
 
           document.getElementById("move-piece").play();
           currentPiece.moveRight();
-
           resetShadow();
+          currentPiece.drawPiece();
           break;
         case 32: // space-bar
           event.preventDefault();
@@ -452,7 +467,7 @@ const movePiece = (currentPiece, shadowPiece, game) => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "playPause", function() { return playPause; });
-const playPause = (currentPiece, game) => {
+const playPause = (currentPiece, shadowPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
@@ -829,7 +844,7 @@ class Piece {
   
             // if (gridBelow !== charcoal) verticalCheck += 1;
             if (this.y_offset + y === 19) this.verticalCollision = true;
-            else if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"] && !this.currentPiece[y+1].includes(1)) this.verticalCollision = true;
+            else if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.verticalCollision = true;
             // else verticalCollision = false;
           }
         }
@@ -877,7 +892,6 @@ class Piece {
     if (this.horizontalLeftCollision === false) {
       this.x_offset -= 1;
     }
-    this.drawPiece();
   }
 
   moveRight() {
@@ -886,7 +900,6 @@ class Piece {
     if (this.horizontalRightCollision === false) {
       this.x_offset += 1;
     }
-    this.drawPiece();
   }
   
   moveDown() {
@@ -927,8 +940,6 @@ class Piece {
         this.x_offset -= 1;
       }
     }
-
-    this.drawPiece();
   }
 
   instantFall() {
@@ -1065,15 +1076,10 @@ class PlayGame {
       window.cancelAnimationFrame || 
       window.mozCancelAnimationFrame;
     // More accessible to different browsers and browser versions
-    
-    console.log(this.currentPiece.verticalCollision);
 
     if (this.currentPiece.verticalCollision === false) {
       this.currentPiece.moveDown();
-      this.board.updateBoard(this.currentPiece);
-      this.shadowPiece.instantFall();
-
-      console.log(this.board.board);
+      // this.shadowPiece.instantFall();
     }
 
     else { // this.currentPiece.verticalCollision === true
@@ -1088,11 +1094,11 @@ class PlayGame {
       this.board.deleteRow();
       
       this.currentPiece.resetPiece();
-      this.currentPiece.drawPiece();
 
       this.shadowPiece.resetPiece(this.currentPiece);
       this.shadowPiece.drawPiece();
       this.shadowPiece.instantFall();
+      this.currentPiece.drawPiece();
     }
 
     setTimeout(() => {
@@ -1138,7 +1144,7 @@ class ShadowPiece {
     this.currentPiece = currentPiece.currentPiece;
 
     this.x_offset = 3;
-    this.y_offset = currentPiece.y_offset + 3;
+    this.y_offset = currentPiece.y_offset;
 
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
@@ -1286,7 +1292,6 @@ class ShadowPiece {
       this.checkVerticalCollision();
       this.moveDown();
     }
-    document.getElementById("fall-piece").play();
   }
 
   resetPiece(piece) {
@@ -1541,7 +1546,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // PIECE DOM MANIPULATION START
   Object(_javascripts_dom_manipulation_piece_controls__WEBPACK_IMPORTED_MODULE_5__["movePiece"])(currentPiece, shadow, game);
-  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_6__["playPause"])(currentPiece, game);
+  Object(_javascripts_dom_manipulation_play_pause_controls__WEBPACK_IMPORTED_MODULE_6__["playPause"])(currentPiece, shadow, game);
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_7__["playlistHighscore"])();
   Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_8__["playlist"])(currentSong);
   Object(_javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_9__["guideModal"])();

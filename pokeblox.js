@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // =============================================================
   // PIECE DOM MANIPULATION START
   movePiece(currentPiece, shadow, game);
-  playPause(currentPiece, game);
+  playPause(currentPiece, shadow, game);
   playlistHighscore();
   playlist(currentSong);
   guideModal();

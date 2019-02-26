@@ -1,4 +1,4 @@
-export const playPause = (currentPiece, game) => {
+export const playPause = (currentPiece, shadowPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q

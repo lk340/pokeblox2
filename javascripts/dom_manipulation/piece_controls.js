@@ -3,7 +3,7 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
     function resetShadow() {
       shadowPiece.deletePiece();
       shadowPiece.x_offset = currentPiece.x_offset;
-      shadowPiece.y_offset = currentPiece.y_offset + 3;
+      shadowPiece.y_offset = currentPiece.y_offset;
       shadowPiece.verticalCollision = false;
       shadowPiece.horizontalLeftCollision = false;
       shadowPiece.horizontalRightCollision = false;
@@ -14,7 +14,23 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
     function resetShadowShift() {
       shadowPiece.deletePiece();
       shadowPiece.x_offset = 3;
-      shadowPiece.y_offset = currentPiece.y_offset + 3;
+      shadowPiece.y_offset = currentPiece.y_offset;
+      shadowPiece.shapes = currentPiece.shapes;
+      shadowPiece.type = currentPiece.type;
+      shadowPiece.currentPieceIndex = currentPiece.currentPieceIndex;
+      shadowPiece.currentPiece = currentPiece.currentPiece;
+      shadowPiece.verticalCollision = false;
+      shadowPiece.horizontalLeftCollision = false;
+      shadowPiece.horizontalRightCollision = false;
+      shadowPiece.instantFall();
+      shadowPiece.drawPiece();
+    }
+
+    function resetShadowRotate() {
+
+      shadowPiece.deletePiece();
+      shadowPiece.x_offset = currentPiece.x_offset;
+      shadowPiece.y_offset = currentPiece.y_offset;
       shadowPiece.shapes = currentPiece.shapes;
       shadowPiece.type = currentPiece.type;
       shadowPiece.currentPieceIndex = currentPiece.currentPieceIndex;
@@ -31,7 +47,7 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
         case 87: // w
           document.getElementById("move-piece").play();
           currentPiece.rotate();
-          shadowPiece.rotate();
+          resetShadowRotate();
           break;
         case 65: // a
           document.getElementById("move-piece").play();
@@ -51,17 +67,16 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
           event.preventDefault();
           document.getElementById("move-piece").play();
           currentPiece.rotate();
-
-          resetShadow();
-          shadowPiece.rotate();
+          resetShadowRotate();
+          currentPiece.drawPiece();
           break;
         case 37: // left
           event.preventDefault();
 
           document.getElementById("move-piece").play();
           currentPiece.moveLeft();
-
           resetShadow();
+          currentPiece.drawPiece();
           break;
         case 40: // down
           event.preventDefault();
@@ -74,8 +89,8 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
 
           document.getElementById("move-piece").play();
           currentPiece.moveRight();
-
           resetShadow();
+          currentPiece.drawPiece();
           break;
         case 32: // space-bar
           event.preventDefault();

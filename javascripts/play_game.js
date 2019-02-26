@@ -23,15 +23,10 @@ export default class PlayGame {
       window.cancelAnimationFrame || 
       window.mozCancelAnimationFrame;
     // More accessible to different browsers and browser versions
-    
-    console.log(this.currentPiece.verticalCollision);
 
     if (this.currentPiece.verticalCollision === false) {
       this.currentPiece.moveDown();
-      this.board.updateBoard(this.currentPiece);
-      this.shadowPiece.instantFall();
-
-      console.log(this.board.board);
+      // this.shadowPiece.instantFall();
     }
 
     else { // this.currentPiece.verticalCollision === true
@@ -46,11 +41,11 @@ export default class PlayGame {
       this.board.deleteRow();
       
       this.currentPiece.resetPiece();
-      this.currentPiece.drawPiece();
 
       this.shadowPiece.resetPiece(this.currentPiece);
       this.shadowPiece.drawPiece();
       this.shadowPiece.instantFall();
+      this.currentPiece.drawPiece();
     }
 
     setTimeout(() => {

@@ -13,7 +13,7 @@ export default class ShadowPiece {
     this.currentPiece = currentPiece.currentPiece;
 
     this.x_offset = 3;
-    this.y_offset = currentPiece.y_offset + 3;
+    this.y_offset = currentPiece.y_offset;
 
     this.verticalCollision = false;
     this.horizontalLeftCollision = false;
@@ -161,7 +161,6 @@ export default class ShadowPiece {
       this.checkVerticalCollision();
       this.moveDown();
     }
-    document.getElementById("fall-piece").play();
   }
 
   resetPiece(piece) {

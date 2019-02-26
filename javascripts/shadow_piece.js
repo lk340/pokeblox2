@@ -59,18 +59,12 @@ export default class ShadowPiece {
             let gridBelow;
             if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
   
-            // if (gridBelow !== charcoal) verticalCheck += 1;
             if (this.y_offset + y === 19) this.verticalCollision = true;
             else if (gridBelow !== charcoal) this.verticalCollision = true;
-            // else verticalCollision = false;
           }
         }
       }
     }
-
-    // if (this.y_offset + y === 19) this.verticalCollision = true;
-    // else if (verticalCheck > 0) this.verticalCollision = true;
-    // else this.verticalCollision = false;
   }
 
   checkHorizontalLeftCollision() {

@@ -470,6 +470,12 @@ const playPause = (currentPiece, shadowPiece, game) => {
   document.addEventListener("keydown", event => {
     switch(event.which) {
       case 81: // q
+        const initialGameScreen = document.getElementById("initial-game-screen").classList;
+        if (initialGameScreen[0] === "initial-game-screen") {
+          initialGameScreen.remove("initial-game-screen");
+          initialGameScreen.add("initial-game-screen-hide");
+        }
+      
         if (game.start === false) {
           game.start = true;
           currentPiece.drawPiece();
@@ -487,6 +493,7 @@ const playPause = (currentPiece, shadowPiece, game) => {
     }
   });
 };
+
 
 /***/ }),
 
@@ -1638,8 +1645,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // DRAW BOARD END
   // =============================================================
   // DRAW PIECE START
-  // const tetrominoes = [I, O, T, S, Z, J, L];
-  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"]];
+  const tetrominoes = [_javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["I"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["O"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["T"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["S"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["Z"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["J"], _javascripts_tetrominoes__WEBPACK_IMPORTED_MODULE_4__["L"]];
+  // const tetrominoes = [I];
   const currentPiece = new _javascripts_piece__WEBPACK_IMPORTED_MODULE_1__["default"](context, gameBoard, tetrominoes);
   const shadow = new _javascripts_shadow_piece__WEBPACK_IMPORTED_MODULE_2__["default"](context, gameBoard, currentPiece);
   // currentPiece.drawPiece();

@@ -1,0 +1,35 @@
+.initial-game-screen {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 7px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.initial-game-screen-hide {
+  display: none;
+}
+
+.initial-game-screen-message {
+  color: white;
+  text-shadow: 0 0 5px white;
+  text-align: center;
+  padding: 0 10%;
+  cursor: default;
+
+  animation: gameScreenMessageFloat 1.2s linear infinite;
+}
+
+@keyframes gameScreenMessageFloat {
+  0%, 100% {
+    transform: translateY(4px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}

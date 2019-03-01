@@ -10,6 +10,8 @@
   <link rel="stylesheet" type="text/css" media="screen" href="./css/header.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/guide_modal.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/board.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/initial_game_screen.css">
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/pause_screen.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/sidebars.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/music_player.css">
   <link rel="stylesheet" type="text/css" media="screen" href="./css/music_player_background.css">
@@ -176,6 +178,18 @@
     </div>
 
     <div id="board-container">
+      <div id="initial-game-screen" class="initial-game-screen">
+        <div class="initial-game-screen-message">
+          <span>Have you read the directions? If so, press the right key to begin the game :)</span>
+          <br>
+          <br>
+          <span>If not, click the "Guide" button above. Remember to read the directions!</span>
+          <br>
+          <br>
+          <span>Also, don't forget to pick a background song!</span>
+        </div>
+      </div>
+      
       <canvas id="board" class="board" width="300px" height="600px"></canvas>
     </div>
 

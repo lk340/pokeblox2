@@ -9,6 +9,7 @@ import { playPause } from './javascripts/dom_manipulation/play_pause_controls';
 import { playlistHighscore } from './javascripts/dom_manipulation/playlist_highscore';
 import { playlist } from './javascripts/dom_manipulation/playlist';
 import { guideModal } from './javascripts/dom_manipulation/guide_modal';
+import { aboutModal } from './javascripts/dom_manipulation/about_modal';
 import { header } from './javascripts/dom_manipulation/header';
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   playlistHighscore();
   playlist(currentSong);
   guideModal();
+  aboutModal();
   header();
   // PIECE DOM MANIPULATION END
 });

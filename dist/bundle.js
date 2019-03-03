@@ -259,6 +259,43 @@ const ash = "rgb(92, 92, 92)";
 
 /***/ }),
 
+/***/ "./javascripts/dom_manipulation/about_modal.js":
+/*!*****************************************************!*\
+  !*** ./javascripts/dom_manipulation/about_modal.js ***!
+  \*****************************************************/
+/*! exports provided: aboutModal */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "aboutModal", function() { return aboutModal; });
+const aboutModal = () => {
+  const aboutModal = document.getElementById("about-modal").classList;
+  document.getElementById("about-modal-background").addEventListener("click", () => {
+    if (aboutModal[0] === "about-modal") {
+      aboutModal.remove("about-modal");
+      aboutModal.add("about-modal-close");
+    }
+  });
+
+  document.getElementById("about-modal-close").addEventListener("click", () => {
+    if (aboutModal[0] === "about-modal") {
+      aboutModal.remove("about-modal");
+      aboutModal.add("about-modal-close");
+    }
+  });
+
+  document.getElementById("about").addEventListener("click", () => {
+    if (aboutModal[0] === "about-modal-close") {
+      aboutModal.remove("about-modal-close");
+      aboutModal.add("about-modal");
+    }
+  });
+};
+
+
+/***/ }),
+
 /***/ "./javascripts/dom_manipulation/guide_modal.js":
 /*!*****************************************************!*\
   !*** ./javascripts/dom_manipulation/guide_modal.js ***!
@@ -1633,7 +1670,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist_highscore */ "./javascripts/dom_manipulation/playlist_highscore.js");
 /* harmony import */ var _javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./javascripts/dom_manipulation/playlist */ "./javascripts/dom_manipulation/playlist.js");
 /* harmony import */ var _javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./javascripts/dom_manipulation/guide_modal */ "./javascripts/dom_manipulation/guide_modal.js");
-/* harmony import */ var _javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./javascripts/dom_manipulation/header */ "./javascripts/dom_manipulation/header.js");
+/* harmony import */ var _javascripts_dom_manipulation_about_modal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./javascripts/dom_manipulation/about_modal */ "./javascripts/dom_manipulation/about_modal.js");
+/* harmony import */ var _javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./javascripts/dom_manipulation/header */ "./javascripts/dom_manipulation/header.js");
+
 
 
 
@@ -1679,7 +1718,8 @@ document.addEventListener("DOMContentLoaded", () => {
   Object(_javascripts_dom_manipulation_playlist_highscore__WEBPACK_IMPORTED_MODULE_7__["playlistHighscore"])();
   Object(_javascripts_dom_manipulation_playlist__WEBPACK_IMPORTED_MODULE_8__["playlist"])(currentSong);
   Object(_javascripts_dom_manipulation_guide_modal__WEBPACK_IMPORTED_MODULE_9__["guideModal"])();
-  Object(_javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_10__["header"])();
+  Object(_javascripts_dom_manipulation_about_modal__WEBPACK_IMPORTED_MODULE_10__["aboutModal"])();
+  Object(_javascripts_dom_manipulation_header__WEBPACK_IMPORTED_MODULE_11__["header"])();
   // PIECE DOM MANIPULATION END
 });
 

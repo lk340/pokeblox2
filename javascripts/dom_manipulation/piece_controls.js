@@ -47,11 +47,13 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
           document.getElementById("move-piece").play();
           currentPiece.rotate();
           resetShadowRotate();
+          currentPiece.drawPiece();
           break;
         case 65: // a
           document.getElementById("move-piece").play();
           currentPiece.moveLeft();
-          shadowPiece.moveLeft();
+          resetShadow();
+          currentPiece.drawPiece();
           break;
         case 83: // s
           document.getElementById("move-piece").play();
@@ -60,7 +62,8 @@ export const movePiece = (currentPiece, shadowPiece, game) => {
         case 68: // d
           document.getElementById("move-piece").play();
           currentPiece.moveRight();
-          shadowPiece.moveRight();
+          resetShadow();
+          currentPiece.drawPiece();
           break;
         case 38: // up
           event.preventDefault();

@@ -48,3 +48,27 @@
 .about-modal-information p {
   color: var(--ash);
 }
+
+.about-modal-x {
+  color: white;
+  font-size: 5rem;
+  position: fixed;
+  z-index: 3;
+  margin-left: 260px;
+  cursor: pointer;
+  background-color: var(--fireRed);
+  padding: 10px 40px 10px 60px;
+  transition-duration: 0.6s;
+}
+
+.about-modal-x:hover {
+  transform: translateX(95px);
+}
+
+.fa-times {
+  transition-duration: 0.4s;
+}
+
+.about-modal-x:hover .fa-times {
+  transform: rotate(720deg);
+}

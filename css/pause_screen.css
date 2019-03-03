@@ -22,10 +22,10 @@
   cursor: default;
   font-size: 3rem;
 
-  animation: gameScreenMessageFloat 1.2s linear infinite;
+  animation: pauseScreenMessageFloat 1.2s linear infinite;
 }
 
-@keyframes gameScreenMessageFloat {
+@keyframes pauseScreenMessageFloat {
   0%, 100% {
     transform: translateY(4px);
     text-shadow: 0 0 20px white;

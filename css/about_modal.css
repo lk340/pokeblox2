@@ -1,0 +1,50 @@
+.about-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+}
+
+.about-modal-close {
+  display: none;
+}
+
+.about-modal-background {
+  background-color: black;
+  opacity: 0.6;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.about-modal-information {
+  background-color: var(--charcoal);
+  position: fixed;
+  width: 600px;
+  height: 500px;
+  z-index: 4;
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-modal-information h3 {
+  font-size: 3rem;
+  color: var(--ash);
+  padding: 0;
+  margin: 0;
+}
+
+.about-modal-information p {
+  color: var(--ash);
+}

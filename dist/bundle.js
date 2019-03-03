@@ -492,6 +492,18 @@ const playPause = (currentPiece, shadowPiece, game) => {
         break;
       case 69: // e
         if (game.start === true) game.pauseGame();
+
+        const pauseScreen = document.getElementById("pause-screen").classList;
+        if (pauseScreen[0] === "pause-screen-hide") {
+          pauseScreen.remove("pause-screen-hide");
+          pauseScreen.add("pause-screen");
+        }
+
+        else {
+          pauseScreen.remove("pause-screen");
+          pauseScreen.add("pause-screen-hide");
+        }
+        
         break;
     }
   });

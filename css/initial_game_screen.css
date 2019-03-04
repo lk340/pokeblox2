@@ -10,8 +10,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  border: red solid 1px;
 }
 
 .initial-game-screen-hide {

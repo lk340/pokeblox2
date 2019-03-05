@@ -901,19 +901,12 @@ class Piece {
           if (this.currentPiece[y][x] === 1) {
             let gridBelow;
             if (this.y_offset + y + 1 < 20) gridBelow = this.board.board[this.y_offset + y + 1][this.x_offset + x];
-  
-            // if (gridBelow !== charcoal) verticalCheck += 1;
             if (this.y_offset + y === 19) this.verticalCollision = true;
             else if (gridBelow !== _colors__WEBPACK_IMPORTED_MODULE_0__["charcoal"]) this.verticalCollision = true;
-            // else verticalCollision = false;
           }
         }
       }
     }
-
-    // if (this.y_offset + y === 19) this.verticalCollision = true;
-    // else if (verticalCheck > 0) this.verticalCollision = true;
-    // else this.verticalCollision = false;
   }
 
   checkHorizontalLeftCollision() {
@@ -1199,51 +1192,27 @@ class PlayGame {
         document.getElementById("game-over").play();
         return;
       }
-      
-
-      this.board.updateBoard(this.currentPiece);
-      this.board.deleteRow();
-      
-      this.currentPiece.resetPiece();
-
-      this.shadowPiece.resetPiece(this.currentPiece);
-      this.shadowPiece.drawPiece();
-      this.shadowPiece.instantFall();
-      this.currentPiece.drawPiece();
-
+      this.updateBoard();
+      this.resetPiece();
+      this.resetShadowPiece();
       this.frameRate();
     }
+  }
 
-    // if (this.currentPiece.verticalCollision === false) {
-    //   this.currentPiece.moveDown();
-    //   // this.shadowPiece.instantFall();
+  updateBoard() {
+    this.board.updateBoard(this.currentPiece);
+    this.board.deleteRow();
+  }
 
-    //   console.log(this.board.board);
-    // }
+  resetPiece() {
+    this.currentPiece.resetPiece();
+  }
 
-    // else { // this.currentPiece.verticalCollision === true
-    //   this.board.checkIfLose();
-    //   if (this.board.gameOver === true) {
-    //     cancelAnimationFrame(this.animation);
-    //     this.start = false;
-    //     document.getElementById("game-over").play();
-    //     return;
-    //   }
-
-    //   this.board.updateBoard(this.currentPiece);
-    //   this.board.deleteRow();
-      
-    //   this.currentPiece.resetPiece();
-
-    //   this.shadowPiece.resetPiece(this.currentPiece);
-    //   this.shadowPiece.drawPiece();
-    //   this.shadowPiece.instantFall();
-    //   this.currentPiece.drawPiece();
-    // }
-
-    // setTimeout(() => {
-    //   if (this.toggleAnimation === true) this.animation = requestAnimationFrame(this.frameRate);
-    // }, 400);
+  resetShadowPiece() {
+    this.shadowPiece.resetPiece(this.currentPiece);
+    this.shadowPiece.drawPiece();
+    this.shadowPiece.instantFall();
+    this.currentPiece.drawPiece();
   }
 
   resetFrame() {

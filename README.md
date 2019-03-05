@@ -2,6 +2,8 @@
 
 Live: http://www.loydkim.com/pokeblox2/
 
+![game](screenshot.png)
+
 ## Background and Overview
 Tetris is a game that caught the world by storm and still continues to captivate the hearts of millions even today. Calling it a timeless classic is simply an understatement. It's a culture and, for some, a way of life.
 

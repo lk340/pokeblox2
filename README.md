@@ -25,7 +25,7 @@ Webpack is set up to make sure the game functions the way it is intended.
 For styling, each part of the game is split into its own dedicated CSS file.
 
 ## Board Implementation
-The entire board was created using a 10x20 array and HTML canvas. The canvas is of a fixed size: 300x600 pixels.
+The entire board is created using a 10x20 array and HTML canvas. The canvas is of a fixed size: 300x600 pixels.
 
 The board class has instance methods that allow it to generate a canvas board by iterating through a board array:
 
@@ -118,7 +118,7 @@ export const I = {
 
 By using the three properties above, I am able to manipulate a piece in different ways. For example, in my piece rotation logic, I key into "shapes" and iterate through each piece matrix. If I want to render the piece's color on the canvas board, I simply key into "color", and if I want to detect the kind of piece I'm working with, I key into "type". This is extremely important because it allows me to predict the type of the next piece and display it accordingly. It also allows me to display a saved piece on the game screen.
 
-Each piece contains *currentPiece*, *x_offset*, and *y_offset* instance variables. *currentPiece* is the currentPiece that we are keyed into in our tetromino object (in this case, the key would be "shapes"). x_offset and y_offset are the positions of the piece relative to the board. By using these three variables, I created the following logic to properly render pieces on the board:
+Each piece contains *currentPiece*, *x_offset*, and *y_offset* instance variables. *currentPiece* is the currentPiece that we are keyed into in our tetromino object (in this case, the key would be "shapes"). x_offset and y_offset are the positions of the piece relative to the board. By using these three variables, I use the following logic to properly render pieces on the board:
 
 ``` JavaScript
 drawPiece() {
@@ -163,7 +163,7 @@ instantFall() {
 ```
 
 ## Gameplay Implementation
-In order for the game to be playable, I use requestAnimationFrame, which recursively calls the *frameRate()* method. This method sets the frame rate for the game by calling the *moveDown* method of the piece class, which moves the piece down one grid. requestAnimationFrame allows the game to constantly call the *moveDown()* method, and this is what allows the piece to fall in the board. cancelAnimationFrame was used to pause and end the game.
+In order for the game to be playable, I use requestAnimationFrame, which recursively calls the *frameRate()* method. This method sets the frame rate for the game by calling the *moveDown* method of the piece class, which moves the piece down one grid. requestAnimationFrame allows the game to constantly call the *moveDown()* method, and this is what allows the piece to fall in the board. cancelAnimationFrame is used to pause and end the game.
 
 Because requestAnimationFrame is relatively new, it isn't supported in all browsers, which is why I implemented the following code to make the game as accessible to as many browsers as possible:
 
@@ -179,7 +179,7 @@ const cancelAnimationFrame =
   window.mozCancelAnimationFrame;
 ```
 
-Game start functionality was created using the following logic: 
+Game start functionality logic: 
 ``` JavaScript
 if (this.currentPiece.verticalCollision === false) {
   this.currentPiece.moveDown();
@@ -190,7 +190,7 @@ if (this.currentPiece.verticalCollision === false) {
 }
 ```
 
-Game over functionality was created using the following logic:
+Game over functionality logic:
 ``` JavaScript
 else {
   this.board.checkIfLose();

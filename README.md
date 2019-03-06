@@ -25,7 +25,7 @@ Webpack is set up to make sure the game functions the way it is intended.
 For styling, each part of the game is split into its own dedicated CSS file.
 
 ## Board Implementation
-The entire board was created using a 10x20 array and HTML canvas. THe canvas is of a fixed size: 300x600 pixels.
+The entire board was created using a 10x20 array and HTML canvas. The canvas is of a fixed size: 300x600 pixels.
 
 The board class has instance methods that allow it to generate a canvas board by iterating through a board array:
 
@@ -39,6 +39,17 @@ createEmptyBoard() {
     for (let x = 0; x < 10; x++) {
       this.board[y][x] = charcoal;
     }
+  }
+}
+
+createGrid(x, y, blockColor, context) {
+  if (x < 10 && y < 20) {
+    const x_pos = x * 30;
+    const y_pos = y * 30;
+    context.fillStyle = blockColor;
+    context.fillRect(x_pos, y_pos, 30, 30);
+    context.strokeStyle = ash;
+    context.strokeRect(x_pos, y_pos, 30, 30);
   }
 }
   

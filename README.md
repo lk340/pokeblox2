@@ -62,7 +62,7 @@ drawBoard() {
 }
 ```
 ## Points Implementation
-The board class contains an instace variable, *pointCounter*, which records how many rows were cleared for each piece drop. By using ths point counter, I'm able to use the following method to allow the player to accrue points:
+The board class contains an instance variable, *pointCounter*, which records how many rows were cleared for each piece drop. By using ths point counter, I'm able to use the following method to allow the player to accrue points as they clear rows:
 
 ``` JavaScript
 handlePoints() {
@@ -93,7 +93,7 @@ handlePoints() {
 
 ## Piece Implementation
 Each tetromino piece is an object that contains three properties:
-1. Possible piece shapes
+1. Possible piece shapes (used for rotation)
 2. Piece color
 3. Piece type
 
@@ -133,7 +133,7 @@ drawPiece() {
 ```
 
 ## Collision Detection
-Because each piece is being rendered onto the board relative to its x and y positions, I used these positions to calculate whether there is a piece below, to the side, or to the right of the piece. The following is a code snippet for vertical collision; horizontal collision contains similar logic:
+Because each piece is being rendered onto the board relative to its x and y positions, I used these positions to calculate whether there is a piece below or to the side of the piece. The following is a code snippet for vertical collision; horizontal collision contains similar logic:
 
 ``` JavaScript
 if (this.y_offset >= 0) {
@@ -151,7 +151,7 @@ if (this.y_offset >= 0) {
 ```
 
 ## Shadow Piece
-The shadow piece class is very similar to the piece class; however, it is different in that it is always rendered at the possible bottom-most part of the board. I do this by calling the *instantFall* method, which is called every time the piece is rendered on the board:
+The shadow piece class is very similar to the piece class; however, it is different in that it is always rendered at the bottom-most possible part of the board. I do this by calling the *instantFall* method, which is called every time the piece is rendered on the board:
 
 ``` JavaScript
 instantFall() {
@@ -163,7 +163,7 @@ instantFall() {
 ```
 
 ## Gameplay Implementation
-In order for the game to be playable, I use requestAnimationFrame, which recursively calls the *frameRate()* method. This method sets the frame rate for the game calls the *moveDown* method of the piece class, which moves the piece down one grid. requestAnimationFrame allows the game to constantly call the *moveDown()* method, and this is what allows the piece to fall in the board. cancelAnimationFrame was used to pause and end the game.
+In order for the game to be playable, I use requestAnimationFrame, which recursively calls the *frameRate()* method. This method sets the frame rate for the game by calling the *moveDown* method of the piece class, which moves the piece down one grid. requestAnimationFrame allows the game to constantly call the *moveDown()* method, and this is what allows the piece to fall in the board. cancelAnimationFrame was used to pause and end the game.
 
 Because requestAnimationFrame is relatively new, it isn't supported in all browsers, which is why I implemented the following code to make the game as accessible to as many browsers as possible:
 

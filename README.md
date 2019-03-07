@@ -69,25 +69,19 @@ handlePoints() {
   switch(this.pointCounter) {
     case 1:
       this.points += this.pointCounter * 10;
-      document.getElementById("points").innerHTML = this.points;
-      this.pointCounter = 0;
       break;
     case 2:
       this.points += (this.pointCounter * 20) + 10;
-      document.getElementById("points").innerHTML = this.points;
-      this.pointCounter = 0;
       break;
     case 3:
       this.points += (this.pointCounter * 30) + 20;
-      document.getElementById("points").innerHTML = this.points;
-      this.pointCounter = 0;
       break;
     case 4:
       this.points += (this.pointCounter * 40) + 30;
-      document.getElementById("points").innerHTML = this.points;
-      this.pointCounter = 0;
       break;
   }
+  document.getElementById("points").innerHTML = this.points;
+  this.pointCounter = 0;
 }
 ```
 
